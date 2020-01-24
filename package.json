@@ -2,8 +2,8 @@
   "name": "teddytags",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/teddytags.js",
-  "types": "./dist/teddytags.d.ts",
+  "main": "./lib/teddytags.js",
+  "types": "./lib/teddytags.d.ts",
   "scripts": {
     "prepublish": "tsc",
     "compiler": "node ./ts/cli"
@@ -15,6 +15,7 @@
     "chalk": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^13.5.0"
+    "@types/node": "^13.5.0",
+    "typescript": "^3.7.5"
   }
 }
