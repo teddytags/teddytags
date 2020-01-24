@@ -1,12 +1,12 @@
 {
     "compilerOptions": {
         "target": "es6",
-        "outDir": "js",
-        "module": "es6",
+        "outDir": "dist",
+        "module": "commonjs",
         "skipLibCheck": true,
+        "declaration": true,
         "typeRoots": [
-            "./node_modules/@types/node",
-            "./ts/@types"
+            "./node_modules/@types/node"
           ]
     }
 }
