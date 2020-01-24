@@ -1,0 +1,19 @@
+{
+  "name": "teddytags",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./ts/teddytags.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "node ./ts/cli"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.5.0"
+  }
+}

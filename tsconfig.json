@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "outDir": "js",
+        "module": "es6",
+        "skipLibCheck": true,
+        "typeRoots": [
+            "./node_modules/@types/node",
+            "./ts/@types"
+          ]
+    }
+}
