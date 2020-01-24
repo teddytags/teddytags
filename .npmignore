@@ -1,2 +1,4 @@
-*
-!/lib/
+ts
+tsconfig.json
+tslint.json
+.prettierrc

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "./lib/teddytags.js",
+  "files": ["lib/**/*"],
   "types": "./lib/teddytags.d.ts",
   "scripts": {
     "prepublish": "tsc",
