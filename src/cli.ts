@@ -18,7 +18,7 @@ const chalk = require("chalk");
 let regex1: RegExp = /((?!<).)+((?!>).)/gm;
 let regex2: RegExp = /(([^::])+)/gm;
 /**
- * Sample format of definiton : 
+ * Sample format of definiton :
  * ```html
  * <customTag::htmlElement>
  * <!-- Where customTag is the name of yout custom element -->
@@ -48,6 +48,9 @@ export function cli(args: Array<string>) {
    * The filename to be compiled
    */
   let filename: string = args.splice(2)[0];
+  /**
+   * If there is no file input in argument, stop the CLI anyway.
+   */
   if (filename === null || filename === undefined || filename === "") {
     console.log(
       chalk.red.bold("Try entering a filename after 'teddy' like:"),
@@ -75,14 +78,19 @@ export function cli(args: Array<string>) {
  */
 const openFile = (fname: string) => {
   fs.readFile(fname, (err, res) => {
-    if (err.code === "ENOENT") {
-      console.log(
-        chalk.red.bold("That sounds like an imaginary file."),
-        chalk.yellow.underline("Sorry but teddy can only compile real files.")
-      );
-      return;
-    } else {
-      throw err;
+    /**
+     * If the file entered does not exists, stop the CLI anywau.
+     */
+    if (err) {
+      if (err.code === "ENOENT") {
+        console.log(
+          chalk.red.bold("That sounds like an imaginary file."),
+          chalk.yellow.underline("Sorry but teddy can only compile real files.")
+        );
+        return;
+      } else {
+        throw err;
+      }
     }
     let data = res.toString();
     let compiledData: string[] = compileData(data);
