@@ -6,22 +6,22 @@
   "files": [
     "lib/**/*"
   ],
+  "bin": {
+    "teddy": "bin/teddy"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "types": "./lib/teddytags.d.ts",
   "scripts": {
     "prepare": "tsc",
-    "preinstall": "which link-module-alias && link-module-alias clean || echo",
-    "postinstall": "link-module-alias",
     "compiler": "node ./ts/cli"
   },
-  "_moduleAliases": {
-    "@lib": "teddytags/lib"
-  },
-  "keywords": [],
+  "keywords": ["custom elements", "teddytags", "obnoxoxiousnerd"],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^3.0.0",
-    "link-module-alias": "^1.2.0"
+    "chalk": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "^13.5.0",
