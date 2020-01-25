@@ -3,17 +3,25 @@
   "version": "1.0.0",
   "description": "",
   "main": "./lib/teddytags.js",
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "types": "./lib/teddytags.d.ts",
   "scripts": {
-    "prepublish": "tsc",
+    "prepare": "tsc",
+    "preinstall": "which link-module-alias && link-module-alias clean || echo",
+    "postinstall": "link-module-alias",
     "compiler": "node ./ts/cli"
+  },
+  "_moduleAliases": {
+    "@lib": "teddytags/lib"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^3.0.0"
+    "chalk": "^3.0.0",
+    "link-module-alias": "^1.2.0"
   },
   "devDependencies": {
     "@types/node": "^13.5.0",
