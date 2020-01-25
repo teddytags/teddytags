@@ -61,12 +61,36 @@ export function cli(args: Array<string>) {
   /**
    * Extract extension from file
    */
-  let fnameext: string = filename.match(/(.td)?/g).join("");
+  let exts:string[] = filename.match(/\.[^.]*$/g);
   /**
-   * I extension already present, let it be or add the extension
+   * Variable to transform the `exts` to `string`.
+   * 
+   * Full form : FileNAMEEXTension.
    */
-  if (fnameext !== ".td") {
+  let fnameext: string;
+  /**
+   * If no extension, flush "" to fnamenext
+   */
+  if (exts === null) {
+    fnameext = "";
+  }
+  /**
+   * Or if already present, flush it to `fnameext`  
+   */ 
+  else {
+    fnameext = exts.join("");
+  }
+  /**
+   * If extension already present, let it be or add the extension
+   */
+  if (fnameext === "") {
     filename += ".td";
+  } else if (fnameext !== ".td") {
+    /**
+     * If extension other than `.td`, stop the CLI anyway.
+     */
+    console.log(chalk.red.bold("Sorry, teddy can only compile .td files."));
+    return;
   }
   console.log("Compiling", chalk.yellow(filename));
   openFile(filename);
@@ -79,7 +103,7 @@ export function cli(args: Array<string>) {
 const openFile = (fname: string) => {
   fs.readFile(fname, (err, res) => {
     /**
-     * If the file entered does not exists, stop the CLI anywau.
+     * If the file entered does not exists, stop the CLI anyway.
      */
     if (err) {
       if (err.code === "ENOENT") {
