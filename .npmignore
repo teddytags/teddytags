@@ -1,4 +1,6 @@
+.git
 src
 tsconfig.json
 tslint.json
 .prettierrc
+.gitignore
