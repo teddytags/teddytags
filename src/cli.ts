@@ -1,23 +1,90 @@
-// Sample format of definiton : <customTag::htmlElement>
+/*! *****************************************************************************
+Copyright © 2020 Pranav Karawale. All rights reserved. 
+Licensed under the MIT License (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at https://mit-license.org/  
+ 
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE, 
+MERCHANTABLITY OR NON-INFRINGEMENT. 
+ 
+See the MIT License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
 import * as fs from "fs";
 import * as path from "path";
-import * as readline from "readline";
 const chalk = require("chalk");
 let regex1: RegExp = /((?!<).)+((?!>).)/gm;
 let regex2: RegExp = /(([^::])+)/gm;
-let r: readline.Interface = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-r.question(chalk.yellow.bold("Enter file directory to compile: "), fname => {
+// Sample format of definiton : <customTag::htmlElement>
+/**
+ * The default CLI function that will compile the .td files.
+ * Dedicated to my lazy friends who want to easy compile and
+ * use their awesome custom tags powered by TeddyTags.
+ * @param args The arguments passed
+ * 
+ * Usage:
+ * #### A specific file in root
+ * ```
+ * teddy foo
+ * ```
+ * where foo points to ./foo.td
+ * #### A file in a folder of root
+ * ```
+ *  teddy lib/foo
+ * ```
+ * where lib/foo points to ./lib/foo.td
+ */
+export function cli(args: Array<string>) {
+  /**
+   * The filename to be compiled
+   */
+  let filename: string = args.splice(2)[0];
+  /**
+   * Extract extension from file
+   */
+  let fnameext: string = filename.match(/(.td)?/g).join("");
+  /**
+   * I extension already present, let it be or add the extension
+   */
+  if (fnameext !== ".td") {
+    filename += ".td";
+  }
+  console.log("Compiling", chalk.yellow(filename));
+  openFile(filename);
+}
+/**
+ * Function to open a file.
+ * Will also run `compileData()` and `flushFile()`
+ * @param fname
+ */
+const openFile = (fname: string) => {
   fs.readFile(fname, (err, res) => {
     if (err) throw err;
     let data = res.toString();
     let compiledData: string[] = compileData(data);
     flushFile(compiledData, fname);
   });
-  r.close();
-});
+};
+/**
+ * Compile the data using Regular Expressions.
+ * Will input data from a .td (Teddy Definitons) file
+ * If input is
+ * ```html
+ * <customTag::h1>
+ * <newTag::p>
+ * ```
+ * Will return output as:
+ * ```javascript
+ * [`window.onload = function(){`,
+ *  `new TeddyTags('customTag').set('h1')`,
+ *  `new TeddyTags('newTag').set('p')`,
+ * `}`
+ * ]
+ * ```
+ * @param data
+ */
 const compileData = (data): string[] => {
   let lines: string[] = data.split("\n");
   let output: string[] = [];
@@ -33,6 +100,26 @@ const compileData = (data): string[] => {
   output.push("}");
   return output;
 };
+/**
+ * Create the compiled .js file from a .td file.
+ * If input from `compileData()` is
+ * ```javascript
+ * [`window.onload = function(){`,
+ *  `new TeddyTags('customTag').set('h1')`,
+ *  `new TeddyTags('newTag').set('p')`,
+ * `}`
+ * ]
+ * ```
+ * Output in the file
+ * ```javascript
+ * window.onload = function(){
+ *  new TeddyTags('customTag').set('h1')
+ *  new TeddyTags('newTag').set('p')
+ * }
+ * ```
+ * @param data The data from compileData, must be type f string[]
+ * @param filename The name of file to be flushed to disk
+ */
 const flushFile = (data: string[], filename: string) => {
   let dirname = path.dirname(filename);
   let fname = path.parse(filename).name;
