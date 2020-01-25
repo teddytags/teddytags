@@ -1,7 +1,11 @@
 {
   "name": "teddytags",
   "version": "1.0.0",
-  "description": "",
+  "description": "The superfast way to custom elements.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/obnoxiousnerd/teddytags.git"
+  },
   "main": "./lib/teddytags.js",
   "files": [
     "lib/**/*"
@@ -21,7 +25,7 @@
     "teddytags",
     "obnoxoxiousnerd"
   ],
-  "author": "",
+  "author": "Pranav Karawale",
   "license": "ISC",
   "dependencies": {
     "chalk": "^3.0.0"
