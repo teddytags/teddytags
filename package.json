@@ -14,8 +14,7 @@
   },
   "types": "./lib/teddytags.d.ts",
   "scripts": {
-    "prepare": "tsc",
-    "compiler": "node ./ts/cli"
+    "prepare": "tsc"
   },
   "keywords": [
     "custom elements",
