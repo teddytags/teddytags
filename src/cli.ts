@@ -23,7 +23,7 @@ let regex2: RegExp = /(([^::])+)/gm;
  * Dedicated to my lazy friends who want to easy compile and
  * use their awesome custom tags powered by TeddyTags.
  * @param args The arguments passed
- * 
+ *
  * Usage:
  * #### A specific file in root
  * ```
@@ -41,6 +41,13 @@ export function cli(args: Array<string>) {
    * The filename to be compiled
    */
   let filename: string = args.splice(2)[0];
+  if (filename === null || filename === undefined || filename === "") {
+    console.log(
+      chalk.red.bold("Try entering a filename after 'teddy' like:"),
+      chalk.grey("teddy path/file")
+    );
+    return;
+  }
   /**
    * Extract extension from file
    */
@@ -61,7 +68,15 @@ export function cli(args: Array<string>) {
  */
 const openFile = (fname: string) => {
   fs.readFile(fname, (err, res) => {
-    if (err) throw err;
+    if (err.code === "ENOENT") {
+      console.log(
+        chalk.red.bold("That sounds like an imaginary file."),
+        chalk.yellow.underline("Sorry but teddy can only compile real files.")
+      );
+      return;
+    } else {
+      throw err;
+    }
     let data = res.toString();
     let compiledData: string[] = compileData(data);
     flushFile(compiledData, fname);
