@@ -17,7 +17,11 @@
     "prepare": "tsc",
     "compiler": "node ./ts/cli"
   },
-  "keywords": ["custom elements", "teddytags", "obnoxoxiousnerd"],
+  "keywords": [
+    "custom elements",
+    "teddytags",
+    "obnoxoxiousnerd"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
