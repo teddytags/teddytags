@@ -17,8 +17,13 @@ import * as path from "path";
 const chalk = require("chalk");
 let regex1: RegExp = /((?!<).)+((?!>).)/gm;
 let regex2: RegExp = /(([^::])+)/gm;
-// Sample format of definiton : <customTag::htmlElement>
 /**
+ * Sample format of definiton : 
+ * ```html
+ * <customTag::htmlElement>
+ * <!-- Where customTag is the name of yout custom element -->
+ * <!-- Where htmlElement is any valid HTML5 element like h1, h2, etc -->
+ * ```
  * The default CLI function that will compile the .td files.
  * Dedicated to my lazy friends who want to easy compile and
  * use their awesome custom tags powered by TeddyTags.
@@ -26,11 +31,13 @@ let regex2: RegExp = /(([^::])+)/gm;
  *
  * Usage:
  * #### A specific file in root
+ * The command:
  * ```
  * teddy foo
  * ```
  * where foo points to ./foo.td
  * #### A file in a folder of root
+ * The command
  * ```
  *  teddy lib/foo
  * ```
