@@ -15,7 +15,7 @@ and limitations under the License.
 /**
  * The class used for instantaniation of TeddyTags.
  */
-export default class TeddyTags {
+export class TeddyTags {
   /**
    * The `querySelectorAll` which will be mutated from the `constructor` of this class.
    */

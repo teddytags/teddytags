@@ -152,6 +152,7 @@ const compileData = (data): string[] => {
   }
   output.unshift("window.onload = function(){");
   output.push("}");
+  output.unshift("let TeddyTags = require('teddytags')")
   return output;
 };
 /**
