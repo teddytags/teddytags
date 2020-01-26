@@ -1,6 +1,6 @@
 {
   "name": "teddytags",
-  "version": "0.1.0c",
+  "version": "0.1.0e",
   "description": "The superfast way to custom elements.",
   "jsdelivr": "./lib/browser/teddytags.js",
   "repository": {
@@ -20,7 +20,7 @@
   "types": "./lib/teddytags.d.ts",
   "scripts": {
     "prepare": "tsc",
-    "postinstall": "node bin/postinstall"
+    "postinstall": "node lib/postinstall.js"
   },
   "keywords": [
     "custom elements",
