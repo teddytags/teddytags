@@ -1,6 +1,6 @@
 {
   "name": "teddytags",
-  "version": "0.1.0b",
+  "version": "0.1.0a",
   "description": "The superfast way to custom elements.",
   "jsdelivr": "./lib/browser/teddytags.js",
   "repository": {
@@ -19,7 +19,8 @@
   },
   "types": "./lib/teddytags.d.ts",
   "scripts": {
-    "prepare": "tsc"
+    "prepare": "tsc",
+    "postinstall": "node bin/postinstall"
   },
   "keywords": [
     "custom elements",
@@ -27,7 +28,7 @@
     "obnoxoxiousnerd"
   ],
   "author": "Pranav Karawale",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "chalk": "^3.0.0"
   },
