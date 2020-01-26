@@ -5,6 +5,7 @@
 ![npm](https://img.shields.io/npm/v/teddytags?colorA=darkred&color=red)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/teddytags?colorA=tomato&color=yellow&label=npm%20bundle)
 [![NPM](https://nodei.co/npm/teddytags.png?mini=true)](https://nodei.co/npm/teddytags/)
+
 The superfast way to custom elements.
 # Install (Node)
 ```shell
