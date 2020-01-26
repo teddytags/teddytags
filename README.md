@@ -1,5 +1,5 @@
 # teddytags
-![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hd/teddytags?colorA=red&color=orange&label=jsdelivr%20hits)
+![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hm/teddytags?colorA=red&color=orange&label=jsdelivr)
 ![GitHub](https://img.shields.io/github/license/obnoxiousnerd/teddytags?colorA=blue&color=cyan)
 ![GitHub repo size](https://img.shields.io/github/repo-size/obnoxiousnerd/teddytags?colorA=purple&color=pink&label=code%20size)
 ![npm](https://img.shields.io/npm/v/teddytags?colorA=darkred&color=red)
