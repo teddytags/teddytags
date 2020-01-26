@@ -15,14 +15,16 @@ and limitations under the License.
 import * as fs from "fs";
 import * as path from "path";
 const chalk = require("chalk");
-let regex1: RegExp = /((?!<).)+((?!>).)/gm;
-let regex2: RegExp = /(([^::])+)/gm;
+let checkTags: RegExp = /<(.)*?>/gm;
+let inTagsRegex: RegExp = /((?!<).)+((?!>).)/gm;
+let bothTagsRegex: RegExp = /(([^::])+)/gm;
 /**
  * Sample format of definiton :
  * ```html
  * <customTag::htmlElement>
  * <!-- Where customTag is the name of yout custom element -->
  * <!-- Where htmlElement is any valid HTML5 element like h1, h2, etc -->
+ * <!-- Will go in a .td file only. -->
  * ```
  * The default CLI function that will compile the .td files.
  * Dedicated to my lazy friends who want to easy compile and
@@ -30,24 +32,50 @@ let regex2: RegExp = /(([^::])+)/gm;
  * @param args The arguments passed
  *
  * Usage:
+ * ### Command Line:
  * #### A specific file in root
  * The command:
- * ```
- * teddy foo
- * ```
+ *
+ * `teddy foo`
+ *
  * where foo points to ./foo.td
  * #### A file in a folder of root
  * The command
- * ```
- *  teddy lib/foo
- * ```
+ *
+ * `teddy lib/foo`
+ *
  * where lib/foo points to ./lib/foo.td
+ *
+ * ### API:
+ *
+ * When compiling a file, say 'foo.td'
+ * ```javascript
+ * const cli = require('teddytags/lib/cli')
+ * cli.start([
+ * '', //Node install location
+ * '', //Current directory
+ * 'foo.td' //Filename
+ * ])
+ * ```
+ * In the above example, the first two are left blank and are useless because Node by default
+ * sends the two arguments to any Node CLI. These are spliced out anyways.
  */
-export function cli(args: Array<string>) {
+export function start(args: Array<string>) {
+  /**
+   * Extract the required args
+   */
+  let requiredArgs: string[] = args.splice(2);
   /**
    * The filename to be compiled
    */
-  let filename: string = args.splice(2)[0];
+  let filename: string = requiredArgs[0];
+  /**
+   * Get other extension.
+   *
+   * Currently supported:
+   * * (-w, --watch) Watch and compile file
+   */
+  let otherarg: string = requiredArgs[1];
   /**
    * If there is no file input in argument, stop the CLI anyway.
    */
@@ -61,10 +89,10 @@ export function cli(args: Array<string>) {
   /**
    * Extract extension from file
    */
-  let exts:string[] = filename.match(/\.[^.]*$/g);
+  let exts: string[] = filename.match(/\.[^.]*$/g);
   /**
    * Variable to transform the `exts` to `string`.
-   * 
+   *
    * Full form : FileNAMEEXTension.
    */
   let fnameext: string;
@@ -73,11 +101,10 @@ export function cli(args: Array<string>) {
    */
   if (exts === null) {
     fnameext = "";
-  }
-  /**
-   * Or if already present, flush it to `fnameext`  
-   */ 
-  else {
+  } else {
+    /**
+     * Or if already present, flush it to `fnameext`
+     */
     fnameext = exts.join("");
   }
   /**
@@ -92,8 +119,12 @@ export function cli(args: Array<string>) {
     console.log(chalk.red.bold("Sorry, teddy can only compile .td files."));
     return;
   }
-  console.log("Compiling", chalk.yellow(filename));
-  openFile(filename);
+  if (otherarg === "-w" || otherarg === "--watch") {
+    watch(filename);
+  } else {
+    console.log("Compiling", chalk.yellow(filename));
+    openFile(filename);
+  }
 }
 /**
  * Function to open a file.
@@ -121,6 +152,15 @@ const openFile = (fname: string) => {
     flushFile(compiledData, fname);
   });
 };
+const watch = (fname: string) => {
+  console.log(chalk.redBright("Watching file"));
+  openFile(fname);
+  let timestamp = `[${chalk.grey(new Date().toISOString())}]`;
+  fs.watchFile(fname, (curr, prev) => {
+    console.log(timestamp);
+    openFile(fname);
+  });
+};
 /**
  * Compile the data using Regular Expressions.
  * Will input data from a .td (Teddy Definitons) file
@@ -137,14 +177,76 @@ const openFile = (fname: string) => {
  * `}`
  * ]
  * ```
- * @param data
+ * @param data The data recieved from `openFile()`
  */
 const compileData = (data): string[] => {
+  /**
+   * Keep tract of line numbers
+   */
+  let lineNumber: number = 1;
+  /**
+   * If data not present, stop CLI
+   */
+  if (!data) {
+    console.log(
+      chalk.redBright("Not got anything. Check your file for errors"),
+      `The correct syntax is ${chalk.cyan("<") +
+        chalk.redBright("customTagName") +
+        chalk.cyan("::") +
+        chalk.redBright("HTMLTagName") +
+        chalk.cyan(">")}`,
+      chalk.redBright(`\nError occured at line ${chalk.gray(lineNumber)}`)
+    );
+  }
   let lines: string[] = data.split("\n");
   let output: string[] = [];
   for (let line of lines) {
-    let inTags: string = line.match(regex1)[0];
-    let array: string[] = inTags.match(regex2);
+    /**
+     * Find comments and if present, skip the iteration
+     */
+    if (line.startsWith("#")) {
+      /**
+       * Extract the comment
+       */
+      let comment: string = `//${line.match(/\#(.*)/g)[0].match(/[^#].+/g)[0]}`;
+      /**
+       * push the comment
+       */
+      output.push(comment);
+      continue;
+    }
+    if (!line.match(checkTags)) {
+      /**
+       * If not got anything, stop CLI
+       */
+      console.log(
+        chalk.redBright(
+          `Your tags do not look right. The correct syntax is ${chalk.cyan(
+            "<"
+          ) +
+            chalk.redBright("customTagName") +
+            chalk.cyan("::") +
+            chalk.redBright("HTMLTagName") +
+            chalk.cyan(">")}`
+        ),
+        chalk.redBright(`\nError occured at line ${chalk.gray(lineNumber)}`)
+      );
+      return;
+    }
+    /**
+     * Get text between tags `<>`
+     */
+    let inTags: string = line.match(checkTags)[0].match(inTagsRegex)[0];
+    /**
+     * Extract custom tag name and html element name from `inTags`.
+     *
+     * Example:
+     * ```javascript
+     * "customTag::h1".match(bothTagsRegex)
+     * //returns ['customTag', 'h1']
+     * ```
+     */
+    let array: string[] = inTags.match(bothTagsRegex);
     let customTag: string = array[0];
     let htmltag: string = array[1];
     let boilerplate: string = `new TeddyTags('${customTag}').set('${htmltag}')`;
