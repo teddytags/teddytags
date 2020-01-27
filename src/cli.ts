@@ -156,7 +156,7 @@ const watch = (fname: string) => {
   console.log(chalk.redBright("Watching file"));
   openFile(fname);
   let timestamp = `[${chalk.grey(new Date().toISOString())}]`;
-  fs.watchFile(fname, (curr, prev) => {
+  fs.watchFile(fname, { persistent: true, interval: 10000 }, (curr, prev) => {
     console.log(timestamp);
     openFile(fname);
   });
@@ -171,10 +171,9 @@ const watch = (fname: string) => {
  * ```
  * Will return output as:
  * ```javascript
- * [`window.onload = function(){`,
+ * [
  *  `new TeddyTags('customTag').set('h1')`,
  *  `new TeddyTags('newTag').set('p')`,
- * `}`
  * ]
  * ```
  * @param data The data recieved from `openFile()`
@@ -252,8 +251,6 @@ const compileData = (data): string[] => {
     let boilerplate: string = `new TeddyTags('${customTag}').set('${htmltag}')`;
     output.push(boilerplate);
   }
-  output.unshift("window.onload = function(){");
-  output.push("}");
   return output;
 };
 /**
