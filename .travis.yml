@@ -5,7 +5,10 @@ language: node_js
 node_js:
   - node
 
-install: 
+addons:
+  chrome: stable
+
+install:
   - npm ci
 
 script:
