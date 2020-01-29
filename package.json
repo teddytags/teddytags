@@ -20,7 +20,6 @@
   "types": "./lib/teddytags.d.ts",
   "scripts": {
     "prepare": "tsc",
-    "postinstall": "node lib/postinstall",
     "test": "npm run prepare && mocha test/* --timeout 20000 --exit"
   },
   "keywords": [
