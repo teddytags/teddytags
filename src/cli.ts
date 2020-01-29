@@ -172,13 +172,13 @@ const watch = (fname: string) => {
  * Will return output as:
  * ```javascript
  * [
- *  `new TeddyTags('customTag').set('h1')`,
- *  `new TeddyTags('newTag').set('p')`,
+ *  "new TeddyTags('customTag').set('h1')"",
+ *  "new TeddyTags('newTag').set('p')"",
  * ]
  * ```
  * @param data The data recieved from `openFile()`
  */
-const compileData = (data): string[] => {
+export const compileData = (data): string[] => {
   /**
    * Keep tract of line numbers
    */
