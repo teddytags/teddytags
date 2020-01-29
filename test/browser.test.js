@@ -3,6 +3,7 @@ const chai = require("chai");
 const expect = chai.expect;
 const assert = chai.assert;
 var sw = require("selenium-webdriver");
+const chrome = require("selenium-webdriver/chrome");
 const { By } = require("selenium-webdriver");
 var driver = new sw.Builder()
   .withCapabilities(sw.Capabilities.chrome())
