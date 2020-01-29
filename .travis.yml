@@ -11,6 +11,10 @@ addons:
 install:
   - npm ci
 
+before_script:
+  - LATEST_CHROMEDRIVER_VERSION=`curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE"`
+  - curl "https://chromedriver.storage.googleapis.com/${LATEST_CHROMEDRIVER_VERSION}/chromedriver_linux64.zip" -O
+  - unzip chromedriver_linux64.zip -d ~/bin
+
 script:
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost:8080
   - npm test
