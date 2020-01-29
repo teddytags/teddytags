@@ -48,9 +48,9 @@ describe("testing teddytags", () => {
           .then(e => {
             expect(e).equal("Clicked.");
           });
+      })
+      .then(() => {
+        driver.quit();
       });
-  });
-  after(async () => {
-    (await driver).quit();
   });
 });
