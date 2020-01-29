@@ -12,5 +12,4 @@ install:
   - npm ci
 
 script:
-  - google-chrome-stable --disable-gpu --remote-debugging-port=9222 http://localhost:8080
   - npm test

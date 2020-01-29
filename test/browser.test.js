@@ -6,6 +6,7 @@ var sw = require("selenium-webdriver");
 const { By } = require("selenium-webdriver");
 var driver = new sw.Builder()
   .withCapabilities(sw.Capabilities.chrome())
+  .setChromeOptions(new chrome.Options().headless())
   .build();
 var chaiWebdriver = require("chai-webdriver");
 chai.use(chaiWebdriver(driver));
