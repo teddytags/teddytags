@@ -1,8 +1,8 @@
-<div style="text-align:justify">
+<p style="text-align:justify">
   <img style="text-align:center" height="320" width="640" src="https://raw.githubusercontent.com/obnoxiousnerd/teddytags-website/gh-pages/assets/icons/teddytagslogo.big.png" alt="Teddytags logo">
-</div>
+</p>
 
-<div style="text-align: center">
+<p style="text-align: center">
   <!-- <a href="">
     <img src="" alt="">
   </a> -->
@@ -33,7 +33,7 @@
   <a href="https://nodei.co/npm/teddytags/">
     <img src="https://nodei.co/npm/teddytags.png?mini=true" alt="npm install teddytags">
   </a>
-</div>
+</p>
 
 # CONTRIBUTING
 
