@@ -1,8 +1,8 @@
-<div style="text-align:center">
+<div style="text-align:justify">
   <img src="https://raw.githubusercontent.com/obnoxiousnerd/teddytags-website/gh-pages/assets/icons/teddytagslogo.big.png" alt="Teddytags logo">
 </div>
 
-<div style="text-align: center">
+<div style="text-align: justify">
   <!-- <a href="">
     <img src="" alt="">
   </a> -->
