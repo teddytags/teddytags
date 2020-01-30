@@ -122,7 +122,6 @@ export function start(args: Array<string>) {
   if (otherarg === "-w" || otherarg === "--watch") {
     watch(filename);
   } else {
-    console.log("Compiling", chalk.yellow(filename));
     openFile(filename);
   }
 }
@@ -281,6 +280,5 @@ const flushFile = (data: string[], filename: string) => {
   let lines: string = data.join("\n");
   fs.writeFile(`${dirname}/${fname}.js`, lines, err => {
     if (err) throw err;
-    console.log(chalk.blue.bold.underline("Successfully compiled!!"));
   });
 };
