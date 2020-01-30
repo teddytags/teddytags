@@ -1,8 +1,8 @@
 <div style="text-align:justify">
-  <img src="https://raw.githubusercontent.com/obnoxiousnerd/teddytags-website/gh-pages/assets/icons/teddytagslogo.big.png" alt="Teddytags logo">
+  <img style="text-align:center" height="320" width="640" src="https://raw.githubusercontent.com/obnoxiousnerd/teddytags-website/gh-pages/assets/icons/teddytagslogo.big.png" alt="Teddytags logo">
 </div>
 
-<div style="text-align: justify">
+<div style="text-align: center">
   <!-- <a href="">
     <img src="" alt="">
   </a> -->
@@ -83,12 +83,13 @@ We love contributions from the open-source community! If you are interested in c
 
 # Common issues
 
-__*Q : DOM manipulation not working*__
+**_Q : DOM manipulation not working_**
 
-**A : If your DOM manipulation scripts are in a file *(say, event.js)*, then try adding the file below your tag definitions file with the defer attribute like this :**
+**A : If your event listeners or `appendChild()` scripts are in a file _(say, event.js)_, then try adding the file below your tag definitions file with the defer attribute like this :**
+
 ```html
-    <!-- The tag defintions file -->
-    <script src="./tags.js" defer></script>
-    <!-- The DOM manipulation file -->
-    <script src="./event.js" defer></script>
+<!-- The tag defintions file -->
+<script src="./tags.js" defer></script>
+<!-- The DOM manipulation file -->
+<script src="./event.js" defer></script>
 ```
