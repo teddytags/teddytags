@@ -1,8 +1,8 @@
-<p style="text-align:center">
-  <img align="center" style="text-align:center" height="320" width="640" src="https://raw.githubusercontent.com/obnoxiousnerd/teddytags-website/gh-pages/assets/icons/teddytagslogo.big.png" alt="Teddytags logo">
+<p align="center">
+  <img align="center" style="text-align:center" height="400" width="800" src="https://raw.githubusercontent.com/obnoxiousnerd/teddytags-website/gh-pages/assets/icons/teddytagslogo.big.png" alt="Teddytags logo">
 </p>
-
-<p style="text-align: center">
+<p align="center">The superfast way to custom elements.</p>
+<p align="center">
   <!-- <a href="">
     <img src="" alt="">
   </a> -->
@@ -30,6 +30,7 @@
   <a href="https://www.npmjs.com/package/teddytags/v/latest">
     <img align="center" src="https://img.shields.io/bundlephobia/min/teddytags?colorA=tomato&color=yellow&label=npm%20bundle" alt="npm bundle size">
   </a>
+  <br />
   <a href="https://nodei.co/npm/teddytags/">
     <img align="center" src="https://nodei.co/npm/teddytags.png?mini=true" alt="npm install teddytags">
   </a>
