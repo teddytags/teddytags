@@ -1,5 +1,5 @@
-<p style="text-align:justify">
-  <img style="text-align:center" height="320" width="640" src="https://raw.githubusercontent.com/obnoxiousnerd/teddytags-website/gh-pages/assets/icons/teddytagslogo.big.png" alt="Teddytags logo">
+<p style="text-align:center">
+  <img align="center" style="text-align:center" height="320" width="640" src="https://raw.githubusercontent.com/obnoxiousnerd/teddytags-website/gh-pages/assets/icons/teddytagslogo.big.png" alt="Teddytags logo">
 </p>
 
 <p style="text-align: center">
@@ -7,31 +7,31 @@
     <img src="" alt="">
   </a> -->
   <a href="https://www.jsdelivr.com/package/npm/teddytags">
-    <img src="https://img.shields.io/jsdelivr/npm/hm/teddytags?colorA=red&color=orange&label=jsdelivr" alt="jsDelivr hits (npm)">
+    <img align="center" src="https://img.shields.io/jsdelivr/npm/hm/teddytags?colorA=red&color=orange&label=jsdelivr" alt="jsDelivr hits (npm)">
   </a>
   <br />
   <a href="https://travis-ci.com/obnoxiousnerd/teddytags">
-    <img src="https://img.shields.io/travis/obnoxiousnerd/teddytags?label=travis&logo=travis&logoColor=white" alt="Travis (.org)">
+    <img align="center" src="https://img.shields.io/travis/obnoxiousnerd/teddytags?label=travis&logo=travis&logoColor=white" alt="Travis (.org)">
   </a>
   <a href="https://coveralls.io/github/obnoxiousnerd/teddytags">
-    <img src="https://img.shields.io/coveralls/github/obnoxiousnerd/teddytags?label=coveralls&logo=coveralls&logoColor=lightskyblue" alt="Coveralls github">
+    <img align="center" src="https://img.shields.io/coveralls/github/obnoxiousnerd/teddytags?label=coveralls&logo=coveralls&logoColor=lightskyblue" alt="Coveralls github">
   </a>
   <br />
   <a href="https://github.com/obnoxiousnerd/teddytags/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/obnoxiousnerd/teddytags?colorA=blue&color=cyan" alt="GitHub License">
+    <img align="center" src="https://img.shields.io/github/license/obnoxiousnerd/teddytags?colorA=blue&color=cyan" alt="GitHub License">
   </a>
   <a href="https://github.com/obnoxiousnerd/teddytags">
-    <img src="https://img.shields.io/github/repo-size/obnoxiousnerd/teddytags?colorA=purple&color=pink&label=code%20size" alt="GitHub repo size">
+    <img align="center" src="https://img.shields.io/github/repo-size/obnoxiousnerd/teddytags?colorA=purple&color=pink&label=code%20size" alt="GitHub repo size">
   </a>
   <br />
   <a href="https://www.npmjs.com/package/teddytags/v/latest">
-    <img src="https://img.shields.io/npm/v/teddytags?colorA=darkred&color=red" alt="npm version">
+    <img align="center" src="https://img.shields.io/npm/v/teddytags?colorA=darkred&color=red" alt="npm version">
   </a>
   <a href="https://www.npmjs.com/package/teddytags/v/latest">
-    <img src="https://img.shields.io/bundlephobia/min/teddytags?colorA=tomato&color=yellow&label=npm%20bundle" alt="npm bundle size">
+    <img align="center" src="https://img.shields.io/bundlephobia/min/teddytags?colorA=tomato&color=yellow&label=npm%20bundle" alt="npm bundle size">
   </a>
   <a href="https://nodei.co/npm/teddytags/">
-    <img src="https://nodei.co/npm/teddytags.png?mini=true" alt="npm install teddytags">
+    <img align="center" src="https://nodei.co/npm/teddytags.png?mini=true" alt="npm install teddytags">
   </a>
 </p>
 
