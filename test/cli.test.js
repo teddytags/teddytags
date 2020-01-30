@@ -22,7 +22,6 @@ describe("compileData function TeddyTags CLI", () => {
 describe("start function TeddyTags CLI file checks", () => {
   let fileToCompile = path.join(__dirname, "./teddy.td");
   let fileCompiledPath = path.join(__dirname, "./teddy.js");
-  var compiledData = []
   let shouldBeCompiledData = [
     "new TeddyTags('hello').set('h1')",
     "new TeddyTags('world').set('h2')",
@@ -34,14 +33,10 @@ describe("start function TeddyTags CLI file checks", () => {
   fs.readFile(fileCompiledPath, "utf-8", (err, data) => {
     let lines = data.split("\n");
     lines.forEach(line => {
-      compiledData.push(line);
-    });
-  });
-  console.log(compiledData)
-  compiledData.forEach((line, index) => {
-    let cline = shouldBeCompiledData[index];
-    it(`will check line ${(index += 1)} of all lines compiled to be equal to expected output`, () => {
-      assert.equal(cline, line);
+      let cline = shouldBeCompiledData[index];
+      it(`will check line ${(index += 1)} of all lines compiled to be equal to expected output`, () => {
+        assert.equal(cline, line);
+      });
     });
   });
   it("should be a compiled file named teddy.td", done => {
