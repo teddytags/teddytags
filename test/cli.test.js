@@ -27,19 +27,16 @@ describe("start function TeddyTags CLI file checks", () => {
     "new TeddyTags('world').set('h2')",
     "new TeddyTags('simple').set('buttton')",
     "new TeddyTags('long').set('p')"
-  ];
+  ].join("\n");
   //Compile the file
   start(["", "", fileToCompile]);
-  fs.readFile(fileCompiledPath, "utf-8", (err, data) => {
-    let lines = data.split("\n");
-    lines.forEach(line => {
-      let cline = shouldBeCompiledData[index];
-      it(`will check line ${(index += 1)} of all lines compiled to be equal to expected output`, () => {
-        assert.equal(cline, line);
-      });
+  it("will check compiled lines", done => {
+    fs.readFile(fileCompiledPath, "utf-8", (err, data) => {
+      assert.strictEqual(data, shouldBeCompiledData);
+      done();
     });
   });
-  it("should be a compiled file named teddy.td", done => {
+  it("should be a compiled file named teddy.js", done => {
     fs.exists(fileCompiledPath, exists => {
       assert.strictEqual(exists, true);
       done();
