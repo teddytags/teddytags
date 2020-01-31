@@ -12,7 +12,10 @@
   </p>
   <p align="center">
   <a href="https://travis-ci.com/obnoxiousnerd/teddytags">
-    <img align="center" src="https://img.shields.io/travis/obnoxiousnerd/teddytags?label=travis&logo=travis&logoColor=white" alt="Travis (.org)">
+    <img align="center" src="https://img.shields.io/travis/obnoxiousnerd/teddytags?label=Travis&logo=travis&logoColor=white" alt="Travis (.org)">
+  </a>
+  <a href="https://circleci.com/gh/obnoxiousnerd/teddytags">
+    <img align="center" alt="CircleCI" src="https://img.shields.io/circleci/build/gh/obnoxiousnerd/teddytags?label=CircleCI&logo=circleci">
   </a>
   <a href="https://coveralls.io/github/obnoxiousnerd/teddytags">
     <img align="center" src="https://img.shields.io/coveralls/github/obnoxiousnerd/teddytags?label=coveralls&logo=coveralls&logoColor=lightskyblue" alt="Coveralls github">
