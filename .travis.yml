@@ -7,6 +7,7 @@ node_js:
 
 addons:
   chrome: stable
+  firefox: stable
 
 install:
   - npm ci

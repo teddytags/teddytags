@@ -1,18 +1,18 @@
-require("chromedriver");
+require("geckodriver");
 const chai = require("chai");
 const expect = chai.expect;
 const assert = chai.assert;
 var sw = require("selenium-webdriver");
-const chrome = require("selenium-webdriver/chrome");
+const firefox = require("selenium-webdriver/firefox");
 const { By } = require("selenium-webdriver");
 var driver = new sw.Builder()
-  .withCapabilities(sw.Capabilities.chrome())
-  .setChromeOptions(new chrome.Options().headless())
+  .withCapabilities(sw.Capabilities.firefox())
+  .setFirefoxOptions(new firefox.Options().headless())
   .build();
 var chaiWebdriver = require("chai-webdriver");
 chai.use(chaiWebdriver(driver));
 driver.get("http://localhost:8080/");
-describe("testing teddytags", () => {
+describe("TeddyTags in FireFox", () => {
   it(`will look for 'myHeader' to be compiled and have id 'myHeader`, () => {
     driver
       .findElement(By.name("header"))
