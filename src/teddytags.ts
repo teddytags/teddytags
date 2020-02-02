@@ -13,8 +13,6 @@ See the MIT License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
 
-import { resolve } from 'url'
-
 /**
  * The class used for instantaniation of TeddyTags.
  */
@@ -86,7 +84,7 @@ export class TeddyTags {
    *    <h1 id="customTag">Hello, World!</h1>
    * ```
    */
-  set = (tagName: string): Promise<any> => {
+  set = (tagName: string): void => {
     /**
      * The `index` variable is used to select the elements from the newly mutated elements.
      * It will stop brodcasting properties from one element to another.
@@ -99,11 +97,6 @@ export class TeddyTags {
       let newElement: Node | HTMLElement = this.selector[index]
       this.passAttrs(newElement, attributes)
       index += 1
-    })
-    return new Promise((resolve, reject): void => {
-      resolve()
-    }).catch(err => {
-      throw err
     })
   }
 }
