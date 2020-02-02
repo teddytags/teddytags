@@ -14,14 +14,14 @@
   "bin": {
     "teddy": "bin/teddy"
   },
-  "prettier": ".prettierrc.json",
+  "prettier": "./.prettierrc.js",
   "publishConfig": {
     "access": "public"
   },
   "types": "./lib/teddytags.d.ts",
   "prettyquick": {
     "*.{js,ts,yml,d.ts,md}": [
-      "prettier ./.prettierrc.json"
+      "prettier ./.prettierrc.js"
     ]
   },
   "husky": {

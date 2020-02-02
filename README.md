@@ -14,9 +14,6 @@
   <a href="https://travis-ci.com/obnoxiousnerd/teddytags">
     <img align="center" src="https://img.shields.io/travis/obnoxiousnerd/teddytags?label=Travis&logo=travis&logoColor=white" alt="Travis (.org)">
   </a>
-  <a href="https://circleci.com/gh/obnoxiousnerd/teddytags">
-    <img align="center" alt="CircleCI" src="https://img.shields.io/circleci/build/gh/obnoxiousnerd/teddytags?label=CircleCI&logo=circleci">
-  </a>
   <a href="https://coveralls.io/github/obnoxiousnerd/teddytags">
     <img align="center" src="https://img.shields.io/coveralls/github/obnoxiousnerd/teddytags?label=coveralls&logo=coveralls&logoColor=lightskyblue" alt="Coveralls github">
   </a>
@@ -80,9 +77,9 @@ For more information, check out the [CONTRIBUTING.md](https://github.com/obnoxio
   ```
 - Make a defintions file _(say, tags.js)_ like this:
   ```javascript
-  new TeddyTags("loader").set("div");
-  new TeddyTags("icon").set("img");
-  new TeddyTags("text").set("h1");
+  new TeddyTags('loader').set('div')
+  new TeddyTags('icon').set('img')
+  new TeddyTags('text').set('h1')
   ```
 - Add the file in your HTML like this _(just make sure it loads after the [document is ready](https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event))_:
   ```html
