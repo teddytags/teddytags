@@ -12,6 +12,9 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the MIT License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
+
+import { resolve } from 'url'
+
 /**
  * The class used for instantaniation of TeddyTags.
  */
@@ -19,11 +22,11 @@ export class TeddyTags {
   /**
    * The `querySelectorAll` which will be mutated from the `constructor` of this class.
    */
-  selector: NodeList;
+  selector: NodeList
   /**
    * The name of the custom element, acquired from the `constructor`.
    */
-  elementName: string;
+  elementName: string
   /**
    * A function used in this library to pass attribues like `name`, `id`, etc. to an element.
    * @param element The object referring to the element, like a `querySelector`
@@ -31,13 +34,13 @@ export class TeddyTags {
    */
   passAttrs = (element, attrs: NamedNodeMap): void => {
     Array.prototype.slice.call(attrs).forEach((attr: Attr) => {
-      if (attr.name === "id") {
+      if (attr.name === 'id') {
         /* Not passing ID ahead */
       } else {
-        element.setAttribute(attr.name, attr.value);
+        element.setAttribute(attr.name, attr.value)
       }
-    });
-  };
+    })
+  }
   /**
    * A function used in this library to parse the custom tag with a valid HTML5 tag.
    * @param element The object referring to the element, like a `querySelector`
@@ -45,9 +48,9 @@ export class TeddyTags {
    * @param newId The custom tag name. Must because to preserve the custom element's identity in an `ID` attribute
    */
   parseHTML = (element: HTMLElement, tagName: string, newId: string): void => {
-    let elementHTML: string = element.innerHTML;
-    element.outerHTML = `<${tagName} id="${newId}">${elementHTML}</${tagName}>`;
-  };
+    let elementHTML: string = element.innerHTML
+    element.outerHTML = `<${tagName} id="${newId}">${elementHTML}</${tagName}>`
+  }
   /**
    * Initialize TeddyTags
    * @param selector The custom element's tag name
@@ -62,8 +65,8 @@ export class TeddyTags {
    * ```
    */
   constructor(selector: string) {
-    this.selector = document.querySelectorAll(selector);
-    this.elementName = selector;
+    this.selector = document.querySelectorAll(selector)
+    this.elementName = selector
   }
   /**
    * Magically change your custom element to the desired valid HTML5 one.
@@ -83,19 +86,24 @@ export class TeddyTags {
    *    <h1 id="customTag">Hello, World!</h1>
    * ```
    */
-  set = (tagName: string): void => {
+  set = (tagName: string): Promise<any> => {
     /**
      * The `index` variable is used to select the elements from the newly mutated elements.
      * It will stop brodcasting properties from one element to another.
      */
-    let index: number = 0;
+    let index: number = 0
     this.selector.forEach((element: HTMLElement) => {
-      let attributes: NamedNodeMap = element.attributes;
-      this.parseHTML(element, tagName, this.elementName);
-      this.selector = document.querySelectorAll(`#${this.elementName}`);
-      let newElement: Node | HTMLElement = this.selector[index];
-      this.passAttrs(newElement, attributes);
-      index += 1;
-    });
-  };
+      let attributes: NamedNodeMap = element.attributes
+      this.parseHTML(element, tagName, this.elementName)
+      this.selector = document.querySelectorAll(`#${this.elementName}`)
+      let newElement: Node | HTMLElement = this.selector[index]
+      this.passAttrs(newElement, attributes)
+      index += 1
+    })
+    return new Promise((resolve, reject): void => {
+      resolve()
+    }).catch(err => {
+      throw err
+    })
+  }
 }
