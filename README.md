@@ -42,6 +42,11 @@
     <img align="center" src="https://nodei.co/npm/teddytags.png?mini=true" alt="npm install teddytags">
   </a>
 </p>
+  <p align="center">
+  <a href="https://gitter.im/teddytags">
+    <img align="center" alt="Gitter" src="https://img.shields.io/gitter/room/obnoxiousnerd/teddytags?logo=gitter&style=social">
+  </a>
+  </p>
 
 # CONTRIBUTING
 
