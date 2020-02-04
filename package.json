@@ -47,7 +47,7 @@
     "chalk": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^13.5.0",
+    "@types/node": "^13.7.0",
     "chai": "^4.2.0",
     "chai-webdriver": "^1.2.0",
     "chromedriver": "^79.0.2",
