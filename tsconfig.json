@@ -1,12 +1,10 @@
 {
-    "compilerOptions": {
-        "target": "es3",
-        "outDir": "lib",
-        "module": "commonjs",
-        "skipLibCheck": true,
-        "declaration": true,
-        "typeRoots": [
-            "./node_modules/@types/node"
-          ]
-    }
+  "compilerOptions": {
+    "target": "es3",
+    "outDir": "lib",
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "declaration": true,
+    "typeRoots": ["./node_modules/@types/node"]
+  }
 }
