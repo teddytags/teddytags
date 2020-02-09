@@ -4,7 +4,12 @@
     "outDir": "lib",
     "module": "commonjs",
     "skipLibCheck": true,
+    "sourceMap": true,
     "declaration": true,
+    "lib": [
+      "ES2017",
+      "dom"
+    ],
     "typeRoots": ["./node_modules/@types/node"]
   }
 }
