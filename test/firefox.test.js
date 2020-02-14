@@ -11,7 +11,9 @@ var driver = new sw.Builder()
   .build();
 var chaiWebdriver = require("chai-webdriver");
 chai.use(chaiWebdriver(driver));
-driver.get("http://localhost:8080/");
+driver.get("http://localhost:8080/").then(() => {
+  driver.sleep(1000)
+});
 describe("TeddyTags in FireFox", () => {
   it(`will look for 'myHeader' to be compiled and have id 'myHeader`, () => {
     driver
