@@ -18,7 +18,11 @@ describe("TeddyTags in Chrome", () => {
       .findElement(By.name("header"))
       .getAttribute("id")
       .then(id => {
-        expect(id).equal("myHeader");
+        expect(id)
+          .equal("myHeader")
+          .catch(e => {
+            console.log(e);
+          });
       });
   });
   it(`will look for 'myHeader' to be compiled and have tag name 'h1'`, () => {
@@ -26,7 +30,11 @@ describe("TeddyTags in Chrome", () => {
       .findElement(By.name("header"))
       .getAttribute("tagName")
       .then(tag => {
-        expect(tag).equal("H1");
+        expect(tag)
+          .equal("H1")
+          .catch(e => {
+            console.log(e);
+          });
       });
   });
   it(`will look for 'lol' to be compiled as 'button' with id 'lol'`, () => {
@@ -34,7 +42,11 @@ describe("TeddyTags in Chrome", () => {
       .findElement(By.id("lol"))
       .getAttribute("tagName")
       .then(tag => {
-        expect(tag).equal("BUTTON");
+        expect(tag)
+          .equal("BUTTON")
+          .catch(e => {
+            console.log(e);
+          });
       });
   });
   it(`will click on 'button#lol' and check an event listener`, () => {
@@ -47,6 +59,9 @@ describe("TeddyTags in Chrome", () => {
           .getAttribute("innerHTML")
           .then(e => {
             expect(e).equal("Clicked.");
+          })
+          .catch(e => {
+            console.log(e);
           });
       })
       .then(() => {
