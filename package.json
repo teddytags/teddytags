@@ -1,6 +1,6 @@
 {
   "name": "teddytags",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "The superfast way to custom elements.",
   "jsdelivr": "./lib/browser/teddytags.js",
   "repository": {
@@ -11,9 +11,6 @@
   "files": [
     "lib/**/*"
   ],
-  "bin": {
-    "teddy": "bin/teddy"
-  },
   "prettier": "./.prettierrc.js",
   "publishConfig": {
     "access": "public"
@@ -31,7 +28,6 @@
   },
   "scripts": {
     "prepare": "tsc",
-    "postinstall": "node lib/postinstall.js",
     "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "pretty": "prettier .prettierrc.json",
     "test": "npm run prepare && mocha \"test/**/*.test.js\" --timeout 20000 --exit"
@@ -43,9 +39,7 @@
   ],
   "author": "Pranav Karawale",
   "license": "MIT",
-  "dependencies": {
-    "chalk": "^3.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^13.7.0",
     "chai": "^4.2.0",
