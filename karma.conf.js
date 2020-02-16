@@ -60,7 +60,7 @@ module.exports = function(config) {
     remapCoverageReporter: {
       "text-summary": null,
       lcovonly: "./coverage/lcov.info",
-      html: "./coverage",
+      html: "./coverage/html",
     },
 
     // web server port
