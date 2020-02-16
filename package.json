@@ -28,9 +28,8 @@
   },
   "scripts": {
     "prepare": "tsc",
-    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "pretty": "prettier .prettierrc.json",
-    "test": "npm run prepare && mocha \"test/**/*.test.js\" --timeout 20000 --exit"
+    "test": "npm run prepare && karma start karma.conf.js"
   },
   "keywords": [
     "custom elements",
@@ -42,19 +41,23 @@
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^13.7.0",
-    "chai": "^4.2.0",
-    "chai-webdriver": "^1.2.0",
-    "chromedriver": "^79.0.2",
+    "babel-loader": "^8.0.6",
     "coveralls": "^3.0.9",
-    "express": "^4.17.1",
-    "geckodriver": "^1.19.1",
     "husky": "^4.2.1",
-    "jest": "^25.1.0",
-    "mocha": "^7.0.1",
-    "mocha-lcov-reporter": "^1.3.0",
+    "istanbul-instrumenter-loader": "^3.0.1",
+    "jasmine-core": "^3.5.0",
+    "karma": "^4.4.1",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage": "^2.0.1",
+    "karma-coveralls": "^2.1.0",
+    "karma-firefox-launcher": "^1.3.0",
+    "karma-jasmine": "^3.1.1",
+    "karma-remap-coverage": "^0.1.5",
+    "karma-webpack": "^4.0.2",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "selenium-webdriver": "^4.0.0-alpha.5",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.6"
   }
 }
