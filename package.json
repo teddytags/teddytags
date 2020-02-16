@@ -2,6 +2,7 @@
   "name": "teddytags",
   "version": "0.3.3",
   "description": "The superfast way to custom elements.",
+  "browser": "./lib/teddytags.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/obnoxiousnerd/teddytags.git"
@@ -26,8 +27,9 @@
     }
   },
   "scripts": {
-    "prepare": "tsc",
-    "pretty": "prettier .prettierrc.json",
+    "prepare": "tsc && npm run minify",
+    "minify": "terser lib/teddytags.js --comments -o lib/teddytags.min.js --source-map \"content='lib/teddytags.js.map', url='teddytags.min.js.map'\"",
+    "pretty": "prettyquick",
     "test": "npm run prepare && karma start karma.conf.js"
   },
   "keywords": [
@@ -56,6 +58,7 @@
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "selenium-webdriver": "^4.0.0-alpha.5",
+    "terser": "^4.6.3",
     "typescript": "^3.7.5",
     "webpack": "^4.41.6"
   }
