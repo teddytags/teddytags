@@ -1,8 +1,7 @@
 {
   "name": "teddytags",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "The superfast way to custom elements.",
-  "jsdelivr": "./lib/browser/teddytags.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/obnoxiousnerd/teddytags.git"
