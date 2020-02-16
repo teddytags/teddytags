@@ -48,6 +48,49 @@
   </a>
   </p>
 
+# Installation
+
+- ## via NPM
+
+  ```console
+  npm i -g teddytags
+  ```
+
+- ## Use
+
+  - Just write your imaginary HTML:
+
+  ```html
+  <loader>
+    <icon src="assets/loader.png"></icon>
+    <text>Loading your awesome app...</text>
+  </loader>
+  ```
+
+  - Make a defintions file _(say, tags.js)_ like this:
+
+  ```javascript
+  import { TeddyTags } from "https://cdn.jsdelivr.net/npm/teddytags@latest?module";
+  new TeddyTags("loader").set("div");
+  new TeddyTags("icon").set("img");
+  new TeddyTags("text").set("h1");
+  ```
+
+  - Add the file in your HTML like this _(just make sure it loads after the [document is ready](https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event))_:
+
+  ```html
+  <script src="./tags.js" defer></script>
+  ```
+
+  - The output in your browser:
+
+  ```html
+  <div id="loader">
+    <img id="icon" src="assets/loader.png" />
+    <p id="text">Loading your awesome app...</p>
+  </div>
+  ```
+
 # CONTRIBUTING
 
 We love contributions from the open-source community! If you are interested in contributing to this lovely preoject, submit a **Pull Request** right now. The Pull Request should:
@@ -58,45 +101,6 @@ We love contributions from the open-source community! If you are interested in c
 We are happilty accepting contributions for our website for this project, **[teddy.js.org](https://teddy.js.org)**
 
 For more information, check out the [CONTRIBUTING.md](https://github.com/obnoxiousnerd/teddytags/blob/master/CONTRIBUTING.md) file in this repository.
-
-# Installation
-
-- ## via NPM
-  ```console
-  npm i -g teddytags
-  ```
-- ## Quick run (Browser)
-  Add this in your HTML file:
-  ```html
-  <script src="https://cdn.jsdelivr.net/npm/teddytags"></script>
-  ```
-
-# Use
-
-- Just write your imaginary HTML:
-  ```html
-  <loader>
-    <icon src="assets/loader.png"></icon>
-    <text>Loading your awesome app...</text>
-  </loader>
-  ```
-- Make a defintions file _(say, tags.js)_ like this:
-  ```javascript
-  new TeddyTags("loader").set("div");
-  new TeddyTags("icon").set("img");
-  new TeddyTags("text").set("h1");
-  ```
-- Add the file in your HTML like this _(just make sure it loads after the [document is ready](https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event))_:
-  ```html
-  <script src="./tags.js" defer></script>
-  ```
-- The output in your browser:
-  ```html
-  <div id="loader">
-    <img id="icon" src="assets/loader.png" />
-    <p id="text">Loading your awesome app...</p>
-  </div>
-  ```
 
 # Common issues
 
