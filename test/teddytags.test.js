@@ -27,6 +27,17 @@ describe("TeddyTags", () => {
     expect(construct.selector).toEqual(document.querySelectorAll("testTag"));
     expect(construct.elementName).toBe("testTag");
   });
+  it("will not pass id attribute", () => {
+    let el = document.createElement("h1");
+    el.innerHTML = "h1";
+    el.setAttribute("id", "lol");
+    el.setAttribute("class", "lol");
+    document.body.appendChild(el);
+    el = document.querySelector("h1.lol");
+    new TeddyTags().passAttrs(el, el.attributes);
+    expect(el.getAttribute("id")).toBe("lol");
+    document.body.removeChild(el);
+  });
   it("will check h1#customH1 to be compiled", () => {
     new TeddyTags("customH1").set("h1");
     let tag = document.querySelector("#tags h1#customH1");
