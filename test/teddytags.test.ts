@@ -28,14 +28,17 @@ describe("TeddyTags", () => {
     expect(construct.elementName).toBe("testTag");
   });
   it("will not pass id attribute", () => {
-    let el = document.createElement("h1");
-    el.innerHTML = "h1";
-    el.setAttribute("id", "lol");
-    el.setAttribute("class", "lol");
+    let testEl = document.createElement("h1");
+    testEl.innerHTML = "h1";
+    testEl.setAttribute("id", "lol");
+    testEl.setAttribute("class", "lol");
+    let attrs = testEl.attributes;
+    let el = document.createElement("p");
     document.body.appendChild(el);
-    el = document.querySelector("h1.lol");
-    new TeddyTags().passAttrs(el, el.attributes);
-    expect(el.getAttribute("id")).toBe("lol");
+    new TeddyTags().passAttrs(el, attrs);
+    el = document.querySelector("p.lol");
+    //el.id = ''
+    expect(el.id).toBe("");
     document.body.removeChild(el);
   });
   it("will check h1#customH1 to be compiled", () => {
