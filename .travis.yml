@@ -1,0 +1,19 @@
+sudo: false
+
+language: node_js
+
+node_js:
+  - node
+
+addons:
+  chrome: stable
+  firefox: 68.1
+
+install:
+  - npm ci
+
+script:
+  - npm test
+
+notifications:
+  - email: false

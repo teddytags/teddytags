@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./",
+    "rootDir": "./",
+    "declaration": false,
+    "sourceMap": false,
+    "skipLibCheck": true
+  },
+  "files": ["teddytags.test.ts"],
+  "exclude": ["**/*.ts"]
+}
