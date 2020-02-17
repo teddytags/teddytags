@@ -1,10 +1,9 @@
-name: CI[8.x, 10.x, 12.x]
+name: CI (8.x, 10.x, 12.x)
 
 on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -12,13 +11,14 @@ jobs:
         node-version: [8.x, 10.x, 12.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install
-    - run: npm test
-    - run: npm publish --access public || true
-      env:
-        CI: true
+      - uses: actions/checkout@v2
+      - name: Automatic Releases
+        uses: marvinpinto/action-automatic-releases@v0.2.2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm test
+        env:
+          CI: true
