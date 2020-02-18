@@ -12,14 +12,14 @@
   "files": [
     "lib/**/*"
   ],
-  "prettier": "./.prettierrc.js",
+  "prettier": "./.prettierrc.json",
   "publishConfig": {
     "access": "public"
   },
   "types": "./lib/teddytags.d.ts",
   "prettyquick": {
     "*.{js,ts,yml,d.ts,md}": [
-      "prettier ./.prettierrc.js"
+      "prettier ./.prettierrc.json"
     ]
   },
   "husky": {
@@ -30,11 +30,11 @@
   "scripts": {
     "tsc:src": "tsc -p ./src",
     "tsc:test": "tsc -p ./test",
+    "tsc": "npm run tsc:src && npm run tsc:test",
     "cleanup:test": "rimraf test/**/*.js",
     "prepare": "npm run tsc:src && npm run tsc:test && npm run minify",
     "minify": "terser lib/teddytags.js --comments -o lib/teddytags.min.js --source-map \"content='lib/teddytags.js.map', url='teddytags.min.js.map'\"",
-    "pretty": "prettyquick",
-    "test": "npm run prepare && karma start karma.conf.ts && npm run cleanup:test"
+    "test": "npm run tsc && karma start karma.conf.ts && npm run cleanup:test"
   },
   "keywords": [
     "custom elements",
