@@ -1,5 +1,5 @@
 import { TeddyTags } from "../lib/teddytags";
-describe("TeddyTags", () => {
+describe("TeddyTags Constructor and other functions", () => {
   beforeEach(() => {
     var fixture = `
         <div id="test">
@@ -40,38 +40,5 @@ describe("TeddyTags", () => {
     //el.id = ''
     expect(el.id).toBe("");
     document.body.removeChild(el);
-  });
-  it("will check h1#customH1 to be compiled", () => {
-    new TeddyTags("customH1").set("h1");
-    let tag = document.querySelector("#tags h1#customH1");
-    expect(tag.innerHTML).toBe("This is a H1 tag");
-  });
-  it("will check h2#customH2 to be compiled", () => {
-    new TeddyTags("customH2").set("h2");
-    let tag = document.querySelector("#tags h2#customH2");
-    expect(tag.innerHTML).toBe("This is a H2 tag");
-  });
-  it("will check p#customP to be compiled", () => {
-    new TeddyTags("customP").set("p");
-    let tag = document.querySelector("#tags p#customP");
-    expect(tag.innerHTML).toBe("This is a paragraph");
-  });
-  it("will check button#myButton to be compiled", () => {
-    new TeddyTags("myButton").set("button");
-    let tag = document.querySelector("#tags button#myButton");
-    expect(tag.innerHTML).toBe("This is a button");
-  });
-  it("will check event listener to be working", () => {
-    new TeddyTags("sometext").set("p");
-    new TeddyTags("clickme").set("button");
-    let text = document.querySelector("#listener p#sometext");
-    let button: Element | any = document.querySelector(
-      "#listener button#clickme"
-    );
-    button.addEventListener("click", () => {
-      text.innerHTML = "Listener Triggered.";
-    });
-    button.click();
-    expect(text.innerHTML).toBe("Listener Triggered.");
   });
 });

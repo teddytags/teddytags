@@ -32,7 +32,7 @@ module.exports = config => {
     webpackServer: {
       noInfo: true,
     },
-    reporters: ["progress", "coverage", "remap-coverage", "coveralls"],
+    reporters: ["spec", "coverage", "remap-coverage", "coveralls"],
     coverageReporter: {
       type: "in-memory",
       html: "./coverage",

@@ -7,6 +7,7 @@
     "sourceMap": false,
     "skipLibCheck": true
   },
-  "files": ["teddytags.test.ts"],
-  "exclude": ["**/*.ts"]
+  "include": ["./**/*.test.ts"],
+  "files": ["test-context.ts"],
+  "exclude": [""]
 }
