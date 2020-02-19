@@ -1,6 +1,6 @@
 {
   "name": "teddytags",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "The superfast way to custom elements.",
   "browser": "./lib/teddytags.min.js",
   "jsdelivr": "./lib/teddytags.min.js",
@@ -24,7 +24,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "npm run release && pretty-quick --staged"
     }
   },
   "scripts": {
@@ -32,6 +32,7 @@
     "tsc:test": "tsc -p ./test",
     "tsc": "npm run tsc:src && npm run tsc:test",
     "cleanup:test": "rimraf test/**/*.js",
+    "release": "standard-version",
     "prepare": "npm run tsc:src && npm run tsc:test && npm run minify",
     "minify": "terser lib/teddytags.js --comments -o lib/teddytags.min.js --source-map \"content='lib/teddytags.js.map', url='teddytags.min.js.map'\"",
     "test": "npm run tsc && karma start karma.conf.ts && npm run cleanup:test"
