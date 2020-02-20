@@ -19,9 +19,10 @@ interface HElement {
 }
 export const h = (
   type: string | Function | Component | any,
-  props = {},
+  props: object,
   ...children: any[]
 ) => {
+  props = !props ? {} : props;
   if (type.prototype && type.prototype.isClassComponent) {
     const componentInstance = new type(props);
     componentInstance.node = componentInstance.render();
