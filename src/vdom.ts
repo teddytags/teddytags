@@ -226,7 +226,7 @@ export const render = (node, target) => {
 //Ignoring this cause this does not need testing anyway
 export class Component {
   props: object | any;
-  state: object;
+  state: object | any;
   constructor(props: object) {
     this.props = props;
   }
