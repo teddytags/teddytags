@@ -1,6 +1,6 @@
 {
   "name": "teddytags",
-  "version": "0.3.8",
+  "version": "0.4.0",
   "description": "The superfast way to custom elements.",
   "browser": "./lib/teddytags.min.js",
   "jsdelivr": "./lib/teddytags.min.js",
@@ -16,11 +16,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "auto-changelog":{
-      "template": "keepachangelog",
-      "unreleased": true,
-      "commitLimit": 6
-    },
+  "auto-changelog": {
+    "template": "keepachangelog",
+    "unreleased": true,
+    "commitLimit": 6
+  },
   "types": "./typings/**/*.d.ts",
   "prettyquick": {
     "*.{js,ts,yml,d.ts,md}": [
