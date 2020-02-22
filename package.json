@@ -16,7 +16,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "types": "./lib/teddytags.d.ts",
+  "types": "./typings/**/*.d.ts",
   "prettyquick": {
     "*.{js,ts,yml,d.ts,md}": [
       "prettier ./.prettierrc.json"
@@ -33,8 +33,10 @@
     "tsc": "npm run tsc:src && npm run tsc:test",
     "cleanup:test": "rimraf test/**/*.js",
     "release": "standard-version",
-    "prepare": "npm run tsc:src && npm run tsc:test && npm run minify",
-    "minify": "terser lib/teddytags.js --comments -o lib/teddytags.min.js --source-map \"content='lib/teddytags.js.map', url='teddytags.min.js.map'\"",
+    "prepare": "npm run tsc:src && npm run minify",
+    "minify:teddy": "terser lib/teddytags.js --comments -o lib/teddytags.min.js --source-map \"content='lib/teddytags.js.map', url='teddytags.min.js.map'\"",
+    "minify:vdom": "terser lib/vdom.js --comments -o lib/vdom.min.js --source-map \"content='lib/vdom.js.map', url='vdom.min.js.map'\"",
+    "minify": "npm run minify:teddy && npm run minify:vdom",
     "test": "npm run tsc && karma start karma.conf.ts && npm run cleanup:test"
   },
   "keywords": [

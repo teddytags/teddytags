@@ -13,7 +13,7 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the MIT License for specific language governing permissions
 and limitations under the License.
 ***************************************************************************** */
-
+import { h, render, Component } from "./vdom.js";
 /**
  * The class used for instantaniation of TeddyTags.
  */
@@ -98,6 +98,49 @@ export class TeddyTags {
       let newElement: Node | HTMLElement = this.selector[index];
       this.passAttrs(newElement, attributes);
       index += 1;
+    });
+  };
+  /**
+   * A function that transpiles HTML elements into dynamic components on the go.
+   * Example:
+   * * A component
+   *  ```javascript
+   * class Greeter extends Component{
+   *  constructor(props){
+   *  super(props)
+   *  }
+   *  render(){
+   *    return h("h1", null, "Hello, ", this.props.name)
+   *  }
+   * }
+   * ```
+   * 
+   * * The HTML tag
+   *   ```html
+   *   <Greeter name="Yoda"></Greeter>
+   *   ```
+   * 
+   * * Code to convert it into element
+   *   ```javascript
+   *    new TeddyTags('Greeter').fromComponent(Greeter)
+   *   ```
+   * 
+   * * The rendered HTML
+   *   ```html
+   *   <div id="Greeter" name="Yoda">
+   *    <p>Hello, Yoda</p>
+   *   </div>
+   *   ```
+   */
+  fromComponent = (component: Component| Function): void => {
+    this.set("div");
+    this.selector.forEach((e: HTMLElement) => {
+      let props = {};
+      Array.prototype.slice.call(e.attributes).forEach((a: Attr) => {
+        props[a.name] = a.value;
+      });
+      let app = h(component, props);
+      render(app, e);
     });
   };
 }

@@ -60,8 +60,9 @@ describe("TeddyVDOM - h", () => {
       }
     }
     let el = h(App, { name: "Master" });
-    let shouldBeEl = { type: "h1", props: { children: ["Hi,", "Master"] } };
-    expect(el).toEqual(shouldBeEl);
-    expect(new App({ name: "Master" }).render()).toEqual(shouldBeEl);
+    let shouldBeElRaw = [App, { name: 'Master' }];
+    let shouldBeElRender = {type: 'h1', props : {children: ['Hi,', 'Master']}}
+    expect(el).toEqual(shouldBeElRaw);
+    expect(new App({ name: "Master" }).render()).toEqual(shouldBeElRender);
   });
 });
