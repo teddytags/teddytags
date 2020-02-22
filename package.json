@@ -16,6 +16,11 @@
   "publishConfig": {
     "access": "public"
   },
+  "auto-changelog":{
+      "template": "keepachangelog",
+      "unreleased": true,
+      "commitLimit": 6
+    },
   "types": "./typings/**/*.d.ts",
   "prettyquick": {
     "*.{js,ts,yml,d.ts,md}": [
@@ -24,7 +29,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run release && pretty-quick --staged"
+      "pre-commit": "npm run log && pretty-quick --staged"
     }
   },
   "scripts": {
@@ -32,7 +37,7 @@
     "tsc:test": "tsc -p ./test",
     "tsc": "npm run tsc:src && npm run tsc:test",
     "cleanup:test": "rimraf test/**/*.js",
-    "release": "standard-version",
+    "log": "auto-changelog",
     "prepare": "npm run tsc:src && npm run minify",
     "minify:teddy": "terser lib/teddytags.js --comments -o lib/teddytags.min.js --source-map \"content='lib/teddytags.js.map', url='teddytags.min.js.map'\"",
     "minify:vdom": "terser lib/vdom.js --comments -o lib/vdom.min.js --source-map \"content='lib/vdom.js.map', url='vdom.min.js.map'\"",
@@ -51,6 +56,7 @@
     "@babel/core": "^7.8.4",
     "@types/jasmine": "^3.5.4",
     "@types/node": "^13.7.0",
+    "auto-changelog": "^1.16.2",
     "babel-loader": "^8.0.6",
     "coveralls": "^3.0.9",
     "husky": "^4.2.1",
@@ -69,7 +75,6 @@
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.2",
     "selenium-webdriver": "^4.0.0-alpha.5",
-    "standard-version": "^7.1.0",
     "terser": "^4.6.3",
     "typescript": "^3.7.5",
     "webpack": "^4.41.6"
