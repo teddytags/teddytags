@@ -20,8 +20,6 @@ interface HElement {
   type: string;
   props: object;
 }
-/* istanbul ignore next */
-//Ignoring temporarily cause tests not ready
 const checkAttrs = (a: NamedNodeMap, b: NamedNodeMap) => {
   let c = "";
   Array.prototype.slice.call(a).map(x => {
@@ -42,39 +40,47 @@ const diff = (dom: Element, node: object, parent?: Element) => {
     //lookup further if dom has only one child
     if (dom.firstChild === dom.lastChild) {
       dom.childNodes.forEach((child: Element) => {
-        //proceed if child an el have same tag name
+        //proceed if child an el
         outer: if (
+          //same tag
           child.tagName === el.tagName &&
+          //same attributes
           checkAttrs(child.attributes, el.attributes)
         ) {
           for (let i = 0; i < child.childNodes.length; i++) {
             let elc: ChildNode = el.childNodes[i];
             let cc: ChildNode = child.childNodes[i];
+            //if childnodes length differs
             if (child.childNodes.length !== el.childNodes.length) {
+              //append the missing child
               child.appendChild(el.childNodes[el.childNodes.length - 1]);
+              //and break the loop for further check
               break outer;
             }
             if (elc.firstChild && cc.firstChild) {
-              if (elc.firstChild.nodeValue === cc.firstChild.nodeValue) {
-                continue;
-              } else {
+              //if innerHTML(nodeValue) not equal, replace it
+              if (elc.firstChild.nodeValue !== cc.firstChild.nodeValue) {
                 cc.firstChild.nodeValue = elc.firstChild.nodeValue;
               }
             } else {
-              if (elc.nodeValue === cc.nodeValue) {
-                continue;
-              } else {
+              //if innerHTML(nodeValue) not equal, replace it
+              if (elc.nodeValue !== cc.nodeValue) {
                 cc.nodeValue = elc.nodeValue;
               }
             }
           }
         }
+        //if child and el has
         if (
+          //same tag
           child.tagName === el.tagName &&
+          //but not same attributes
           !checkAttrs(child.attributes, el.attributes)
         ) {
+          //remove old attributes
           while (child.attributes.length > 0)
             child.removeAttribute(child.attributes[0].name);
+          //add new attributes
           Array.prototype.slice.call(el.attributes).forEach((e: Attr) => {
             child.setAttribute(e.name, e.value);
           });
@@ -84,27 +90,70 @@ const diff = (dom: Element, node: object, parent?: Element) => {
       //lookup further in all children
       let domChildren: NodeListOf<ChildNode> = dom.childNodes;
       domChildren.forEach((child: Element) => {
-        //if the child and el have same tags and attributes(or props), diff further
-        if (child.childNodes !== el.childNodes) {
+        //if the child and el have
+        if (
+          //same tag
+          child.tagName === el.tagName &&
+          //same attributes
+          checkAttrs(child.attributes, el.attributes) &&
+          //but not same number of children
+          child.childNodes.length !== el.childNodes.length &&
+          //is a element
+          child.nodeType === 1
+        ) {
+          //append the remaining children
           child.appendChild(el.childNodes[el.childNodes.length - 1]);
         }
-        child.childNodes.forEach((c, i) => {
-          //if children not equal, replace them
-          let cnv, elnv;
-          if (c.firstChild && el.childNodes[i].firstChild) {
-            cnv = c.firstChild.nodeValue;
-            elnv = el.childNodes[i].firstChild.nodeValue;
-            if (cnv !== elnv) {
-              c.firstChild.nodeValue = elnv;
+        //if the child and el have
+        if (
+          //same tags
+          child.tagName === el.tagName &&
+          //same attributes
+          checkAttrs(child.attributes, el.attributes) &&
+          //same length of nodes
+          child.childNodes.length === el.childNodes.length &&
+          //is a element
+          child.nodeType === 1
+        ) {
+          child.childNodes.forEach((c, i) => {
+            //if children not equal, replace them
+            let cnv: string, elnv: string;
+            console.log(c === undefined);
+            //if has firstchild
+            if (c.firstChild && el.childNodes[i].firstChild) {
+              cnv = c.firstChild.nodeValue;
+              elnv = el.childNodes[i].firstChild.nodeValue;
+              //if innerHTML(nodeValue) not equal, replace it
+              if (cnv !== elnv) {
+                c.firstChild.nodeValue = elnv;
+              }
             }
-          } else {
-            cnv = c.nodeValue;
-            elnv = el.childNodes[i].nodeValue;
-            if (cnv !== elnv) {
-              c.nodeValue = elnv;
+            //if no firstchild
+            else {
+              cnv = c.nodeValue;
+              elnv = el.childNodes[i].nodeValue;
+              //if innerHTML(nodeValue) not equal, replace it
+              if (cnv !== elnv) {
+                c.nodeValue = elnv;
+              }
             }
-          }
-        });
+          });
+        }
+        //if child and el has
+        if (
+          //same tag
+          child.tagName === el.tagName &&
+          //but not same attributes
+          !checkAttrs(child.attributes, el.attributes)
+        ) {
+          //remove old attributes
+          while (child.attributes.length > 0)
+            child.removeAttribute(child.attributes[0].name);
+          //add new attributes
+          Array.prototype.slice.call(el.attributes).forEach((e: Attr) => {
+            child.setAttribute(e.name, e.value);
+          });
+        }
       });
     }
     return dom;
@@ -118,7 +167,7 @@ const diff = (dom: Element, node: object, parent?: Element) => {
 };
 /* istanbul ignore next */
 //Ignoring this cause this does not need testing anyway
-const renderComponent = (component, parent?) => {
+const renderComponent = component => {
   let rerendered = component.render();
   component.base = diff(component.base, rerendered);
 };
@@ -132,7 +181,7 @@ const renderEl = (node: any, target?: any) => {
     component["base"] = target;
     let dom = renderEl(component.node);
     return dom;
-  } /* istanbul ignore next */ else if (textTypes.includes(typeof node)) {
+  } else if (textTypes.includes(typeof node)) {
     return document.createTextNode(node);
   } else {
     const dom = document.createElement(node.type);
@@ -174,12 +223,14 @@ export const render = (node, target) => {
   diff(undefined, node, target);
 };
 /* istanbul ignore next */
+//Ignoring this cause this does not need testing anyway
 export class Component {
   props: object | any;
-  state: object | any;
+  state: object;
   constructor(props: object) {
     this.props = props;
   }
+  /* istanbul ignore next */
   render() {}
   setState(state: object) {
     this.state = Object.assign({}, state);
