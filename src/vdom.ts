@@ -22,6 +22,19 @@ interface HElement {
 }
 /* istanbul ignore next */
 //Ignoring temporarily cause tests not ready
+const checkAttrs = (a: NamedNodeMap, b: NamedNodeMap) => {
+  let c = "";
+  Array.prototype.slice.call(a).map(x => {
+    c = c + x.toString();
+  });
+  let d = "";
+  Array.prototype.slice.call(b).map(x => {
+    d = d + x.toString();
+  });
+  return c === d;
+};
+/* istanbul ignore next */
+//Ignoring temporarily cause tests not ready
 const diff = (dom: Element, node: object, parent?: Element) => {
   //if main dom is present, start diff process
   if (dom) {
@@ -29,10 +42,18 @@ const diff = (dom: Element, node: object, parent?: Element) => {
     //lookup further if dom has only one child
     if (dom.firstChild === dom.lastChild) {
       dom.childNodes.forEach((child: Element) => {
-        if (child.tagName === el.tagName) {
+        //proceed if child an el have same tag name
+        outer: if (
+          child.tagName === el.tagName &&
+          checkAttrs(child.attributes, el.attributes)
+        ) {
           for (let i = 0; i < child.childNodes.length; i++) {
             let elc: ChildNode = el.childNodes[i];
             let cc: ChildNode = child.childNodes[i];
+            if (child.childNodes.length !== el.childNodes.length) {
+              child.appendChild(el.childNodes[el.childNodes.length - 1]);
+              break outer;
+            }
             if (elc.firstChild && cc.firstChild) {
               if (elc.firstChild.nodeValue === cc.firstChild.nodeValue) {
                 continue;
@@ -48,12 +69,25 @@ const diff = (dom: Element, node: object, parent?: Element) => {
             }
           }
         }
+        if (
+          child.tagName === el.tagName &&
+          !checkAttrs(child.attributes, el.attributes)
+        ) {
+          while (child.attributes.length > 0)
+            child.removeAttribute(child.attributes[0].name);
+          Array.prototype.slice.call(el.attributes).forEach((e: Attr) => {
+            child.setAttribute(e.name, e.value);
+          });
+        }
       });
     } else {
       //lookup further in all children
       let domChildren: NodeListOf<ChildNode> = dom.childNodes;
       domChildren.forEach((child: Element) => {
         //if the child and el have same tags and attributes(or props), diff further
+        if (child.childNodes !== el.childNodes) {
+          child.appendChild(el.childNodes[el.childNodes.length - 1]);
+        }
         child.childNodes.forEach((c, i) => {
           //if children not equal, replace them
           let cnv, elnv;
