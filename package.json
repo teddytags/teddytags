@@ -16,11 +16,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "auto-changelog": {
-    "template": "keepachangelog",
-    "unreleased": true,
-    "commitLimit": 6
-  },
   "types": "./typings/**/*.d.ts",
   "prettyquick": {
     "*.{js,ts,yml,d.ts,md}": [
@@ -29,7 +24,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run log && pretty-quick --staged"
+      "pre-commit": "pretty-quick --staged"
     }
   },
   "scripts": {
@@ -37,7 +32,6 @@
     "tsc:test": "tsc -p ./test",
     "tsc": "npm run tsc:src && npm run tsc:test",
     "cleanup:test": "rimraf test/**/*.js",
-    "log": "auto-changelog",
     "prepare": "npm run tsc:src && npm run minify",
     "minify:teddy": "terser lib/teddytags.js --comments -o lib/teddytags.min.js --source-map \"content='lib/teddytags.js.map', url='teddytags.min.js.map'\"",
     "minify:vdom": "terser lib/vdom.js --comments -o lib/vdom.min.js --source-map \"content='lib/vdom.js.map', url='vdom.min.js.map'\"",
