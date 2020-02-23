@@ -21,7 +21,6 @@ install:
 
 script:
   - npm test
-  - npx semantic-release
 
 notifications:
   - email: false
