@@ -20,6 +20,8 @@ interface HElement {
   type: string;
   props: object;
 }
+/* istanbul ignore next */
+//Ignoring this cause this does not need testing anyway
 const checkAttrs = (a: NamedNodeMap, b: NamedNodeMap) => {
   let c = "";
   Array.prototype.slice.call(a).map(x => {
@@ -181,7 +183,7 @@ const renderEl = (node: any, target?: any) => {
     component["base"] = target;
     let dom = renderEl(component.node);
     return dom;
-  } else if (textTypes.includes(typeof node)) {
+  } else /*instanbul ignore if */ if (textTypes.includes(typeof node)) {
     return document.createTextNode(node);
   } else {
     const dom = document.createElement(node.type);
