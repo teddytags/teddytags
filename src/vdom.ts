@@ -183,7 +183,7 @@ const renderEl = (node: any, target?: any) => {
     component["base"] = target;
     let dom = renderEl(component.node);
     return dom;
-  } else /*instanbul ignore if */ if (textTypes.includes(typeof node)) {
+  } /* istanbul ignore next */ else if (textTypes.includes(typeof node)) {
     return document.createTextNode(node);
   } else {
     const dom = document.createElement(node.type);
@@ -224,8 +224,8 @@ export function h(
 export const render = (node, target) => {
   diff(undefined, node, target);
 };
-/* istanbul ignore next */
 //Ignoring this cause this does not need testing anyway
+/* istanbul ignore next */
 export class Component {
   props: object | any;
   state: object | any;
@@ -234,6 +234,7 @@ export class Component {
   }
   /* istanbul ignore next */
   render() {}
+  /* istanbul ignore next */
   setState(state: object) {
     this.state = Object.assign({}, state);
     renderComponent(this);
