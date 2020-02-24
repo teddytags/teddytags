@@ -14,8 +14,8 @@
   <a href="https://travis-ci.com/teddytags/teddytags">
     <img align="center" src="https://img.shields.io/travis/teddytags/teddytags?label=Travis&logo=travis&logoColor=white" alt="Travis (.com)">
   </a>
-  <a href="https://coveralls.io/github/teddytags/teddytags">
-    <img align="center" src="https://img.shields.io/coveralls/github/teddytags/teddytags?label=coveralls&logo=coveralls&logoColor=lightskyblue" alt="Coveralls github">
+  <a href='https://coveralls.io/github/teddytags/teddytags?branch=master'>
+  <img src='https://coveralls.io/repos/github/teddytags/teddytags/badge.svg?branch=master' alt='Coverage Status' />
   </a>
   </p>
   <p align="center">
@@ -53,7 +53,7 @@
 - ## via NPM
 
   ```console
-  npm i -g teddytags
+  $ npm i -g teddytags
   ```
 
 - ## Use
