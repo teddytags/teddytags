@@ -1,11 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es5",
     "module": "es6",
     "skipLibCheck": true,
+    "moduleResolution": "node",
     "sourceMap": true,
     "declaration": true,
     "lib": ["ES2017", "dom"],
-    "typeRoots": ["./node_modules/@types/node", "./node_modules/@types/jasmine"]
+    "typeRoots": [
+      "./node_modules/@types/node",
+      "./node_modules/@types/jasmine",
+      "./node_modules/@types/webpack"
+    ]
   }
 }

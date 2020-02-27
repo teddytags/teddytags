@@ -3,11 +3,12 @@
   "compilerOptions": {
     "outDir": "./",
     "rootDir": "./",
+    "module": "es6",
     "declaration": false,
     "sourceMap": false,
     "skipLibCheck": true
   },
-  "include": ["./**/*.test.ts"],
+  "include": ["./**/*.test.ts", "vdom-render.test.ts"],
   "files": ["test-context.ts"],
   "exclude": [""]
 }

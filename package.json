@@ -4,11 +4,12 @@
   "description": "The superfast way to custom elements.",
   "browser": "./lib/teddytags.min.js",
   "jsdelivr": "./lib/teddytags.min.js",
+  "main": "./lib/teddytags.cjs.js",
+  "module": "./lib/teddytags.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/obnoxiousnerd/teddytags.git"
   },
-  "main": "./lib/teddytags.js",
   "files": [
     "lib/**/*"
   ],
@@ -28,15 +29,14 @@
     }
   },
   "scripts": {
-    "tsc:src": "tsc -p ./src",
+    "build": "npm run build:ts && npm run build:dts",
+    "build:ts": "rollup --config rollup.config.ts",
+    "build:dts": "dts-bundle-generator -o lib/teddytags.d.ts src/index.ts",
     "tsc:test": "tsc -p ./test",
-    "tsc": "npm run tsc:src && npm run tsc:test",
     "cleanup:test": "rimraf test/**/*.js",
     "prepare": "npm run tsc:src && npm run minify",
-    "minify:teddy": "terser lib/teddytags.js --comments -o lib/teddytags.min.js --source-map \"content='lib/teddytags.js.map', url='teddytags.min.js.map'\"",
-    "minify:vdom": "terser lib/vdom.js --comments -o lib/vdom.min.js --source-map \"content='lib/vdom.js.map', url='vdom.min.js.map'\"",
     "minify": "npm run minify:teddy && npm run minify:vdom",
-    "test": "npm run tsc && karma start karma.conf.ts && npm run cleanup:test"
+    "test": "npm run build && npm run tsc:test && karma start karma.conf.ts && npm run cleanup:test"
   },
   "keywords": [
     "custom elements",
@@ -48,11 +48,16 @@
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@rollup/plugin-typescript": "^3.0.0",
     "@types/jasmine": "^3.5.4",
     "@types/node": "^13.7.0",
+    "@types/webpack": "^4.41.6",
     "auto-changelog": "^1.16.2",
     "babel-loader": "^8.0.6",
     "coveralls": "^3.0.9",
+    "dts-bundle-generator": "^3.3.1",
     "husky": "^4.2.1",
     "istanbul-instrumenter-loader": "^3.0.1",
     "jasmine-core": "^3.5.0",
@@ -62,12 +67,14 @@
     "karma-coveralls": "^2.1.0",
     "karma-jasmine": "^3.1.1",
     "karma-remap-coverage": "^0.1.5",
-    "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^4.0.2",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.2",
+    "rollup": "^1.31.1",
+    "rollup-plugin-terser": "^5.2.0",
     "terser": "^4.6.3",
+    "ts-node": "^8.6.2",
     "typescript": "^3.7.5",
     "webpack": "^4.41.6"
   }
