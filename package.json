@@ -34,8 +34,7 @@
     "build:dts": "dts-bundle-generator -o lib/teddytags.d.ts src/index.ts",
     "tsc:test": "tsc -p ./test",
     "cleanup:test": "rimraf test/**/*.js",
-    "prepare": "npm run tsc:src && npm run minify",
-    "minify": "npm run minify:teddy && npm run minify:vdom",
+    "prepare": "npm run build",
     "test": "npm run build && npm run tsc:test && karma start karma.conf.ts && npm run cleanup:test"
   },
   "keywords": [
