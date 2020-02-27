@@ -1,19 +1,6 @@
-/**! *****************************************************************************
-@license
-Copyright © 2020 Pranav Karawale. All rights reserved. 
-Licensed under the MIT License (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at https://mit-license.org/  
- 
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE, 
-MERCHANTABLITY OR NON-INFRINGEMENT. 
- 
-See the MIT License for specific language governing permissions
-and limitations under the License.
-***************************************************************************** */
-import { h, render, Component } from "./vdom.js";
+import { h } from "./h";
+import { render } from "./render";
+import { Component } from "./component";
 /**
  * The class used for instantaniation of TeddyTags.
  */
@@ -114,17 +101,17 @@ export class TeddyTags {
    *  }
    * }
    * ```
-   * 
+   *
    * * The HTML tag
    *   ```html
    *   <Greeter name="Yoda"></Greeter>
    *   ```
-   * 
+   *
    * * Code to convert it into element
    *   ```javascript
    *    new TeddyTags('Greeter').fromComponent(Greeter)
    *   ```
-   * 
+   *
    * * The rendered HTML
    *   ```html
    *   <div id="Greeter" name="Yoda">
@@ -132,7 +119,7 @@ export class TeddyTags {
    *   </div>
    *   ```
    */
-  fromComponent = (component: Component| Function): void => {
+  fromComponent = (component: Component | Function): void => {
     this.set("div");
     this.selector.forEach((e: HTMLElement) => {
       let props = {};
