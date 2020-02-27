@@ -1,9 +1,9 @@
-import { h, render, Component } from "../lib/vdom";
+import { h, render, Component } from "../lib/teddytags";
 describe("TeddyVDOM - render", () => {
   beforeEach(() => {
     var fixture = `<div id="test"></div>`;
-
     document.body.insertAdjacentHTML("afterbegin", fixture);
+    let alertSpy = spyOn(window, "alert");
   });
   afterEach(function() {
     document.body.removeChild(document.getElementById("test"));
@@ -39,5 +39,27 @@ describe("TeddyVDOM - render", () => {
     let el = h(App, { name: "VSCODE" });
     render(el, document.querySelector("#test"));
     expect(document.querySelector("#test #H1").innerHTML).toBe("Hi, VSCODE");
+  });
+  it("should render with event listener", () => {
+    class App extends Component {
+      constructor(props) {
+        super(props);
+      }
+      render() {
+        return h(
+          "button",
+          {
+            onClick: () => {
+              alert("Bye");
+            },
+          },
+          "HI"
+        );
+      }
+    }
+    render(h(App, null), document.querySelector("#test"));
+    let el: Element | any = document.querySelector("#test button");
+    el.click();
+    expect(window.alert).toHaveBeenCalledWith("Bye")
   });
 });

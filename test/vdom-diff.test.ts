@@ -1,4 +1,4 @@
-import { h, Component, render } from "../lib/vdom";
+import { h, Component, render } from "../lib/teddytags";
 describe("TeddyVDOM - diff", () => {
   let timerCallback
   beforeEach(() => {

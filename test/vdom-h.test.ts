@@ -1,4 +1,4 @@
-import { h, Component } from "../lib/vdom";
+import { h, Component } from "../lib/teddytags";
 describe("TeddyVDOM - h", () => {
   beforeEach(() => {
     var fixture = `<div id="test"></div>`;

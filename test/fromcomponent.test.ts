@@ -1,5 +1,4 @@
-import { TeddyTags } from "../lib/teddytags";
-import { h, Component } from "../lib/vdom";
+import { TeddyTags, h, Component } from "../lib/teddytags";
 describe("TeddyTags fromComponent()", () => {
   let timerCallback;
   beforeEach(() => {
@@ -47,17 +46,17 @@ describe("TeddyTags fromComponent()", () => {
       let count = 0;
       expect(componentel.innerHTML).toBe(`Count: ${count}`);
       count += 1;
-      jasmine.clock().tick(1000)
+      jasmine.clock().tick(1000);
     }, 1000);
     setTimeout(() => {
       clearInterval(interval);
     }, 10000);
   });
   it("should get Greet component working with .fromComponent()", () => {
-    new TeddyTags('Greet').fromComponent(Greet)
-    let greet1 = document.querySelectorAll('#Greet h1')[0]
-    let greet2 = document.querySelectorAll('#Greet h1')[1]
-    expect(greet1.innerHTML).toBe("Hi, React")
-    expect(greet2.innerHTML).toBe("Hi, Martin")
-  })
+    new TeddyTags("Greet").fromComponent(Greet);
+    let greet1 = document.querySelectorAll("#Greet h1")[0];
+    let greet2 = document.querySelectorAll("#Greet h1")[1];
+    expect(greet1.innerHTML).toBe("Hi, React");
+    expect(greet2.innerHTML).toBe("Hi, Martin");
+  });
 });
