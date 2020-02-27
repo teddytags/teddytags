@@ -4,8 +4,8 @@ module.exports = config => {
     frameworks: ["jasmine"],
     files: [{ pattern: "./test/test-context.js", watched: false }],
     browserStack: {
-      username: process.env.BROWSERSTACK_USERNAME,
-      accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
+      username: 'pranavkarawale1',
+      accessKey: 'nnp16k98fLyzN9f4pmCa',
     },
     exclude: [],
     preprocessors: {
@@ -19,7 +19,10 @@ module.exports = config => {
           {
             test: /\.js/,
             exclude: /node_modules/,
-            use: { loader: "babel-loader", options: {} },
+            use: { loader: "babel-loader", options: {
+              presets: ["@babel/preset-env",],
+              plugins: ["@babel/plugin-transform-runtime"]
+            } },
           },
           {
             test: /\.js/,
@@ -37,7 +40,6 @@ module.exports = config => {
       noInfo: true,
     },
     reporters: [
-      "spec",
       "BrowserStack",
       "coverage",
       "remap-coverage",
