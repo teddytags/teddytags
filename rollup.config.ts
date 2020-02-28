@@ -1,26 +1,29 @@
 var path = require("path");
 import typescript from "@rollup/plugin-typescript";
 import { terser } from "rollup-plugin-terser";
+import pkg from "./package.json";
 export default [
   {
     input: path.join(__dirname, "./src/index.ts"),
     output: [
       {
-        file: "lib/teddytags.min.js",
+        file: pkg.browser,
         format: "esm",
-        sourcemap: false,
       },
       {
-        file: "lib/teddytags.js",
+        file: pkg.module,
         format: "esm",
-        sourcemap: true,
       },
       {
-        file: "lib/teddytags.cjs.js",
+        file: "lib/legacy.js",
+        format: "iife",
+        exports: "named",
+        name: "TeddyTags",
+      },
+      {
+        file: pkg.main,
         format: "cjs",
         exports: "named",
-        sourcemap: false,
-        plugins: [typescript({ module: "commonjs" })],
       },
     ],
     plugins: [
