@@ -3,24 +3,21 @@
   "version": "1.5.3-0",
   "description": "The superfast way to custom elements.",
   "type": "module",
-  "exports": {
-    ".": {
-      "require": "./lib/teddytags.cjs",
-      "import": "./lib/teddyatgs.js",
-      "legacy": "./lib/teddytags.legacy.js",
-      "browser": "./lib/teddytags.min.js"
-    }
-  },
   "browser": "./lib/teddytags.min.js",
   "jsdelivr": "./lib/teddytags.min.js",
-  "main": "./lib/teddytags.cjs",
+  "main": "./lib/teddytags.js",
   "module": "./lib/teddytags.js",
+  "exports": {
+    "./cjs" : "./lib/teddytags.cjs",
+    "./legacy": "./lib/teddytags.legacy.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/obnoxiousnerd/teddytags.git"
   },
   "files": [
-    "lib/**/*"
+    "lib/**/*.js",
+    "lib/**/*.cjs"
   ],
   "prettier": "./.prettierrc.json",
   "publishConfig": {
@@ -41,8 +38,8 @@
     "build": "npm run build:ts && npm run build:dts",
     "build:ts": "rollup --config rollup.config.ts",
     "build:dts": "npm run build:dts:cjs && npm run build:dts:es",
-    "build:dts:cjs": "dts-bundle-generator --project src/tsconfig.json -o lib/teddytags.cjs.d.ts src/index.ts",
     "build:dts:es": "dts-bundle-generator --project src/tsconfig.json -o lib/teddytags.d.ts src/index.ts",
+    "build:dts:cjs": "dts-bundle-generator --project src/tsconfig.json -o lib/teddytags.cjs.d.ts src/index.ts",
     "dev": "rollup --config rollup.config.ts --watch",
     "tsc:test": "tsc -p ./test",
     "cleanup:test": "rimraf test/**/*.js",

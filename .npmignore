@@ -5,4 +5,5 @@ tslint.json
 .prettierrc
 .gitignore
 test
-lib/**/*.map
+lib/**/*.js.map
+lib/**/*.cjs.map

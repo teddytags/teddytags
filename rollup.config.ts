@@ -18,15 +18,15 @@ export default [
         sourcemap: true,
       },
       {
-        file: pkg.exports["."].legacy,
-        format: "iife",
+        file: pkg.exports["./cjs"],
+        format: "cjs",
         exports: "named",
         name: "TeddyTags",
         sourcemap: true,
       },
       {
-        file: pkg.main,
-        format: "umd",
+        file: "./lib/teddytags.legacy.js",
+        format: "amd",
         exports: "named",
         name: "TeddyTags",
         sourcemap: true,
@@ -38,10 +38,11 @@ export default [
     ],
   },
   {
-    input: pkg.exports["."].legacy,
+    input: "./lib/teddytags.legacy.js",
     output: {
-      file: pkg.exports["."].legacy,
-      format: "iife",
+      file: "./lib/teddytags.legacy.js",
+      format: "umd",
+      useStrict: false,
       exports: "named",
       name: "TeddyTags",
       sourcemap: true,
@@ -49,7 +50,7 @@ export default [
     plugins: [
       babel({
         babelrc: false,
-        presets: [["@babel/preset-env", { modules: false }]],
+        presets: [["@babel/preset-env", { modules: false, loose: true }]],
       }),
       terser({ include: /\.legacy\.js$/, compress: true }),
     ],
