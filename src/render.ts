@@ -1,9 +1,19 @@
 import { diff } from "./diff";
+import { HConstructorElement, HElement } from "./component";
+/**
+ * The runtime condition of a Constructor Element
+ */
+interface HElementRuntime {
+  (component: HConstructorElement);
+  (component: any);
+}
 /* istanbul ignore next */
 //Ignoring this cause this does not need testing anyway
-export const renderComponent = component => {
-  let rerendered = component.render();
-  let base = [];
+export const renderComponent: HElementRuntime = (
+  component: HConstructorElement
+): void => {
+  let rerendered: HElement = component.render();
+  let base: string[] = [];
   base.push(component.base.innerHTML);
   component.base = diff(component.base, rerendered);
   base.push(component.base.innerHTML);
@@ -19,9 +29,9 @@ export const renderEl = (node: any, target?: any) => {
   if (Array.isArray(node)) {
     let app = node[0],
       props: object = node[1];
-    let component = new app(props);
-    component["node"] = component.render();
-    component["base"] = target;
+    let component: HConstructorElement = new app(props);
+    component.node = component.render();
+    component.base = target;
     let dom = renderEl(component.node);
     return [dom, component];
   } else {
@@ -53,7 +63,20 @@ export const renderEl = (node: any, target?: any) => {
     return dom;
   }
 };
-
-export const render = (node, target) => {
+/**
+ * The function that links your Virtual Elements to the real DOM.
+ * Appends the virtual element to the target
+ * Usage:
+ * ```js
+ * //App is a Component
+ * //If JSX
+ * render(<App />, document.querySelector("#app"))
+ * //If no JSX
+ * render(h(App, null), document.querySelector("#app"))
+ * ```
+ * @param node Your virtual Element
+ * @param target The target to append to
+ */
+export const render = (node: HElement, target: Element) => {
   diff(undefined, node, target);
 };

@@ -4,8 +4,8 @@ module.exports = config => {
     frameworks: ["jasmine"],
     files: [{ pattern: "./test/test-context.js", watched: false }],
     browserStack: {
-      username: 'pranavkarawale1',
-      accessKey: 'nnp16k98fLyzN9f4pmCa',
+      username: process.env.BROWSERSTACK_USERNAME,
+      accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
     },
     exclude: [],
     preprocessors: {

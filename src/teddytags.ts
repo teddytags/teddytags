@@ -119,7 +119,7 @@ export class TeddyTags {
    *   </div>
    *   ```
    */
-  fromComponent = (component: Component | Function): void => {
+  fromComponent = (component: typeof Component): void => {
     this.set("div");
     this.selector.forEach((e: HTMLElement) => {
       let props = {};

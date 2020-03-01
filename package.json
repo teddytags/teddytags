@@ -4,7 +4,7 @@
   "description": "The superfast way to custom elements.",
   "browser": "./lib/teddytags.min.js",
   "jsdelivr": "./lib/teddytags.min.js",
-  "main": "./lib/teddytags.cjs",
+  "main": "./lib/teddytags.cjs.js",
   "module": "./lib/teddytags.js",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "types": "./typings/**/*.d.ts",
+  "types": "./lib/**/*.d.ts",
   "prettyquick": {
     "*.{js,ts,yml,d.ts,md}": [
       "prettier ./.prettierrc.json"
@@ -31,7 +31,10 @@
   "scripts": {
     "build": "npm run build:ts && npm run build:dts",
     "build:ts": "rollup --config rollup.config.ts",
-    "build:dts": "dts-bundle-generator -o lib/teddytags.d.ts src/index.ts",
+    "build:dts": "npm run build:dts:cjs && npm run build:dts:es",
+    "build:dts:cjs": "dts-bundle-generator --project src/tsconfig.json -o lib/teddytags.cjs.d.ts src/index.ts",
+    "build:dts:es": "dts-bundle-generator --project src/tsconfig.json -o lib/teddytags.d.ts src/index.ts",
+    "dev": "rollup --config rollup.config.ts --watch",
     "tsc:test": "tsc -p ./test",
     "cleanup:test": "rimraf test/**/*.js",
     "prepare": "npm run build",
@@ -71,6 +74,7 @@
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.2",
     "rollup": "^1.31.1",
+    "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-terser": "^5.2.0",
     "terser": "^4.6.3",
     "ts-node": "^8.6.2",

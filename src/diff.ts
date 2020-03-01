@@ -1,4 +1,5 @@
 import { renderEl } from "./render";
+import { HElement } from "./component";
 /*istanbul ignore next */
 const checkAttrs = (a: NamedNodeMap, b: NamedNodeMap) => {
   let c = "";
@@ -75,7 +76,7 @@ const diffChildren = (child: Element, el: Element) => {
 };
 //Ignoring temporarily cause tests not ready
 /* istanbul ignore next */
-export const diff = (dom: Element, node: object, parent?: Element) => {
+export const diff = (dom: Element, node: HElement, parent?: Element) => {
   //if main dom is present, start diff process
   if (dom) {
     let el: Element = renderEl(node);
