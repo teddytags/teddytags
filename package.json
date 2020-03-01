@@ -2,9 +2,18 @@
   "name": "teddytags",
   "version": "1.5.2",
   "description": "The superfast way to custom elements.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "require": "./lib/teddytags.cjs",
+      "import": "./lib/teddyatgs.js",
+      "legacy": "./lib/teddytags.legacy.js",
+      "browser": "./lib/teddytags.min.js"
+    }
+  },
   "browser": "./lib/teddytags.min.js",
   "jsdelivr": "./lib/teddytags.min.js",
-  "main": "./lib/teddytags.cjs.js",
+  "main": "./lib/teddytags.cjs",
   "module": "./lib/teddytags.js",
   "repository": {
     "type": "git",

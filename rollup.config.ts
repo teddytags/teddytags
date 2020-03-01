@@ -18,7 +18,7 @@ export default [
         sourcemap: true,
       },
       {
-        file: "lib/teddytags.legacy.js",
+        file: pkg.exports["."].legacy,
         format: "iife",
         exports: "named",
         name: "TeddyTags",
@@ -38,9 +38,9 @@ export default [
     ],
   },
   {
-    input: "./lib/teddytags.legacy.js",
+    input: pkg.exports["."].legacy,
     output: {
-      file: "./lib/teddytags.legacy.js",
+      file: pkg.exports["."].legacy,
       format: "iife",
       exports: "named",
       name: "TeddyTags",
