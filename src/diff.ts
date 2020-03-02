@@ -80,6 +80,11 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
   //if main dom is present, start diff process
   if (dom) {
     let el: Element = renderEl(node);
+    //due to an unknown issue, a RawComponent may have crept here as the new DOM, so further check
+    if (Array.isArray(el)) {
+      //extract the dom
+      el = el[0];
+    }
     //lookup further if dom has only one child
     if (dom.firstChild === dom.lastChild) {
       dom.childNodes.forEach((child: Element) => {
@@ -99,6 +104,11 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
     let el = renderEl(node, parent);
     //if its component, get the first el which contains the dom
     let newDOM = Array.isArray(el) ? el[0] : el;
+    //due to an unknown issue, a RawComponent may have crept here as the new DOM, so further check
+    if (Array.isArray(newDOM)) {
+      //extract the dom
+      newDOM = newDOM[0];
+    }
     //get the component, if present
     let c = el[1];
     if (c) {
