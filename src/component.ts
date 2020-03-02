@@ -1,4 +1,19 @@
 import { renderComponent } from "./render";
+/**
+ * The class used for the instantaniation of TeddyTags virtual elements
+ * 
+ * Declaration: 
+ * ```js
+ * class MyComponent extends Component{
+ *  constructor(props){
+ *    super(props)
+ *  }
+ *  render(){
+ *    //return your markup
+ *  } 
+ * }
+ * ```
+ */
 /*istanbul ignore next */
 export class Component {
   /**
@@ -25,6 +40,10 @@ export class Component {
    */
   /* istanbul ignore next */
   render() {}
+  /**
+   * The function which will alter with the `state` property of the Component.
+   * @param state 
+   */
   /* istanbul ignore next */
   setState(state: object) {
     this.state = Object.assign({}, state);
