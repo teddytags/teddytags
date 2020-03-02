@@ -3,7 +3,8 @@
   "compilerOptions": {
     "module": "es6",
     "outDir": "../lib",
-    "declaration": false
+    "declaration": false,
+    "typeRoots": ["../lib"]
   },
   "include": ["./**.ts", "index.ts"]
 }
