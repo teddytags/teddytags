@@ -1,4 +1,4 @@
-import { diff } from "./diff";
+import { initalDiff, diff } from "./diff";
 import { HConstructorElement, HElement } from "./component";
 /**
  * The runtime condition of a Constructor Element
@@ -78,5 +78,5 @@ export const renderEl = (node: any, target?: any) => {
  * @param target The target to append to
  */
 export const render = (node: HElement, target: Element) => {
-  diff(undefined, node, target);
+  initalDiff(node, target);
 };

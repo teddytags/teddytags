@@ -1,7 +1,7 @@
 import { renderEl } from "./render";
 import { HElement } from "./component";
 /*istanbul ignore next */
-const checkAttrs = (a: NamedNodeMap, b: NamedNodeMap) => {
+const checkAttrs = (a: NamedNodeMap, b: NamedNodeMap): boolean => {
   let c = "";
   Array.prototype.slice.call(a).map(x => {
     c = c + x.toString();
@@ -14,7 +14,7 @@ const checkAttrs = (a: NamedNodeMap, b: NamedNodeMap) => {
 };
 //Ignoring temporarily cause tests not ready
 /* istanbul ignore next */
-const diffChildren = (child: Element, el: Element) => {
+const diffChildren = (child: Element, el: Element): void => {
   //proceed if child an el
   outer: if (
     //same tag
@@ -25,8 +25,8 @@ const diffChildren = (child: Element, el: Element) => {
     child.nodeType === 1
   ) {
     for (let i = 0; i < child.childNodes.length; i++) {
-      let elc: ChildNode = el.childNodes[i];
-      let cc: ChildNode = child.childNodes[i];
+      const elc: ChildNode = el.childNodes[i];
+      const cc: ChildNode = child.childNodes[i];
       //if childnodes length differs
       if (child.childNodes.length < el.childNodes.length) {
         //get the difference
@@ -92,7 +92,7 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
       });
     } else {
       //lookup further in all children
-      let domChildren: NodeListOf<ChildNode> = dom.childNodes;
+      const domChildren: NodeListOf<ChildNode> = dom.childNodes;
       domChildren.forEach((child: Element) => {
         diffChildren(child, el);
       });
@@ -101,7 +101,7 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
   } else {
     //if dom not present, render the element and append it.
     //useful if component is rendering for the first time
-    let el = renderEl(node, parent);
+    const el = renderEl(node, parent);
     //if its component, get the first el which contains the dom
     let newDOM = Array.isArray(el) ? el[0] : el;
     //due to an unknown issue, a RawComponent may have crept here as the new DOM, so further check
@@ -110,7 +110,7 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
       newDOM = newDOM[0];
     }
     //get the component, if present
-    let c = el[1];
+    const c = el[1];
     if (c) {
       c.componentWillMount();
     }
@@ -120,4 +120,12 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
     }
     return newDOM;
   }
+};
+/**
+ * Used for inital rendering internally
+ * @param node the virtual element
+ * @param target target element
+ */
+export const initalDiff = (node: HElement, target: Element) => {
+  diff(undefined, node, target);
 };

@@ -25,13 +25,12 @@ type RawComponent = {
 export const h: h = (type: any, props: object, ...children: any[]) => {
   props = !props ? {} : props;
   if (type.prototype && type.prototype.isClassComponent) {
-    let rawComponent: RawComponent = [type, props];
+    const rawComponent: RawComponent = [type, props];
     return rawComponent;
   }
   if (typeof type === "function") {
     return type(props);
   }
-  let node: HElement;
-  node = { type, props: { ...props, children } };
+  const node: HElement = { type, props: { ...props, children } };
   return node;
 };
