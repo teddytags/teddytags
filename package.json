@@ -15,16 +15,11 @@
     "type": "git",
     "url": "https://github.com/obnoxiousnerd/teddytags.git"
   },
-  "files": [
-    "lib/**/*.js",
-    "lib/**/*.cjs",
-    "lib/**/*.d.ts"
-  ],
   "prettier": "./.prettierrc.json",
   "publishConfig": {
     "access": "public"
   },
-  "types": "./lib/**/*.d.ts",
+  "types": "./lib/teddytags.d.ts",
   "prettyquick": {
     "*.{js,ts,yml,d.ts,md}": [
       "prettier ./.prettierrc.json"
@@ -63,7 +58,6 @@
     "@types/jasmine": "^3.5.4",
     "@types/node": "^13.7.0",
     "@types/webpack": "^4.41.6",
-    "auto-changelog": "^1.16.2",
     "babel-loader": "^8.0.6",
     "coveralls": "^3.0.9",
     "dts-bundle-generator": "^3.3.1",
@@ -84,7 +78,6 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-terser": "^5.2.0",
     "terser": "^4.6.3",
-    "ts-node": "^8.6.2",
     "typescript": "^3.8.2",
     "webpack": "^4.41.6"
   }
