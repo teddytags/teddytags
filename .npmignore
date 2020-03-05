@@ -1,9 +1,14 @@
 .git
 src
+test
+.github
+coverage
 tsconfig.json
 tslint.json
 .prettierrc
 .gitignore
-test
+rollup.config.ts
+**/*.md
+!**/README.md
 lib/**/*.js.map
 lib/**/*.cjs.map

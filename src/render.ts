@@ -51,7 +51,7 @@ export const renderEl = (node: any, target?: any) => {
     Object.keys(node.props)
       .filter(isProp)
       .map(prop => {
-        dom[prop] = node.props[prop];
+        dom.setAttribute(prop, node.props[prop].toString());
       });
     node.props.children.forEach(child => {
       if (textTypes.includes(typeof child))
