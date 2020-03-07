@@ -1,6 +1,6 @@
 {
   "name": "teddytags",
-  "version": "1.5.7",
+  "version": "1.6.0",
   "description": "The superfast way to custom elements.",
   "type": "module",
   "browser": "./lib/teddytags.min.js",
