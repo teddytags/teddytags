@@ -1,5 +1,5 @@
 import { renderEl } from "./render";
-import { HElement } from "./component";
+import { HElement, HConstructorElement } from "./component";
 /*istanbul ignore next */
 const checkAttrs = (a: NamedNodeMap, b: NamedNodeMap): boolean => {
   let c = "";
@@ -80,10 +80,12 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
   //if main dom is present, start diff process
   if (dom) {
     let el: Element = renderEl(node);
+    let c: HConstructorElement;
     //due to an unknown issue, a RawComponent may have crept here as the new DOM, so further check
     if (Array.isArray(el)) {
       //extract the dom
       el = el[0];
+      c = el[1];
     }
     //lookup further if dom has only one child
     if (dom.firstChild === dom.lastChild) {
@@ -94,7 +96,12 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
       //lookup further in all children
       const domChildren: NodeListOf<ChildNode> = dom.childNodes;
       domChildren.forEach((child: Element) => {
-        diffChildren(child, el);
+        if (child === el) {
+          child.childNodes.forEach((child: Element) => {
+            diffChildren(child, el);
+            if (child === el) node.dom = child;
+          });
+        }
       });
     }
     return dom;
@@ -110,13 +117,27 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
       newDOM = newDOM[0];
     }
     //get the component, if present
-    const c = el[1];
-    if (c) {
-      c.componentWillMount();
+    const c: HConstructorElement = el[1];
+    if (c && c.componentWillMount) {
+      if (c.componentWillMount["called"] === true) {
+        c.componentWillMount(newDOM);
+        c.componentWillMount["called"] = "Won't call again";
+      }
+      if (!c.componentWillMount["called"]) {
+        c.componentWillMount(newDOM);
+        c.componentWillMount["called"] = true;
+      }
     }
     parent.appendChild(newDOM);
-    if (c) {
-      c.componentDidMount();
+    if (c && c.componentDidMount) {
+      if (c.componentDidMount["called"] === true) {
+        c.componentDidMount(newDOM);
+        c.componentDidMount["called"] = "Won't call again";
+      }
+      if (!c.componentDidMount["called"]) {
+        c.componentDidMount(newDOM);
+        c.componentDidMount["called"] = true;
+      }
     }
     return newDOM;
   }

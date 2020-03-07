@@ -1,8 +1,8 @@
 import { renderComponent } from "./render";
 /**
  * The class used for the instantaniation of TeddyTags virtual elements
- * 
- * Declaration: 
+ *
+ * Declaration:
  * ```js
  * class MyComponent extends Component{
  *  constructor(props){
@@ -10,7 +10,7 @@ import { renderComponent } from "./render";
  *  }
  *  render(){
  *    //return your markup
- *  } 
+ *  }
  * }
  * ```
  */
@@ -36,13 +36,13 @@ export class Component {
   }
   /**
    * The function which will return the general markup of the Component.
-   * For Component to appear in the DOM, this function is necessary. 
+   * For Component to appear in the DOM, this function is necessary.
    */
   /* istanbul ignore next */
   render() {}
   /**
    * The function which will alter with the `state` property of the Component.
-   * @param state 
+   * @param state
    */
   /* istanbul ignore next */
   setState(state: object) {
@@ -52,15 +52,15 @@ export class Component {
   /**
    * The function which will invoke when the component is about to mount.
    */
-  componentWillMount() {}
+  componentWillMount(dom?: Element) {}
   /**
    * The function which will invoke immediately after mounting the component.
    */
-  componentDidMount() {}
+  componentDidMount(dom?: Element) {}
   /**
    * The function which will invoke immediately if the DOM of component updates.
    */
-  componentDidUpdate() {}
+  componentDidUpdate(oldDOM?: Element, newDOM?: Element) {}
 }
 Component.prototype["isClassComponent"] = true;
 /**
@@ -82,7 +82,9 @@ export interface HConstructorElement {
   render(): HElement;
   node?: HElement;
   base?: Element;
-  componentWillMount(): void;
-  componentDidMount(): void;
-  componentDidUpdate(): void;
+  dom?: Element;
+  mounted?: boolean;
+  componentWillMount(dom?: Element): void;
+  componentDidMount(dom?: Element): void;
+  componentDidUpdate(oldDOM?: Element, newDOM?: Element): void;
 }

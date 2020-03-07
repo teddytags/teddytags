@@ -26,7 +26,7 @@ export default [
       },
       {
         file: pkg.exports["./legacy"],
-        format: "amd",
+        format: "umd",
         exports: "named",
         name: "TeddyTags",
         sourcemap: true,

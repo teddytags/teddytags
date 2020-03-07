@@ -14,11 +14,13 @@ export const renderComponent: HElementRuntime = (
 ): void => {
   let rerendered: HElement = component.render();
   let base: string[] = [];
+  let doms: Element[] = [];
   base.push(component.base.innerHTML);
+  let oldDom = component.dom;
   component.base = diff(component.base, rerendered);
   base.push(component.base.innerHTML);
   if (base[0] !== base[1]) {
-    component.componentDidUpdate();
+    component.componentDidUpdate(oldDom, component.dom);
   }
 };
 export const renderEl = (node: any, target?: any) => {
@@ -33,11 +35,16 @@ export const renderEl = (node: any, target?: any) => {
     component.node = component.render();
     component.base = target;
     let dom = renderEl(component.node);
+    component.dom = dom;
     return [dom, component];
   } else {
     const dom: Element = document.createElement(node.type);
     const isProp = (key: string) => {
-      return key !== "children" && !isEvent(key);
+      return key !== "children" && !isEvent(key) && !isValidMethod(key);
+    };
+    const isValidMethod = (key: string) => {
+      const validMethods = ["innerHTML", "className"];
+      return validMethods.includes(key);
     };
     const isEvent = (key: string) => {
       return key.startsWith("on");
@@ -52,6 +59,11 @@ export const renderEl = (node: any, target?: any) => {
       .filter(isProp)
       .map(prop => {
         dom.setAttribute(prop, node.props[prop].toString());
+      });
+    Object.keys(node.props)
+      .filter(isValidMethod)
+      .map(prop => {
+        dom[prop], node.props[prop];
       });
     node.props.children.forEach(child => {
       if (textTypes.includes(typeof child))
