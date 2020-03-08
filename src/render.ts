@@ -14,10 +14,9 @@ export const renderComponent: HElementRuntime = (
 ): void => {
   let rerendered: HElement = component.render();
   let base: string[] = [];
-  let doms: Element[] = [];
   base.push(component.base.innerHTML);
   let oldDom = component.dom;
-  component.base = diff(component.base, rerendered);
+  component.base = diff(component.base, rerendered, undefined);
   base.push(component.base.innerHTML);
   if (base[0] !== base[1]) {
     component.componentDidUpdate(oldDom, component.dom);
@@ -90,5 +89,5 @@ export const renderEl = (node: any, target?: any) => {
  * @param target The target to append to
  */
 export const render = (node: HElement, target: Element) => {
-  initalDiff(node, target);
+  diff(undefined, node, target);
 };

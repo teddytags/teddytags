@@ -1,5 +1,6 @@
 *
 !lib/**/*.js
+!lib/**/*.d.ts
 !README.md
 !package.json
 !package-lock.json

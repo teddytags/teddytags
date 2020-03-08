@@ -83,7 +83,6 @@ export interface HConstructorElement {
   node?: HElement;
   base?: Element;
   dom?: Element;
-  mounted?: boolean;
   componentWillMount(dom?: Element): void;
   componentDidMount(dom?: Element): void;
   componentDidUpdate(oldDOM?: Element, newDOM?: Element): void;
