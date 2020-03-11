@@ -62,9 +62,9 @@ export const renderEl = (node: any, target?: any) => {
     Object.keys(node.props)
       .filter(isValidMethod)
       .map(prop => {
-        dom[prop], node.props[prop];
+        dom[prop] = node.props[prop];
       });
-    node.props.children.forEach(child => {
+    node.props.children.forEach((child) => {
       if (textTypes.includes(typeof child))
         dom.appendChild(document.createTextNode(child));
       else {
