@@ -1,5 +1,7 @@
 <p align="center">
-  <img align="center" style="text-align:center" height="300" width="600" src="https://raw.githubusercontent.com/obnoxiousnerd/teddytags-website/gh-pages/assets/icons/teddytagslogo.big.png" alt="Teddytags logo">
+  <a href="https://teddy.js.org/">
+  <img align="center" style="text-align:center" src="https://raw.githubusercontent.com/teddytags/website/master/src/assets/big-dark-logo.svg?sanitize=true" alt="Teddytags logo">
+  </a>
 </p>
 <p align="center">The superfast way to custom elements.</p>
 <p align="center">
