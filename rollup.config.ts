@@ -29,8 +29,10 @@ export default [
     ],
     plugins: [
       typescript({ tsconfig: "./src/tsconfig.json" }),
-      terser({ compress: true }),
-      babel({ extensions: ['.js',".ts"] }),
+      process.env.BUILD === "production"
+        ? []
+        : terser({ compress: true }),
+      babel({ extensions: [".js", ".ts"] }),
     ],
   },
 ];

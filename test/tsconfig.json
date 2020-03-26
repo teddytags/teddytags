@@ -8,7 +8,7 @@
     "sourceMap": false,
     "skipLibCheck": true
   },
-  "include": ["./**/*.test.ts", "vdom-render.test.ts"],
+  "include": ["./**/*.test.ts",],
   "files": ["test-context.ts"],
   "exclude": [""]
 }

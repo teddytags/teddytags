@@ -76,9 +76,9 @@ const diffChildren = (child: Element, el: Element): void => {
 };
 //Ignoring temporarily cause tests not ready
 /* istanbul ignore next */
-export const diff = (dom: Element, node: HElement, parent?: Element) => {
+export const diff = (mountedDom: Element, node: HElement, parent?: Element) => {
   //if main dom is present, start diff process
-  if (dom) {
+  if (mountedDom) {
     let el: Element = renderEl(node);
     let c: HConstructorElement;
     //due to an unknown issue, a RawComponent may have crept here as the new DOM, so further check
@@ -88,14 +88,14 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
       c = el[1];
     }
     //lookup further if dom has only one child
-    if (dom.firstChild === dom.lastChild) {
-      dom.childNodes.forEach((child: Element) => {
+    if (mountedDom.firstChild === mountedDom.lastChild) {
+      mountedDom.childNodes.forEach((child: Element) => {
         if (child.nodeName === el.nodeName && child.innerHTML !== el.innerHTML)
           diffChildren(child, el);
       });
     } else {
       //lookup further in all children
-      const domChildren: NodeListOf<ChildNode> = dom.childNodes;
+      const domChildren: NodeListOf<ChildNode> = mountedDom.childNodes;
       domChildren.forEach((child: Element) => {
         if (
           child.nodeName === el.nodeName &&
@@ -106,11 +106,11 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
         }
       });
     }
-    return dom;
+    return mountedDom;
   } else if (parent) {
     //if dom not present, render the element and append it.
     //useful if component is rendering for the first time
-    const el = renderEl(node, parent);
+    let el = renderEl(node, parent);
     //if its component, get the first el which contains the dom
     let newDOM = Array.isArray(el) ? el[0] : el;
     //get the component, if present
@@ -130,12 +130,4 @@ export const diff = (dom: Element, node: HElement, parent?: Element) => {
     }
     return newDOM;
   }
-};
-/**
- * Used for inital rendering internally
- * @param node the virtual element
- * @param target target element
- */
-export const initalDiff = (node: HElement, target: Element) => {
-  diff(undefined, node, target);
 };

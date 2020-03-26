@@ -1,4 +1,4 @@
-import { initalDiff, diff } from "./diff";
+import { diff } from "./diff";
 import { HConstructorElement, HElement } from "./component";
 /**
  * The runtime condition of a Constructor Element
@@ -28,14 +28,16 @@ export const renderEl = (node: any, target?: any) => {
     return document.createTextNode(node);
   }
   if (Array.isArray(node)) {
-    let app = node[0],
-      props: object = node[1];
-    let component: HConstructorElement = new app(props);
-    component.node = component.render();
-    component.base = target;
-    let dom = renderEl(component.node);
-    component.dom = dom;
-    return [dom, component];
+    if (node[2] === "classComponent") {
+      let app = node[0],
+        props: object = node[1];
+      let component: HConstructorElement = new app(props);
+      component.node = component.render();
+      component.base = target;
+      let dom = renderEl(component.node);
+      component.dom = dom;
+      return [dom, component];
+    }
   } else {
     const dom: Element = document.createElement(node.type);
     const isProp = (key: string) => {
@@ -64,11 +66,11 @@ export const renderEl = (node: any, target?: any) => {
       .map(prop => {
         dom[prop] = node.props[prop];
       });
-    node.props.children.forEach((child) => {
+    node.props.children.forEach(child => {
       if (textTypes.includes(typeof child))
         dom.appendChild(document.createTextNode(child));
       else {
-        render(child, dom);
+        dom.appendChild(child);
       }
     });
     return dom;
@@ -89,5 +91,18 @@ export const renderEl = (node: any, target?: any) => {
  * @param target The target to append to
  */
 export const render = (node: HElement, target: Element) => {
-  diff(undefined, node, target);
+  const commitRoot = () => {
+    diff(undefined, node, target);
+  };
+  const commitWork = deadline => {
+    let done: boolean = false;
+    if (deadline.timeRemaining() > 0) {
+      commitRoot();
+      done = true;
+    }
+    if (!done) {
+      window["requestIdleCallback"](commitWork);
+    }
+  };
+  window["requestIdleCallback"](commitWork);
 };

@@ -17,20 +17,24 @@ module.exports = config => {
       module: {
         rules: [
           {
-            test: /\.js/,
+            test: /\.(js|jsx)/,
             exclude: /node_modules/,
-            use: { loader: "babel-loader", options: {
-              presets: ["@babel/preset-env",],
-              plugins: ["@babel/plugin-transform-runtime"]
-            } },
+            use: {
+              loader: "babel-loader",
+              options: {
+                presets: ["@babel/preset-env"],
+                plugins: ["@babel/plugin-transform-runtime"],
+              },
+            },
           },
           {
-            test: /\.js/,
+            test: /\.(js|jsx)/,
             exclude: /(node_modules|test)/,
             use: {
               loader: "istanbul-instrumenter-loader",
               options: { esModules: true },
             },
+            enforce: "post",
           },
         ],
       },
@@ -39,12 +43,7 @@ module.exports = config => {
     webpackServer: {
       noInfo: true,
     },
-    reporters: [
-      "BrowserStack",
-      "coverage",
-      "remap-coverage",
-      "coveralls",
-    ],
+    reporters: ["BrowserStack", "coverage", "remap-coverage", "coveralls"],
     coverageReporter: {
       type: "in-memory",
       html: "./coverage",

@@ -15,7 +15,7 @@ type RawComponent = {
  * @param type Can be the tagname of the element, a class component or a functional component
  * @param props Properties to be passed
  * @param children Child elements, if any
- * Usage: 
+ * Usage:
  * ```js
  * let app = h("div", null, h("h1", null, "Hello"))
  * //becomes
@@ -25,11 +25,12 @@ type RawComponent = {
 export const h: h = (type: any, props: object, ...children: any[]) => {
   props = !props ? {} : props;
   if (type.prototype && type.prototype.isClassComponent) {
-    const rawComponent: RawComponent = [type, props];
+    const rawComponent: RawComponent = [type, props, "classComponent"];
     return rawComponent;
   }
   if (typeof type === "function") {
-    return type(props);
+    let func = type(props);
+    return func;
   }
   const node: HElement = { type, props: { ...props, children } };
   return node;
