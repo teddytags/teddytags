@@ -121,12 +121,13 @@ export const diff = (mountedDom: Element, node: HElement, parent?: Element) => {
       newDOM = newDOM[0];
       c = newDOM[1];
     }
-    if (c && c.componentWillMount) {
+    if (c && c.componentWillMount && !c["__dirty"]) {
       c.componentWillMount(newDOM);
     }
     parent.appendChild(newDOM);
-    if (c && c.componentDidMount) {
+    if (c && c.componentDidMount && !c["__dirty"]) {
       c.componentDidMount(newDOM);
+      c["__dirty"] = false;
     }
     return newDOM;
   }

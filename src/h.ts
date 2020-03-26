@@ -25,7 +25,7 @@ type RawComponent = {
 export const h: h = (type: any, props: object, ...children: any[]) => {
   props = !props ? {} : props;
   if (type.prototype && type.prototype.isClassComponent) {
-    const rawComponent: RawComponent = [type, props, "classComponent"];
+    const rawComponent: RawComponent = [type, props];
     return rawComponent;
   }
   if (typeof type === "function") {

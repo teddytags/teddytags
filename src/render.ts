@@ -16,7 +16,7 @@ export const renderComponent: HElementRuntime = (
   let base: string[] = [];
   base.push(component.base.innerHTML);
   let oldDom = component.dom;
-  component.base = diff(component.base, rerendered, undefined);
+  component.base = diff(component.base, rerendered);
   base.push(component.base.innerHTML);
   if (base[0] !== base[1]) {
     component.componentDidUpdate(oldDom, component.dom);
@@ -28,16 +28,14 @@ export const renderEl = (node: any, target?: any) => {
     return document.createTextNode(node);
   }
   if (Array.isArray(node)) {
-    if (node[2] === "classComponent") {
-      let app = node[0],
-        props: object = node[1];
-      let component: HConstructorElement = new app(props);
-      component.node = component.render();
-      component.base = target;
-      let dom = renderEl(component.node);
-      component.dom = dom;
-      return [dom, component];
-    }
+    let app = node[0],
+      props: object = node[1];
+    let component: HConstructorElement = new app(props);
+    component.node = component.render();
+    component.base = target;
+    let dom = renderEl(component.node);
+    component.dom = dom;
+    return [dom, component];
   } else {
     const dom: Element = document.createElement(node.type);
     const isProp = (key: string) => {
@@ -70,7 +68,7 @@ export const renderEl = (node: any, target?: any) => {
       if (textTypes.includes(typeof child))
         dom.appendChild(document.createTextNode(child));
       else {
-        dom.appendChild(child);
+        render(child, dom);
       }
     });
     return dom;
@@ -95,13 +93,10 @@ export const render = (node: HElement, target: Element) => {
     diff(undefined, node, target);
   };
   const commitWork = deadline => {
-    let done: boolean = false;
-    if (deadline.timeRemaining() > 0) {
+    deadline.done = false
+    while (deadline.timeRemaining() > 0 && !deadline.done) {
       commitRoot();
-      done = true;
-    }
-    if (!done) {
-      window["requestIdleCallback"](commitWork);
+      deadline.done = true;
     }
   };
   window["requestIdleCallback"](commitWork);
