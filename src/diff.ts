@@ -76,10 +76,15 @@ const diffChildren = (child: Element, el: Element): void => {
 };
 //Ignoring temporarily cause tests not ready
 /* istanbul ignore next */
-export const diff = (mountedDom: Element, node: HElement, parent?: Element) => {
+export const diff = (
+  dom: Element,
+  node: HElement,
+  diffType: string,
+  isDirty: boolean
+) => {
   //if main dom is present, start diff process
-  if (mountedDom) {
-    let el: Element = renderEl(node);
+  if (diffType === "UPDATE") {
+    let el: Element = renderEl(node, undefined, false);
     let c: HConstructorElement;
     //due to an unknown issue, a RawComponent may have crept here as the new DOM, so further check
     if (Array.isArray(el)) {
@@ -88,14 +93,14 @@ export const diff = (mountedDom: Element, node: HElement, parent?: Element) => {
       c = el[1];
     }
     //lookup further if dom has only one child
-    if (mountedDom.firstChild === mountedDom.lastChild) {
-      mountedDom.childNodes.forEach((child: Element) => {
+    if (dom.firstChild === dom.lastChild) {
+      dom.childNodes.forEach((child: Element) => {
         if (child.nodeName === el.nodeName && child.innerHTML !== el.innerHTML)
           diffChildren(child, el);
       });
     } else {
       //lookup further in all children
-      const domChildren: NodeListOf<ChildNode> = mountedDom.childNodes;
+      const domChildren: NodeListOf<ChildNode> = dom.childNodes;
       domChildren.forEach((child: Element) => {
         if (
           child.nodeName === el.nodeName &&
@@ -106,11 +111,11 @@ export const diff = (mountedDom: Element, node: HElement, parent?: Element) => {
         }
       });
     }
-    return mountedDom;
-  } else if (parent) {
+    return dom;
+  } else if (diffType === "PLACEMENT") {
     //if dom not present, render the element and append it.
     //useful if component is rendering for the first time
-    let el = renderEl(node, parent);
+    let el = renderEl(node, dom, true);
     //if its component, get the first el which contains the dom
     let newDOM = Array.isArray(el) ? el[0] : el;
     //get the component, if present
@@ -121,13 +126,12 @@ export const diff = (mountedDom: Element, node: HElement, parent?: Element) => {
       newDOM = newDOM[0];
       c = newDOM[1];
     }
-    if (c && c.componentWillMount && !c["__dirty"]) {
+    if (c && c.componentWillMount && isDirty) {
       c.componentWillMount(newDOM);
     }
-    parent.appendChild(newDOM);
-    if (c && c.componentDidMount && !c["__dirty"]) {
+    dom.appendChild(newDOM);
+    if (c && c.componentDidMount && isDirty) {
       c.componentDidMount(newDOM);
-      c["__dirty"] = false;
     }
     return newDOM;
   }

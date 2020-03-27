@@ -51,14 +51,18 @@ export class Component {
   }
   /**
    * The function which will invoke when the component is about to mount.
+   * @param dom The DOM element that will be mounted
    */
   componentWillMount(dom?: Element) {}
   /**
    * The function which will invoke immediately after mounting the component.
+   * @param dom The DOM element that will is mounted
    */
   componentDidMount(dom?: Element) {}
   /**
    * The function which will invoke immediately if the DOM of component updates.
+   * @param oldDOM The old DOM element
+   * @param newDOM The updated DOM element
    */
   componentDidUpdate(oldDOM?: Element, newDOM?: Element) {}
 }

@@ -16,13 +16,13 @@ export const renderComponent: HElementRuntime = (
   let base: string[] = [];
   base.push(component.base.innerHTML);
   let oldDom = component.dom;
-  component.base = diff(component.base, rerendered);
+  component.base = diff(component.base, rerendered, "UPDATE", false);
   base.push(component.base.innerHTML);
   if (base[0] !== base[1]) {
     component.componentDidUpdate(oldDom, component.dom);
   }
 };
-export const renderEl = (node: any, target?: any) => {
+export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
   let textTypes = ["string", "number", "boolean"];
   /* istanbul ignore if*/ if (textTypes.includes(typeof node)) {
     return document.createTextNode(node);
@@ -33,7 +33,7 @@ export const renderEl = (node: any, target?: any) => {
     let component: HConstructorElement = new app(props);
     component.node = component.render();
     component.base = target;
-    let dom = renderEl(component.node);
+    let dom = renderEl(component.node, undefined, true);
     component.dom = dom;
     return [dom, component];
   } else {
@@ -68,7 +68,8 @@ export const renderEl = (node: any, target?: any) => {
       if (textTypes.includes(typeof child))
         dom.appendChild(document.createTextNode(child));
       else {
-        render(child, dom);
+        if (isDirty) render(child, dom);
+        else cleanRender(child, dom);
       }
     });
     return dom;
@@ -89,15 +90,13 @@ export const renderEl = (node: any, target?: any) => {
  * @param target The target to append to
  */
 export const render = (node: HElement, target: Element) => {
-  const commitRoot = () => {
-    diff(undefined, node, target);
-  };
-  const commitWork = deadline => {
-    deadline.done = false
-    while (deadline.timeRemaining() > 0 && !deadline.done) {
-      commitRoot();
-      deadline.done = true;
-    }
-  };
-  window["requestIdleCallback"](commitWork);
+  diff(target, node, "PLACEMENT", true);
+};
+/**
+ * Another version of render, but will only be used in the process of updating.
+ * @param node Your virtual Element
+ * @param target The target to append to
+ */
+const cleanRender = (node: HElement, target: Element) => {
+  diff(target, node, "PLACEMENT", false);
 };
