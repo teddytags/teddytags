@@ -13,14 +13,7 @@ export default [
         sourcemap: true,
       },
       {
-        file: pkg.exports["./cjs"],
-        format: "cjs",
-        exports: "named",
-        name: "TeddyTags",
-        sourcemap: true,
-      },
-      {
-        file: pkg.exports["./legacy"],
+        file: pkg.exports["./umd"],
         format: "umd",
         exports: "named",
         name: "TeddyTags",
