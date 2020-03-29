@@ -2,11 +2,11 @@ import { Component, HElement, PropsOrState } from "./component";
 type h = {
   (type: string, props: object, ...children: any[]);
   (type: Function, props: object, ...children: any[]);
-  (type: Component, props: object, ...children: any[]);
+  (type: Component<any, any>, props: object, ...children: any[]);
 };
 type RawComponent = {
   [index: number]: {
-    type: Component;
+    type: Component<any, any>;
     props: PropsOrState;
   };
 };

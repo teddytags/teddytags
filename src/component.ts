@@ -15,23 +15,23 @@ import { renderComponent } from "./render";
  * ```
  */
 /*istanbul ignore next */
-export class Component {
+export class Component<P = any, S = any> {
   /**
    * The general properties of the Component. Cannot be changed once set.
    * Should contain some unique or permanent information.
    * Only accessible if passed through the constructor as `super(props)`.
    */
-  readonly props: PropsOrState;
+  readonly props: P;
   /**
    * The attributes of the Component which can be changed as per user's basis.
    * Should contain some temporary information.
    */
-  state: PropsOrState;
+  state: S;
   /**
    * The constructor of the Component. It is a **must to pass `super(props)`** before other things.
-   * @param {PropsOrState} props The properties of the Component
+   * @param {P} props The properties of the Component
    */
-  constructor(props: PropsOrState) {
+  constructor(props: P) {
     this.props = props;
   }
   /**
@@ -45,7 +45,7 @@ export class Component {
    * @param state
    */
   /* istanbul ignore next */
-  setState(state: object) {
+  setState(state: S) {
     this.state = Object.assign({}, state);
     renderComponent(this);
   }

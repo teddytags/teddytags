@@ -4,6 +4,8 @@
     "outDir": "./",
     "rootDir": "./",
     "module": "es6",
+    "jsx": "react",
+    "jsxFactory": "h",
     "declaration": false,
     "sourceMap": false,
     "skipLibCheck": true
