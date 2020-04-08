@@ -2,7 +2,6 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "./",
-    "rootDir": "./",
     "module": "es6",
     "jsx": "react",
     "jsxFactory": "h",
@@ -10,7 +9,6 @@
     "sourceMap": false,
     "skipLibCheck": true
   },
-  "include": ["./**/*.test.ts",],
-  "files": ["test-context.ts"],
+  "include": ["./**/*.test.ts"],
   "exclude": [""]
 }

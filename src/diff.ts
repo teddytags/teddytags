@@ -29,10 +29,8 @@ const diffChildren = (child: Element, el: Element): void => {
       const cc: ChildNode = child.childNodes[i];
       //if childnodes length differs
       if (child.childNodes.length < el.childNodes.length) {
-        //get the difference
-        let d = el.childNodes.length - child.childNodes.length;
         for (
-          let i = child.childNodes.length - 1;
+          let i = child.childNodes.length;
           i < el.childNodes.length;
           i++
         ) {
@@ -82,7 +80,7 @@ export const diff = (
   diffType: string,
   isDirty: boolean
 ) => {
-  //if main dom is present, start diff process
+  //if reconciliation is for updating, start
   if (diffType === "UPDATE") {
     let el: Element = renderEl(node, undefined, false);
     let c: HConstructorElement;

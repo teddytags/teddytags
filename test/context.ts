@@ -1,0 +1,9 @@
+import '../lib/polyfills.js';
+import "./events.test"
+import "./fromcomponent.test"
+import "./misc.test"
+import "./set.test"
+import "./vdom-diff.test"
+import "./vdom-h.test"
+import "./vdom-render.test"
+import "./vdom-specialprops.test"

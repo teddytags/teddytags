@@ -68,12 +68,23 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
       if (textTypes.includes(typeof child))
         dom.appendChild(document.createTextNode(child));
       else {
-        if (isDirty) render(child, dom);
-        else cleanRender(child, dom);
+        if (isDirty) cleanRender(child, dom);
+        else updateRender(child, dom);
       }
     });
     return dom;
   }
+};
+export const cleanRender = (node: HElement, target: Element) => {
+  diff(target, node, "PLACEMENT", true);
+};
+/**
+ * Another version of render, but will only be used in the process of updating.
+ * @param node Your virtual Element
+ * @param target The target to append to
+ */
+const updateRender = (node: HElement, target: Element) => {
+  diff(target, node, "PLACEMENT", false);
 };
 /**
  * The function that links your Virtual Elements to the real DOM.
@@ -90,13 +101,38 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
  * @param target The target to append to
  */
 export const render = (node: HElement, target: Element) => {
-  diff(target, node, "PLACEMENT", true);
+  const commitRoot = () => {
+    diff(target, node, "PLACEMENT", true);
+  };
+  const commitWork = (deadline: RequestIdleCallbackDeadline) => {
+    deadline.done = false;
+    while (deadline.timeRemaining() > 0 && !deadline.done) {
+      commitRoot();
+      deadline.done = true;
+    }
+  };
+  if (window["__karma__"]) commitRoot();
+  else window.requestIdleCallback(commitWork);
 };
-/**
- * Another version of render, but will only be used in the process of updating.
- * @param node Your virtual Element
- * @param target The target to append to
- */
-const cleanRender = (node: HElement, target: Element) => {
-  diff(target, node, "PLACEMENT", false);
+
+//RequestIdleCallback definitions
+type RequestIdleCallbackHandle = any;
+type RequestIdleCallbackOptions = {
+  timeout: number;
 };
+type RequestIdleCallbackDeadline = {
+  //custom property
+  done?: boolean;
+  readonly didTimeout: boolean;
+  timeRemaining: () => number;
+};
+
+declare global {
+  interface Window {
+    requestIdleCallback: (
+      callback: (deadline: RequestIdleCallbackDeadline) => void,
+      opts?: RequestIdleCallbackOptions
+    ) => RequestIdleCallbackHandle;
+    cancelIdleCallback: (handle: RequestIdleCallbackHandle) => void;
+  }
+}

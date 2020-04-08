@@ -1,4 +1,4 @@
-import { HElement, Component } from "./component";
+type HNode = HElement | string | number | boolean | undefined | null;
 /*Courtesy of d.ts (https://github.com/geowarin/ts-react/blob/master/typings/react/d.ts)*/
 interface DOMAttributes {
   onCopy?: ClipboardEventHandler;
@@ -37,7 +37,11 @@ interface DOMAttributes {
   onWheel?: WheelEventHandler;
   innerHTML?: InnerHTML;
 }
-interface HTMLAttributes extends DOMAttributes {
+interface ChildProps<T> {
+  children?: HNode[];
+}
+interface HTMLPropAttributes extends DOMAttributes {
+  // Standard HTML Attributes
   accept?: string;
   acceptCharset?: string;
   accessKey?: string;
@@ -46,12 +50,14 @@ interface HTMLAttributes extends DOMAttributes {
   allowTransparency?: boolean;
   alt?: string;
   async?: boolean;
-  autoComplete?: boolean;
+  autoComplete?: string;
   autoFocus?: boolean;
   autoPlay?: boolean;
+  capture?: boolean;
   cellPadding?: number | string;
   cellSpacing?: number | string;
   charSet?: string;
+  challenge?: string;
   checked?: boolean;
   classID?: string;
   className?: string;
@@ -60,11 +66,12 @@ interface HTMLAttributes extends DOMAttributes {
   content?: string;
   contentEditable?: boolean;
   contextMenu?: string;
-  controls?: any;
+  controls?: boolean;
   coords?: string;
   crossOrigin?: string;
   data?: string;
   dateTime?: string;
+  default?: boolean;
   defer?: boolean;
   dir?: string;
   disabled?: boolean;
@@ -88,6 +95,12 @@ interface HTMLAttributes extends DOMAttributes {
   httpEquiv?: string;
   icon?: string;
   id?: string;
+  inputMode?: string;
+  integrity?: string;
+  is?: string;
+  keyParams?: string;
+  keyType?: string;
+  kind?: string;
   label?: string;
   lang?: string;
   list?: string;
@@ -102,6 +115,7 @@ interface HTMLAttributes extends DOMAttributes {
   mediaGroup?: string;
   method?: string;
   min?: number | string;
+  minLength?: number;
   multiple?: boolean;
   muted?: boolean;
   name?: string;
@@ -132,33 +146,51 @@ interface HTMLAttributes extends DOMAttributes {
   spellCheck?: boolean;
   src?: string;
   srcDoc?: string;
+  srcLang?: string;
   srcSet?: string;
   start?: number;
   step?: number | string;
   style?: CSSStyleDeclaration;
+  summary?: string;
   tabIndex?: number;
   target?: string;
   title?: string;
   type?: string;
   useMap?: string;
-  value?: string;
+  value?: string | string[];
   width?: number | string;
   wmode?: string;
+  wrap?: string;
+
+  // RDFa Attributes
+  about?: string;
+  datatype?: string;
+  inlist?: any;
+  prefix?: string;
+  property?: string;
+  resource?: string;
+  typeof?: string;
+  vocab?: string;
 
   // Non-standard Attributes
   autoCapitalize?: boolean;
-  autoCorrect?: boolean;
-  property?: string;
+  autoCorrect?: string;
+  autoSave?: string;
+  color?: string;
   itemProp?: string;
   itemScope?: boolean;
   itemType?: string;
+  itemID?: string;
+  itemRef?: string;
+  results?: number;
+  security?: string;
   unselectable?: boolean;
 }
-interface SVGElementAttributes extends HTMLAttributes {
+interface SVGElementAttributes extends HTMLPropAttributes {
   viewBox?: string;
   preserveAspectRatio?: string;
 }
-interface SVGAttributes extends DOMAttributes {
+interface SVGPropAttributes extends DOMAttributes {
   cx?: number | string;
   cy?: number | string;
   d?: string;
@@ -203,12 +235,10 @@ interface SVGAttributes extends DOMAttributes {
   y2?: number | string;
   y?: number | string;
 }
-interface DOMElement<P> extends Component<P, any> {
-  tagName: string;
-}
-interface DOMFactory<P> {
-  (props?: P, ...children: HElement[]): DOMElement<P>;
-}
+interface HTMLProps<T = HTMLElement>
+  extends HTMLPropAttributes,
+    ChildProps<T> {}
+interface SVGProps extends SVGPropAttributes, ChildProps<SVGAElement> {}
 
 // Events
 
@@ -337,142 +367,147 @@ interface TouchEventHandler extends EventHandler<TouchEvent> {}
 interface UIEventHandler extends EventHandler<UIEvent> {}
 interface WheelEventHandler extends EventHandler<WheelEvent> {}
 
-export declare namespace JSX {
-  interface Element extends HElement {}
-  interface ElementClass extends Component<any, any> {}
-  interface IntrinsicElements {
-    // HTML
-    a: HTMLAttributes;
-    abbr: HTMLAttributes;
-    address: HTMLAttributes;
-    area: HTMLAttributes;
-    article: HTMLAttributes;
-    aside: HTMLAttributes;
-    audio: HTMLAttributes;
-    b: HTMLAttributes;
-    base: HTMLAttributes;
-    bdi: HTMLAttributes;
-    bdo: HTMLAttributes;
-    big: HTMLAttributes;
-    blockquote: HTMLAttributes;
-    body: HTMLAttributes;
-    br: HTMLAttributes;
-    button: HTMLAttributes;
-    canvas: HTMLAttributes;
-    caption: HTMLAttributes;
-    cite: HTMLAttributes;
-    code: HTMLAttributes;
-    col: HTMLAttributes;
-    colgroup: HTMLAttributes;
-    data: HTMLAttributes;
-    datalist: HTMLAttributes;
-    dd: HTMLAttributes;
-    del: HTMLAttributes;
-    details: HTMLAttributes;
-    dfn: HTMLAttributes;
-    dialog: HTMLAttributes;
-    div: HTMLAttributes;
-    dl: HTMLAttributes;
-    dt: HTMLAttributes;
-    em: HTMLAttributes;
-    embed: HTMLAttributes;
-    fieldset: HTMLAttributes;
-    figcaption: HTMLAttributes;
-    figure: HTMLAttributes;
-    footer: HTMLAttributes;
-    form: HTMLAttributes;
-    h1: HTMLAttributes;
-    h2: HTMLAttributes;
-    h3: HTMLAttributes;
-    h4: HTMLAttributes;
-    h5: HTMLAttributes;
-    h6: HTMLAttributes;
-    head: HTMLAttributes;
-    header: HTMLAttributes;
-    hr: HTMLAttributes;
-    html: HTMLAttributes;
-    i: HTMLAttributes;
-    iframe: HTMLAttributes;
-    img: HTMLAttributes;
-    input: HTMLAttributes;
-    ins: HTMLAttributes;
-    kbd: HTMLAttributes;
-    keygen: HTMLAttributes;
-    label: HTMLAttributes;
-    legend: HTMLAttributes;
-    li: HTMLAttributes;
-    link: HTMLAttributes;
-    main: HTMLAttributes;
-    map: HTMLAttributes;
-    mark: HTMLAttributes;
-    menu: HTMLAttributes;
-    menuitem: HTMLAttributes;
-    meta: HTMLAttributes;
-    meter: HTMLAttributes;
-    nav: HTMLAttributes;
-    noscript: HTMLAttributes;
-    object: HTMLAttributes;
-    ol: HTMLAttributes;
-    optgroup: HTMLAttributes;
-    option: HTMLAttributes;
-    output: HTMLAttributes;
-    p: HTMLAttributes;
-    param: HTMLAttributes;
-    picture: HTMLAttributes;
-    pre: HTMLAttributes;
-    progress: HTMLAttributes;
-    q: HTMLAttributes;
-    rp: HTMLAttributes;
-    rt: HTMLAttributes;
-    ruby: HTMLAttributes;
-    s: HTMLAttributes;
-    samp: HTMLAttributes;
-    script: HTMLAttributes;
-    section: HTMLAttributes;
-    select: HTMLAttributes;
-    small: HTMLAttributes;
-    source: HTMLAttributes;
-    span: HTMLAttributes;
-    strong: HTMLAttributes;
-    style: HTMLAttributes;
-    sub: HTMLAttributes;
-    summary: HTMLAttributes;
-    sup: HTMLAttributes;
-    table: HTMLAttributes;
-    tbody: HTMLAttributes;
-    td: HTMLAttributes;
-    textarea: HTMLAttributes;
-    tfoot: HTMLAttributes;
-    th: HTMLAttributes;
-    thead: HTMLAttributes;
-    time: HTMLAttributes;
-    title: HTMLAttributes;
-    tr: HTMLAttributes;
-    track: HTMLAttributes;
-    u: HTMLAttributes;
-    ul: HTMLAttributes;
-    var: HTMLAttributes;
-    video: HTMLAttributes;
-    wbr: HTMLAttributes;
+declare global {
+  namespace JSX {
+    interface Element extends HElement {}
+    interface ElementClass extends Component {}
+    interface IntrinsicElements {
+      // HTML
+      a: HTMLProps<HTMLAnchorElement>;
+      abbr: HTMLProps;
+      address: HTMLProps;
+      area: HTMLProps<HTMLAreaElement>;
+      article: HTMLProps;
+      aside: HTMLProps;
+      audio: HTMLProps<HTMLAudioElement>;
+      b: HTMLProps;
+      base: HTMLProps<HTMLBaseElement>;
+      bdi: HTMLProps;
+      bdo: HTMLProps;
+      big: HTMLProps;
+      blockquote: HTMLProps<HTMLQuoteElement>;
+      body: HTMLProps<HTMLBodyElement>;
+      br: HTMLProps<HTMLBRElement>;
+      button: HTMLProps<HTMLButtonElement>;
+      canvas: HTMLProps<HTMLCanvasElement>;
+      caption: HTMLProps;
+      cite: HTMLProps;
+      code: HTMLProps;
+      col: HTMLProps;
+      colgroup: HTMLProps;
+      data: HTMLProps<HTMLDataElement>;
+      datalist: HTMLProps<HTMLDataListElement>;
+      dd: HTMLProps;
+      del: HTMLProps;
+      details: HTMLProps<HTMLDetailsElement>;
+      dfn: HTMLProps;
+      dialog: HTMLProps<HTMLDialogElement>;
+      div: HTMLProps<HTMLDivElement>;
+      dl: HTMLProps<HTMLDListElement>;
+      dt: HTMLProps;
+      em: HTMLProps;
+      embed: HTMLProps<HTMLEmbedElement>;
+      fieldset: HTMLProps<HTMLFieldSetElement>;
+      figcaption: HTMLProps;
+      figure: HTMLProps;
+      footer: HTMLProps;
+      form: HTMLProps<HTMLFormElement>;
+      h1: HTMLProps<HTMLHeadingElement>;
+      h2: HTMLProps<HTMLHeadingElement>;
+      h3: HTMLProps<HTMLHeadingElement>;
+      h4: HTMLProps<HTMLHeadingElement>;
+      h5: HTMLProps<HTMLHeadingElement>;
+      h6: HTMLProps<HTMLHeadingElement>;
+      head: HTMLProps<HTMLHeadingElement>;
+      header: HTMLProps;
+      hr: HTMLProps<HTMLHRElement>;
+      html: HTMLProps<HTMLHtmlElement>;
+      i: HTMLProps;
+      iframe: HTMLProps<HTMLIFrameElement>;
+      img: HTMLProps<HTMLImageElement>;
+      input: HTMLProps<HTMLInputElement>;
+      ins: HTMLProps;
+      kbd: HTMLProps;
+      keygen: HTMLProps;
+      label: HTMLProps<HTMLLabelElement>;
+      legend: HTMLProps<HTMLLegendElement>;
+      li: HTMLProps<HTMLLIElement>;
+      link: HTMLProps<HTMLLinkElement>;
+      main: HTMLProps;
+      map: HTMLProps<HTMLMapElement>;
+      mark: HTMLProps;
+      marquee: HTMLProps<HTMLMarqueeElement>;
+      media: HTMLProps<HTMLMediaElement>
+      menu: HTMLProps<HTMLMenuElement>;
+      menuitem: HTMLProps;
+      meta: HTMLProps<HTMLMetaElement>;
+      meter: HTMLProps<HTMLMeterElement>;
+      nav: HTMLProps;
+      noscript: HTMLProps;
+      object: HTMLProps<HTMLObjectElement>;
+      ol: HTMLProps<HTMLOListElement>;
+      optgroup: HTMLProps<HTMLOptGroupElement>;
+      option: HTMLProps<HTMLOptionElement>;
+      output: HTMLProps<HTMLOutputElement>;
+      p: HTMLProps<HTMLParagraphElement>;
+      param: HTMLProps<HTMLParamElement>;
+      picture: HTMLProps<HTMLPictureElement>;
+      pre: HTMLProps<HTMLPreElement>;
+      progress: HTMLProps<HTMLProgressElement>;
+      q: HTMLProps<HTMLQuoteElement>;
+      rp: HTMLProps;
+      rt: HTMLProps;
+      ruby: HTMLProps;
+      s: HTMLProps;
+      samp: HTMLProps;
+      script: HTMLProps<HTMLScriptElement>;
+      section: HTMLProps;
+      select: HTMLProps<HTMLSelectElement>;
+      slot: HTMLProps<HTMLSlotElement>
+      small: HTMLProps;
+      source: HTMLProps<HTMLSourceElement>;
+      span: HTMLProps<HTMLSpanElement>;
+      strong: HTMLProps;
+      style: HTMLProps<HTMLStyleElement>;
+      sub: HTMLProps;
+      summary: HTMLProps;
+      sup: HTMLProps;
+      table: HTMLProps<HTMLTableElement>;
+      tbody: HTMLProps;
+      td: HTMLProps;
+      textarea: HTMLProps;
+      tfoot: HTMLProps;
+      th: HTMLProps;
+      thead: HTMLProps;
+      time: HTMLProps;
+      title: HTMLProps;
+      tr: HTMLProps;
+      track: HTMLProps;
+      u: HTMLProps;
+      ul: HTMLProps;
+      var: HTMLProps;
+      video: HTMLProps;
+      wbr: HTMLProps;
 
-    // SVG
-    svg: SVGElementAttributes;
+      // SVG
+      svg: SVGElementAttributes;
 
-    circle: SVGAttributes;
-    defs: SVGAttributes;
-    ellipse: SVGAttributes;
-    g: SVGAttributes;
-    line: SVGAttributes;
-    linearGradient: SVGAttributes;
-    mask: SVGAttributes;
-    path: SVGAttributes;
-    pattern: SVGAttributes;
-    polygon: SVGAttributes;
-    polyline: SVGAttributes;
-    radialGradient: SVGAttributes;
-    rect: SVGAttributes;
-    stop: SVGAttributes;
-    text: SVGAttributes;
-    tspan: SVGAttributes;
+      circle: SVGProps;
+      defs: SVGProps;
+      ellipse: SVGProps;
+      g: SVGProps;
+      line: SVGProps;
+      linearGradient: SVGProps;
+      mask: SVGProps;
+      path: SVGProps;
+      pattern: SVGProps;
+      polygon: SVGProps;
+      polyline: SVGProps;
+      radialGradient: SVGProps;
+      rect: SVGProps;
+      stop: SVGProps;
+      text: SVGProps;
+      tspan: SVGProps;
+    }
   }
 }

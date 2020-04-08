@@ -14,7 +14,6 @@
     "type": "git",
     "url": "https://github.com/obnoxiousnerd/teddytags.git"
   },
-  "prettier": "./.prettierrc.json",
   "publishConfig": {
     "access": "public"
   },
@@ -31,17 +30,15 @@
   },
   "scripts": {
     "build": "npm run build:ts && npm run build:dts",
+    "build:dev": "npm run build:ts:dev && npm run build:dts",
     "build:ts": "rollup --config rollup.config.ts",
-    "build:ts:dev": "rollup --config rollup.config.ts --environment BUILD:production",
-    "build:dts": "npm run build:dts:es && npm run build:dts:umd && npm run build:dts:jsx",
+    "build:ts:dev": "rollup --config rollup.config.ts --environment BUILD:dev",
+    "build:dts": "npm run build:dts:es && npm run build:dts:jsx",
     "build:dts:es": "dts-bundle-generator --project src/tsconfig.json -o lib/teddytags.d.ts src/index.ts",
-    "build:dts:jsx": "dts-bundle-generator --project src/tsconfig.json -o lib/teddytags-jsx.d.ts src/jsx.d.ts",
-    "build:dts:umd": "dts-bundle-generator --project src/tsconfig.json -o lib/umd.d.ts src/index.ts",
+    "build:dts:jsx": "tsc util/buildjsxdefs && node util/buildjsxdefs",
     "dev": "rollup --config rollup.config.ts --watch",
-    "tsc:test": "tsc -p ./test",
-    "cleanup:test": "rimraf test/**/*.js",
     "prepare": "npm run build",
-    "test": "npm run build:dts && npm run build:ts:dev && npm run tsc:test && karma start karma.conf.ts && npm run cleanup:test"
+    "test": "npm run build:dev && karma start karma.conf.ts"
   },
   "keywords": [
     "custom elements",
@@ -54,17 +51,18 @@
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
-    "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
-    "@rollup/plugin-typescript": "^3.0.0",
+    "@babel/preset-typescript": "^7.9.0",
+    "@babel/runtime-corejs3": "^7.9.2",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-typescript": "^3.1.1",
     "@types/jasmine": "^3.5.4",
     "@types/node": "^13.7.0",
-    "@types/webpack": "^4.41.6",
-    "babel-loader": "^8.0.6",
+    "core-js": "^3.6.4",
     "coveralls": "^3.0.9",
-    "dts-bundle-generator": "^3.3.1",
+    "dts-bundle-generator": "^4.0.0",
     "husky": "^4.2.1",
-    "istanbul-instrumenter-loader": "^3.0.1",
     "jasmine-core": "^3.5.0",
     "karma": "^4.4.1",
     "karma-browserstack-launcher": "^1.5.1",
@@ -72,15 +70,17 @@
     "karma-coveralls": "^2.1.0",
     "karma-jasmine": "^3.1.1",
     "karma-remap-coverage": "^0.1.5",
-    "karma-webpack": "^4.0.2",
+    "karma-rollup-preprocessor": "^7.0.5",
+    "karma-spec-reporter": "0.0.32",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.2",
     "rollup": "^1.31.1",
     "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-istanbul": "^2.0.1",
     "rollup-plugin-terser": "^5.2.0",
     "terser": "^4.6.3",
-    "typescript": "^3.8.2",
-    "webpack": "^4.41.6"
+    "tslib": "^1.11.1",
+    "typescript": "^3.8.2"
   }
 }

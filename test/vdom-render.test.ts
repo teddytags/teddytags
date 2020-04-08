@@ -3,7 +3,7 @@ describe("TeddyVDOM - render", () => {
   beforeEach(() => {
     var fixture = `<div id="test"></div>`;
     document.body.insertAdjacentHTML("afterbegin", fixture);
-    let alertSpy = spyOn(window, "alert");
+    let alertSpy = spyOn(window, "alert")
   });
   afterEach(function() {
     document.body.removeChild(document.getElementById("test"));

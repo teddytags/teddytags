@@ -1,49 +1,52 @@
+let typescript = require("@rollup/plugin-typescript");
+let commonjs = require("@rollup/plugin-commonjs");
+let resolve = require("@rollup/plugin-node-resolve");
+let babel = require("rollup-plugin-babel");
+let istanbul = require("rollup-plugin-istanbul");
 module.exports = config => {
   config.set({
     basePath: "",
     frameworks: ["jasmine"],
-    files: [{ pattern: "./test/test-context.js", watched: false }],
+    files: [{ pattern: "./test/context.ts", watched: false }],
     browserStack: {
       username: process.env.BROWSERSTACK_USERNAME,
       accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
     },
-    exclude: [],
+    exclude: ["/node_modules/**/*"],
     preprocessors: {
-      "./lib/*.js": ["coverage"],
-      "./test/test-context.js": ["webpack"],
+      "./src/*.ts": ["coverage"],
+      "./test/context.ts": ["rollup"],
     },
-    webpack: {
-      mode: "production",
-      module: {
-        rules: [
-          {
-            test: /\.(js|jsx)/,
-            exclude: /node_modules/,
-            use: {
-              loader: "babel-loader",
-              options: {
-                presets: ["@babel/preset-env"],
-                plugins: ["@babel/plugin-transform-runtime"],
-              },
-            },
-          },
-          {
-            test: /\.(js|jsx)/,
-            exclude: /(node_modules|test)/,
-            use: {
-              loader: "istanbul-instrumenter-loader",
-              options: { esModules: true },
-            },
-            enforce: "post",
-          },
-        ],
+    rollupPreprocessor: {
+      input: "./test/context.ts",
+      plugins: [
+        commonjs(),
+        resolve({ browser: true }),
+        typescript({
+          tsconfig: "./test/tsconfig.json",
+          sourceMap: true,
+          noEmit: true,
+        }),
+        babel({
+          extensions: [".js", ".ts"],
+        }),
+        istanbul({
+          exclude: ["./test/*.ts", "./node_modules/*.js"],
+        }),
+      ],
+      output: {
+        format: "iife",
+        name: "teddy",
+        sourcemap: "inline",
       },
-      watch: true,
     },
-    webpackServer: {
-      noInfo: true,
-    },
-    reporters: ["BrowserStack", "coverage", "remap-coverage", "coveralls"],
+    reporters: [
+      "BrowserStack",
+      "coverage",
+      "remap-coverage",
+      "coveralls",
+      "spec",
+    ],
     coverageReporter: {
       type: "in-memory",
       html: "./coverage",
@@ -82,10 +85,10 @@ module.exports = config => {
         os: "Windows",
         os_version: "10",
       },
-      bs_opera_win: {
+      bs_ie_win: {
         base: "BrowserStack",
-        browser: "opera",
-        browser_version: "63",
+        browser: "ie",
+        browser_version: "11",
         os: "Windows",
         os_version: "10",
       },
@@ -95,7 +98,7 @@ module.exports = config => {
       "bs_chrome_mac",
       "bs_safari_mac",
       "bs_edge_win",
-      "bs_opera_win",
+      "bs_ie_win",
     ],
     port: 9876,
     colors: true,

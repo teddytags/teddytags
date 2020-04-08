@@ -1,5 +1,5 @@
 import { h } from "./h";
-import { render } from "./render";
+import { cleanRender } from "./render";
 import { Component } from "./component";
 /**
  * The class used for instantaniation of TeddyTags Custom Elements.
@@ -127,7 +127,7 @@ export class TeddyTags {
         props[a.name] = a.value;
       });
       let app = h(component, props);
-      render(app, e);
+      cleanRender(app, e);
     });
   };
 }
