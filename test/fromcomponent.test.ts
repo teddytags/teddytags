@@ -1,4 +1,4 @@
-import { TeddyTags, h, Component } from "../lib/teddytags";
+import { Tag, h, Component } from "../lib/teddytags";
 describe("TeddyTags fromComponent()", () => {
   let timerCallback;
   beforeEach(() => {
@@ -38,7 +38,7 @@ describe("TeddyTags fromComponent()", () => {
     }
   }
   it("should get Timer component working with .fromComponent()", () => {
-    new TeddyTags("Timer").fromComponent(Timer);
+    new Tag("Timer").fromComponent(Timer);
     let componentel = document.querySelector("#Timer h1");
     expect(componentel.getAttribute("id")).toBe("count");
     let interval = setInterval(() => {
@@ -53,7 +53,7 @@ describe("TeddyTags fromComponent()", () => {
     }, 10000);
   });
   it("should get Greet component working with .fromComponent()", () => {
-    new TeddyTags("Greet").fromComponent(Greet);
+    new Tag("Greet").fromComponent(Greet);
     let greet1 = document.querySelectorAll("#Greet h1")[0];
     let greet2 = document.querySelectorAll("#Greet h1")[1];
     expect(greet1.innerHTML).toBe("Hi, React");

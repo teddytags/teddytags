@@ -12,8 +12,9 @@ module.exports = config => {
       { pattern: "./lib/polyfills.js", watched: false },
     ],
     browserStack: {
-      username: process.env.BROWSERSTACK_USERNAME,
-      accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
+      project: "TeddyTags",
+      username: /*process.env.BROWSERSTACK_USERNAME*/ "pranavkarawale1",
+      accessKey: /*process.env.BROWSERSTACK_ACCESS_KEY*/ "nnp16k98fLyzN9f4pmCa",
     },
     exclude: ["/node_modules/**/*"],
     preprocessors: {
@@ -97,11 +98,11 @@ module.exports = config => {
       },
     },
     browsers: [
+      "bs_ie_win",
       "bs_firefox_mac",
       "bs_chrome_mac",
       "bs_safari_mac",
       "bs_edge_win",
-      "bs_ie_win",
     ],
     port: 9876,
     colors: true,

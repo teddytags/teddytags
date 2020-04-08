@@ -1,10 +1,41 @@
 import { h } from "./h";
-import { cleanRender } from "./render";
+import { render } from "./render";
 import { Component } from "./component";
+/**
+ * A function used in this library to pass attribues like `name`, `id`, etc. to an element.
+ * @param element The object referring to the element, like a `querySelector`
+ * @param attrs The atrributes to be passed. Must be of type NamedNodeMap
+ */
+const passAttrs = (element:any, attrs: NamedNodeMap): void => {
+  Array.prototype.slice.call(attrs).forEach((attr: Attr) => {
+    if (attr.name === "id") {
+      /* Not passing ID ahead */
+    } else {
+      element.setAttribute(attr.name, attr.value);
+    }
+  });
+};
+/**
+ * A function used in this library to parse the custom tag with a valid HTML5 tag.
+ * @param element The object referring to the element, like a `querySelector`
+ * @param tagName The valid HTML5 tag that will replace the element's custom tag name
+ * @param newId The custom tag name. Must because to preserve the custom element's identity in an `ID` attribute
+ */
+const parseHTML = (
+  element: HTMLElement,
+  tagName: string,
+  newId: string
+): void => {
+  let elementHTML: string = element.innerHTML;
+  let newEl: Element = document.createElement(tagName)
+  newEl.setAttribute('id', newId)
+  newEl.innerHTML = elementHTML
+  element.parentElement.replaceChild(newEl, element)
+};
 /**
  * The class used for instantaniation of TeddyTags Custom Elements.
  */
-export class TeddyTags {
+export class Tag {
   /**
    * The `querySelectorAll` which will be mutated from the `constructor` of this class.
    */
@@ -13,30 +44,6 @@ export class TeddyTags {
    * The name of the custom element, acquired from the `constructor`.
    */
   elementName: string;
-  /**
-   * A function used in this library to pass attribues like `name`, `id`, etc. to an element.
-   * @param element The object referring to the element, like a `querySelector`
-   * @param attrs The atrributes to be passed. Must be of type NamedNodeMap
-   */
-  passAttrs = (element, attrs: NamedNodeMap): void => {
-    Array.prototype.slice.call(attrs).forEach((attr: Attr) => {
-      if (attr.name === "id") {
-        /* Not passing ID ahead */
-      } else {
-        element.setAttribute(attr.name, attr.value);
-      }
-    });
-  };
-  /**
-   * A function used in this library to parse the custom tag with a valid HTML5 tag.
-   * @param element The object referring to the element, like a `querySelector`
-   * @param tagName The valid HTML5 tag that will replace the element's custom tag name
-   * @param newId The custom tag name. Must because to preserve the custom element's identity in an `ID` attribute
-   */
-  parseHTML = (element: HTMLElement, tagName: string, newId: string): void => {
-    let elementHTML: string = element.innerHTML;
-    element.outerHTML = `<${tagName} id="${newId}">${elementHTML}</${tagName}>`;
-  };
   /**
    * Initialize TeddyTags
    * @param selector The custom element's tag name
@@ -80,10 +87,10 @@ export class TeddyTags {
     let index: number = 0;
     this.selector.forEach((element: HTMLElement) => {
       let attributes: NamedNodeMap = element.attributes;
-      this.parseHTML(element, tagName, this.elementName);
+      parseHTML(element, tagName, this.elementName);
       this.selector = document.querySelectorAll(`#${this.elementName}`);
       let newElement: Node | HTMLElement = this.selector[index];
-      this.passAttrs(newElement, attributes);
+      passAttrs(newElement, attributes);
       index += 1;
     });
   };
@@ -127,7 +134,7 @@ export class TeddyTags {
         props[a.name] = a.value;
       });
       let app = h(component, props);
-      cleanRender(app, e);
+      render(app, e);
     });
   };
 }

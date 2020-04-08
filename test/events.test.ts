@@ -1,4 +1,4 @@
-import { TeddyTags } from "../lib/teddytags";
+import { Tag } from "../lib/teddytags";
 describe("TeddyTags Event Listener with Custom Elements", () => {
   beforeEach(() => {
     var fixture = `
@@ -16,8 +16,8 @@ describe("TeddyTags Event Listener with Custom Elements", () => {
     document.body.removeChild(document.getElementById("test"));
   });
   it("will check event listener to be working", () => {
-    new TeddyTags("sometext").set("p");
-    new TeddyTags("clickme").set("button");
+    new Tag("sometext").set("p");
+    new Tag("clickme").set("button");
     let text = document.querySelector("#listener p#sometext");
     let button: Element | any = document.querySelector(
       "#listener button#clickme"

@@ -1,4 +1,5 @@
 if (!Array.prototype.includes) {
+  console.info("Loaded Array.prototype.includes Polyfill");
   Object.defineProperty(Array.prototype, "includes", {
     enumerable: false,
     writable: true,
@@ -36,7 +37,7 @@ if (!Array.prototype.includes) {
   });
 }
 if ("NodeList" in window && !NodeList.prototype.forEach) {
-  console.info("polyfill for IE11");
+  console.info("Loaded NodeList.prototype.forEach Polyfill");
   NodeList.prototype.forEach = function(callback, thisArg) {
     thisArg = thisArg || window;
     for (var i = 0; i < this.length; i++) {
@@ -45,6 +46,7 @@ if ("NodeList" in window && !NodeList.prototype.forEach) {
   };
 }
 if (typeof Object.assign !== "function") {
+  console.log("Loaded Object.assign Polyfill")
   // Must be writable: true, enumerable: false, configurable: true
   Object.defineProperty(Object, "assign", {
     value: function assign(target, varArgs) {
@@ -75,6 +77,7 @@ if (typeof Object.assign !== "function") {
   });
 }
 if (!String.prototype.startsWith) {
+  console.log("Loaded String.prototype.startsWith Polyfill")
   String.prototype.startsWith = function(searchString, position) {
     position = position || 0;
     return this.substr(position, searchString.length) === searchString;
@@ -103,6 +106,7 @@ interface Window {
 window.requestIdleCallback =
   window.requestIdleCallback ||
   function(cb) {
+    console.log("Loaded requestIdleCallback Polyfill")
     var start = Date.now();
     return setTimeout(function() {
       cb({

@@ -1,8 +1,8 @@
 import { h } from "./h";
 import { render } from "./render";
 import { Component, HElement } from "./component";
-import { TeddyTags } from "./teddytags";
-export { h, render, Component, TeddyTags };
+import { Tag } from "./tag";
+export { h, render, Component, Tag };
 const _default = {
   /**
  * The hyperscript function which will create virtual elements.
@@ -33,6 +33,6 @@ const _default = {
  * @param target The target to append to
  */
   render,
-  TeddyTags: TeddyTags,
+  Tag: Tag,
 };
 export default _default;
