@@ -12,8 +12,8 @@ module.exports = config => {
       { pattern: "./lib/polyfills.js", watched: false },
     ],
     browserStack: {
-      username: /*process.env.BROWSERSTACK_USERNAME*/ "pranavkarawale1",
-      accessKey: /*process.env.BROWSERSTACK_ACCESS_KEY*/ "nnp16k98fLyzN9f4pmCa",
+      username: process.env.BROWSERSTACK_USERNAME,
+      accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
     },
     exclude: ["/node_modules/**/*"],
     preprocessors: {
