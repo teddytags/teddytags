@@ -7,10 +7,13 @@ module.exports = config => {
   config.set({
     basePath: "",
     frameworks: ["jasmine"],
-    files: [{ pattern: "./test/context.ts", watched: false }],
+    files: [
+      { pattern: "./test/context.ts", watched: false },
+      { pattern: "./lib/polyfills.js", watched: false },
+    ],
     browserStack: {
-      username: process.env.BROWSERSTACK_USERNAME,
-      accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
+      username: /*process.env.BROWSERSTACK_USERNAME*/ "pranavkarawale1",
+      accessKey: /*process.env.BROWSERSTACK_ACCESS_KEY*/ "nnp16k98fLyzN9f4pmCa",
     },
     exclude: ["/node_modules/**/*"],
     preprocessors: {
@@ -31,7 +34,7 @@ module.exports = config => {
           extensions: [".js", ".ts"],
         }),
         istanbul({
-          exclude: ["./test/*.ts", "./node_modules/*.js"],
+          exclude: ["./test/*.ts"],
         }),
       ],
       output: {
@@ -90,7 +93,7 @@ module.exports = config => {
         browser: "ie",
         browser_version: "11",
         os: "Windows",
-        os_version: "10",
+        os_version: "7",
       },
     },
     browsers: [

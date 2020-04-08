@@ -1,4 +1,3 @@
-import '../lib/polyfills.js';
 import "./events.test"
 import "./fromcomponent.test"
 import "./misc.test"

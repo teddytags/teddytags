@@ -34,7 +34,7 @@ export default [
       format: 'iife'
     },
     plugins: [
-      typescript({ tsconfig: "./src/tsconfig.json" }),
+      typescript({ tsconfig: "./src/tsconfig.json", noEmit: true }),
       process.env.BUILD === "dev" ? [] : terser({ compress: true }),
       babel({ extensions: [".js", ".ts"] }),
     ]
