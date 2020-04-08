@@ -12,10 +12,6 @@ os:
 node_js:
   - node
 
-addons:
-  chrome: stable
-  firefox: 68.0.1
-
 install:
   - npm ci
 
