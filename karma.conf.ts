@@ -7,10 +7,7 @@ module.exports = config => {
   config.set({
     basePath: "",
     frameworks: ["jasmine"],
-    files: [
-      { pattern: "./test/context.ts", watched: false },
-      { pattern: "./lib/polyfills.js", watched: false },
-    ],
+    files: [{ pattern: "./test/context.ts", watched: false }],
     browserStack: {
       project: "TeddyTags",
       username: process.env.BROWSERSTACK_USERNAME,
@@ -25,23 +22,23 @@ module.exports = config => {
       input: "./test/context.ts",
       plugins: [
         commonjs(),
-        resolve({ browser: true }),
+        resolve({ extensions: [".ts", ".tsx"] }),
         typescript({
           tsconfig: "./test/tsconfig.json",
-          sourceMap: true,
           noEmit: true,
+          sourceMap: true,
         }),
         babel({
-          extensions: [".js", ".ts"],
+          extensions: [".js", ".ts", ".tsx", ".jsx"],
         }),
         istanbul({
-          exclude: ["./test/*.ts"],
+          exclude: ["./test/**/*.ts", "./test/**/*.tsx"],
         }),
       ],
       output: {
         format: "iife",
         name: "teddy",
-        sourcemap: "inline",
+        sourcemap: true,
       },
     },
     reporters: [
