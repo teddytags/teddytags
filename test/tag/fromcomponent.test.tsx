@@ -1,4 +1,4 @@
-import { Tag, h, Component } from "../lib/teddytags";
+import { Tag, h, Component } from "Lib/teddytags.js";
 describe("TeddyTags fromComponent()", () => {
   let timerCallback;
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe("TeddyTags fromComponent()", () => {
       super(props);
     }
     render() {
-      return h("h1", null, "Hi, ", this.props.user);
+      return <h1>Hi, {this.props.user}</h1>;
     }
   }
   class Timer extends Component {
@@ -34,7 +34,7 @@ describe("TeddyTags fromComponent()", () => {
       }, 1000);
     }
     render() {
-      return h("h1", { id: "count" }, "Count: ", this.state.count);
+      return <h1 id="count">Count: {this.state.count}</h1>;
     }
   }
   it("should get Timer component working with .fromComponent()", () => {

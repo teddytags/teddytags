@@ -1,4 +1,4 @@
-import { Tag } from "../lib/teddytags";
+import { Tag } from "Lib/teddytags.js";
 describe("TeddyTags Constructor and other functions", () => {
   beforeEach(() => {
     var fixture = `

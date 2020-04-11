@@ -1,20 +1,25 @@
-import { h, render, Component } from "../lib/teddytags";
-describe("TeddyVDOM - render", () => {
+import { h, render, Component } from "Lib/teddytags.js";
+describe("TeddyVDOM Core - render", () => {
   beforeEach(() => {
     var fixture = `<div id="test"></div>`;
     document.body.insertAdjacentHTML("afterbegin", fixture);
-    let alertSpy = spyOn(window, "alert")
   });
   afterEach(function() {
     document.body.removeChild(document.getElementById("test"));
   });
   it("should render element in the html", () => {
-    let el = h("h1", { id: "H1" }, "Hello World!");
+    let el = <h1 id="H1">Hello World!</h1>;
     render(el, document.querySelector("#test"));
     expect(document.querySelector("#test #H1").innerHTML).toBe("Hello World!");
   });
   it("should render element in the html with children as numbers, string and boolean", () => {
-    let el = h("h1", { id: "H1" }, "Hello World!", 13, true);
+    let el = (
+      <h1 id="H1">
+        {"Hello World!"}
+        {13}
+        {true}
+      </h1>
+    );
     render(el, document.querySelector("#test"));
     expect(document.querySelector("#test #H1").innerHTML).toBe(
       "Hello World!13true"
@@ -33,7 +38,7 @@ describe("TeddyVDOM - render", () => {
         super(props);
       }
       render() {
-        return h("h1", { id: "H1" }, "Hi, ", this.props.name);
+        return <h1 id="H1">Hi, {this.props.name}</h1>;
       }
     }
     let el = h(App, { name: "VSCODE" });
@@ -41,25 +46,26 @@ describe("TeddyVDOM - render", () => {
     expect(document.querySelector("#test #H1").innerHTML).toBe("Hi, VSCODE");
   });
   it("should render with event listener", () => {
+    let log: any[] = [];
     class App extends Component {
       constructor(props) {
         super(props);
       }
       render() {
-        return h(
-          "button",
-          {
-            onClick: () => {
-              alert("Bye");
-            },
-          },
-          "HI"
+        return (
+          <button
+            onClick={() => {
+              log.push("Bye");
+            }}
+          >
+            HI
+          </button>
         );
       }
     }
     render(h(App, null), document.querySelector("#test"));
     let el: Element | any = document.querySelector("#test button");
     el.click();
-    expect(window.alert).toHaveBeenCalledWith("Bye")
+    expect(log[0]).toBe("Bye");
   });
 });

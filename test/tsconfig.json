@@ -7,8 +7,8 @@
     "jsxFactory": "h",
     "declaration": false,
     "sourceMap": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
-  "include": ["./**/*.test.ts"],
+  "include": ["./**/*.test.ts", "./**/*.test.tsx"],
   "exclude": [""]
 }

@@ -1,14 +1,14 @@
-import { h, Component, render} from "../lib/teddytags";
-describe("TeddyVDOM - diff", () => {
-  let timerCallback
+import { h, Component, render } from "Lib/teddytags.js";
+describe("TeddyVDOM Core - diff", () => {
+  let timerCallback;
   beforeEach(() => {
     var fixture = `<div id="test"></div>`;
-    timerCallback = jasmine.createSpy('timerCallback')
-    jasmine.clock().install()
+    timerCallback = jasmine.createSpy("timerCallback");
+    jasmine.clock().install();
     document.body.insertAdjacentHTML("afterbegin", fixture);
   });
   afterEach(function() {
-    jasmine.clock().uninstall()
+    jasmine.clock().uninstall();
     document.body.removeChild(document.getElementById("test"));
   });
   class Greet extends Component {
@@ -16,7 +16,7 @@ describe("TeddyVDOM - diff", () => {
       super(props);
     }
     render() {
-      return h("h1", null, "Hi, ",this.props.name);
+      return <h1>Hi, {this.props.name}</h1>;
     }
   }
   class Counter extends Component {
@@ -28,26 +28,26 @@ describe("TeddyVDOM - diff", () => {
       }, 1000);
     }
     render() {
-      return h("h1", { id: "count" }, "Count: ", this.state.count);
+      return <h1 id="count">Count: {this.state.count}</h1>;
     }
   }
   it("should render and diff Counter component", () => {
-    render(h(Counter, null), document.querySelector("#test"));
+    render(<Counter />, document.querySelector("#test"));
     let el = document.querySelector("#test #count");
     let interval = setInterval(() => {
-      timerCallback()
+      timerCallback();
       let count = 0;
       expect(el.innerHTML).toBe(`Count: ${count}`);
       count += 1;
-      jasmine.clock().tick(1000)
+      jasmine.clock().tick(1000);
     }, 1000);
     setTimeout(() => {
       clearInterval(interval);
     }, 10000);
   });
   it("should render and diff Greet component", () => {
-    render(h(Greet, {name: "Yoda"}), document.querySelector("#test"));
-      let el = document.querySelector("#test h1");
-      expect(el.innerHTML).toBe("Hi, Yoda")
+    render(<Greet name="Yoda"/>, document.querySelector("#test"));
+    let el = document.querySelector("#test h1");
+    expect(el.innerHTML).toBe("Hi, Yoda");
   });
 });
