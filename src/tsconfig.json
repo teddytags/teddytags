@@ -4,6 +4,7 @@
     "module": "es6",
     "outDir": "../lib",
     "declaration": false,
+    "skipLibCheck": true,
     "typeRoots": ["../lib"]
   },
   "include": ["./**.ts", "index.ts"]

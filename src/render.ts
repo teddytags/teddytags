@@ -12,15 +12,18 @@ interface HElementRuntime {
 export const renderComponent: HElementRuntime = (
   component: HConstructorElement
 ): void => {
-  let rerendered: HElement = component.render();
-  let base: string[] = [];
-  base.push(component.base.innerHTML);
-  let oldDom = component.dom;
-  component.base = diff(component.base, rerendered, "UPDATE", false);
-  base.push(component.base.innerHTML);
-  if (base[0] !== base[1]) {
-    component.componentDidUpdate(oldDom, component.dom);
-  }
+  //only proceed if the component has mounted, else return
+  if (component.base && component.dom) {
+    let rerendered: HElement = component.render();
+    let base: string[] = [];
+    base.push(component.base.innerHTML);
+    let oldDom = component.dom;
+    component.base = diff(component.base, rerendered, "UPDATE", false);
+    base.push(component.base.innerHTML);
+    if (base[0] !== base[1]) {
+      component.componentDidUpdate(oldDom, component.dom);
+    }
+  } else return;
 };
 export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
   let textTypes = ["string", "number", "boolean"];
@@ -69,9 +72,12 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
         dom.appendChild(document.createTextNode(child));
       else {
         if (isDirty) cleanRender(child, dom);
+        /*istanbul ignore next */
         else updateRender(child, dom);
       }
     });
+    //set dom for future reference
+    node.dom = dom
     return dom;
   }
 };
@@ -101,9 +107,13 @@ const updateRender = (node: HElement, target: Element) => {
  * @param target The target to append to
  */
 export const render = (node: HElement, target: Element) => {
+  /*istanbul ignore next */
   const commitRoot = () => {
-    diff(target, node, "PLACEMENT", true);
+    if (target["__tdNode__"]) {
+      diff(target, node, "UPDATE", true);
+    } else diff(target, node, "PLACEMENT", true);
   };
+  /*istanbul ignore next : irreproducible*/
   const commitWork = (deadline: RequestIdleCallbackDeadline) => {
     deadline.done = false;
     while (deadline.timeRemaining() > 0 && !deadline.done) {
@@ -112,6 +122,7 @@ export const render = (node: HElement, target: Element) => {
     }
   };
   if (window["__karma__"]) commitRoot();
+  /*istanbul ignore next : irreproducible*/
   else window.requestIdleCallback(commitWork);
 };
 

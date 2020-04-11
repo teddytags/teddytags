@@ -1,4 +1,5 @@
 import { renderComponent } from "./render";
+/*istanbul ignore next */
 /**
  * The class used for the instantaniation of TeddyTags virtual elements
  *
@@ -49,6 +50,9 @@ export class Component<P = any, S = any> {
     this.state = Object.assign({}, state);
     renderComponent(this);
   }
+  readonly node?: HElement;
+  base?: Element;
+  dom?: Element;
   /**
    * The function which will invoke when the component is about to mount.
    * @param dom The DOM element that will be mounted
@@ -59,6 +63,10 @@ export class Component<P = any, S = any> {
    * @param dom The DOM element that will is mounted
    */
   componentDidMount(dom?: Element) {}
+  /**
+   * The function which will invoke immediately after unmounting the component.
+   */
+  componentDidUnmount() {}
   /**
    * The function which will invoke immediately if the DOM of component updates.
    * @param oldDOM The old DOM element

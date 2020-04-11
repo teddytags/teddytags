@@ -35,7 +35,11 @@ interface DOMAttributes {
   onTouchStart?: TouchEventHandler;
   onScroll?: UIEventHandler;
   onWheel?: WheelEventHandler;
-  innerHTML?: InnerHTML;
+  /**
+   * Set HTML of the element.
+   * *WARNING: The children will be replaced by anything that is in this property.*
+   */
+  innerHTML?: any;
 }
 interface ChildProps<T> {
   children?: HNode[];
@@ -437,7 +441,7 @@ declare global {
       map: HTMLProps<HTMLMapElement>;
       mark: HTMLProps;
       marquee: HTMLProps<HTMLMarqueeElement>;
-      media: HTMLProps<HTMLMediaElement>
+      media: HTMLProps<HTMLMediaElement>;
       menu: HTMLProps<HTMLMenuElement>;
       menuitem: HTMLProps;
       meta: HTMLProps<HTMLMetaElement>;
@@ -463,7 +467,7 @@ declare global {
       script: HTMLProps<HTMLScriptElement>;
       section: HTMLProps;
       select: HTMLProps<HTMLSelectElement>;
-      slot: HTMLProps<HTMLSlotElement>
+      slot: HTMLProps<HTMLSlotElement>;
       small: HTMLProps;
       source: HTMLProps<HTMLSourceElement>;
       span: HTMLProps<HTMLSpanElement>;
