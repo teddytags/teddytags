@@ -70,14 +70,14 @@ module.exports = config => {
         browser: "chrome",
         browser_version: "23",
         os: "OS X",
-        os_version: "Catalina",
+        os_version: "Lion",
       },
       bs_safari_mac: {
         base: "BrowserStack",
         browser: "safari",
         browser_version: "6",
         os: "OS X",
-        os_version: "Catalina",
+        os_version: "Lion",
       },
       bs_ie_win: {
         base: "BrowserStack",
