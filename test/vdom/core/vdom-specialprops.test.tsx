@@ -1,7 +1,7 @@
 import { h, render } from "Lib/teddytags.js";
 describe("TeddyVDOM Core - special properties", () => {
   beforeEach(() => {
-    var fixture = `<div id="test"></div>`;
+    const fixture = `<div id="test"></div>`;
 
     document.body.insertAdjacentHTML("afterbegin", fixture);
   });
@@ -9,14 +9,14 @@ describe("TeddyVDOM Core - special properties", () => {
     document.body.removeChild(document.getElementById("test"));
   });
   it("should set 'innerHTML' of the component", () => {
-    let app = <h1 innerHTML="This is innerHTML"></h1>;
+    const app = <h1 innerHTML="This is innerHTML"></h1>;
     render(app, document.querySelector("#test"));
     expect(document.querySelector("#test h1").innerHTML).toBe(
       "This is innerHTML"
     );
   });
   it("should set 'class' of the component through 'className'", () => {
-    let app = <h1 className="class"></h1>;
+    const app = <h1 className="class"></h1>;
     render(app, document.querySelector("#test"));
     expect(document.querySelector("#test h1").className).toBe("class");
   });

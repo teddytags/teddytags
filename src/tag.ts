@@ -6,7 +6,7 @@ import { Component } from "./component";
  * @param element The object referring to the element, like a `querySelector`
  * @param attrs The atrributes to be passed. Must be of type NamedNodeMap
  */
-const passAttrs = (element:any, attrs: NamedNodeMap): void => {
+const passAttrs = (element: any, attrs: NamedNodeMap): void => {
   Array.prototype.slice.call(attrs).forEach((attr: Attr) => {
     if (attr.name === "id") {
       /* Not passing ID ahead */
@@ -26,11 +26,11 @@ const parseHTML = (
   tagName: string,
   newId: string
 ): void => {
-  let elementHTML: string = element.innerHTML;
-  let newEl: Element = document.createElement(tagName)
-  newEl.setAttribute('id', newId)
-  newEl.innerHTML = elementHTML
-  element.parentElement.replaceChild(newEl, element)
+  const elementHTML: string = element.innerHTML;
+  const newEl: Element = document.createElement(tagName);
+  newEl.setAttribute("id", newId);
+  newEl.innerHTML = elementHTML;
+  element.parentElement.replaceChild(newEl, element);
 };
 /**
  * The class used for instantaniation of TeddyTags Custom Elements.
@@ -84,12 +84,12 @@ export class Tag {
      * The `index` variable is used to select the elements from the newly mutated elements.
      * It will stop brodcasting properties from one element to another.
      */
-    let index: number = 0;
+    let index = 0;
     this.selector.forEach((element: HTMLElement) => {
-      let attributes: NamedNodeMap = element.attributes;
+      const attributes: NamedNodeMap = element.attributes;
       parseHTML(element, tagName, this.elementName);
       this.selector = document.querySelectorAll(`#${this.elementName}`);
-      let newElement: Node | HTMLElement = this.selector[index];
+      const newElement: Node | HTMLElement = this.selector[index];
       passAttrs(newElement, attributes);
       index += 1;
     });
@@ -129,11 +129,11 @@ export class Tag {
   fromComponent = (component: typeof Component): void => {
     this.set("div");
     this.selector.forEach((e: HTMLElement) => {
-      let props = {};
+      const props = {};
       Array.prototype.slice.call(e.attributes).forEach((a: Attr) => {
         props[a.name] = a.value;
       });
-      let app = h(component, props);
+      const app = h(component, props);
       render(app, e);
     });
   };

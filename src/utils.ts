@@ -15,7 +15,7 @@ export const getDOMNode = (component: Component | HElement): Element => {
  * @param component The component class to unmount
  */
 export const unmountComponent = (dom: Element): boolean => {
-  let HNode: Component = dom["__tdNode__"];
+  const HNode: Component = dom["__tdNode__"];
   if (!HNode) return false;
   //Taking strings as evaluation becomes easier and to avoid TS-2367 error
   HNode.base.removeChild(HNode.dom);

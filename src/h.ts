@@ -29,7 +29,7 @@ export const h: h = (type: any, props: object, ...children: any[]) => {
     return rawComponent;
   }
   if (typeof type === "function") {
-    let func = type(props);
+    const func = type(props);
     return func;
   }
   const node: HElement = { type, props: { ...props, children } };

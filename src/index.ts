@@ -1,4 +1,4 @@
-import "./polyfills"
+import "./polyfills";
 import { h } from "./h";
 import { render } from "./render";
 import { getDOMNode, unmountComponent } from "./utils";

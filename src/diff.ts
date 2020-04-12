@@ -125,7 +125,7 @@ export const diff = (
     return dom;
   } else if (diffType === "PLACEMENT") {
     //if dom not present, render the element.
-    let el = renderEl(node, dom, true);
+    const el = renderEl(node, dom, true);
     //if its component, get the first el which contains the dom
     let newDOM = Array.isArray(el) ? el[0] : el;
     //get the component, if present

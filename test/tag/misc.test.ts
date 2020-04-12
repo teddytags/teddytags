@@ -1,7 +1,7 @@
 import { Tag } from "Lib/teddytags.js";
 describe("TeddyTags Constructor and other functions", () => {
   beforeEach(() => {
-    var fixture = `
+    const fixture = `
         <div id="test">
             <div id="tags">
                 <testTag>Test Tag</testTag>
@@ -23,17 +23,17 @@ describe("TeddyTags Constructor and other functions", () => {
     document.body.removeChild(document.getElementById("test"));
   });
   it("will check constructor properties to be equal", () => {
-    let construct = new Tag("testTag");
+    const construct = new Tag("testTag");
     expect(construct.selector).toEqual(document.querySelectorAll("testTag"));
     expect(construct.elementName).toBe("testTag");
   });
   it("will override id attribute", () => {
     let testEl = document.createElement("lol");
     testEl.id = "id";
-    testEl.className = "lol-element"
+    testEl.className = "lol-element";
     document.querySelector("#test").appendChild(testEl);
     new Tag("lol").set("h1");
-    testEl = document.querySelector("#test h1.lol-element")
+    testEl = document.querySelector("#test h1.lol-element");
     expect(testEl.id).toBe("lol");
   });
 });

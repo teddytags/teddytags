@@ -1,3 +1,5 @@
+/* eslint @typescript-eslint/no-unused-vars : 0 */
+/* eslint @typescript-eslint/no-empty-function: 0 */
 import { renderComponent } from "./render";
 /*istanbul ignore next */
 /**
@@ -90,7 +92,7 @@ export type PropsOrState = { [propOrState: string]: any };
 export interface HConstructorElement {
   readonly props: PropsOrState;
   state: PropsOrState;
-  constructor(props: PropsOrState): void;
+  HConstructorElement(props: PropsOrState): void;
   render(): HElement;
   node?: HElement;
   base?: Element;

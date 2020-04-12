@@ -2,7 +2,7 @@ import { Tag, h, Component } from "Lib/teddytags.js";
 describe("TeddyTags fromComponent()", () => {
   let timerCallback;
   beforeEach(() => {
-    var fixture = `
+    const fixture = `
         <div id="test">
             <Timer></Timer>
             <Greet user="React"></Greet>
@@ -39,9 +39,9 @@ describe("TeddyTags fromComponent()", () => {
   }
   it("should get Timer component working with .fromComponent()", () => {
     new Tag("Timer").fromComponent(Timer);
-    let componentel = document.querySelector("#Timer h1");
+    const componentel = document.querySelector("#Timer h1");
     expect(componentel.getAttribute("id")).toBe("count");
-    let interval = setInterval(() => {
+    const interval = setInterval(() => {
       timerCallback();
       let count = 0;
       expect(componentel.innerHTML).toBe(`Count: ${count}`);
@@ -54,8 +54,8 @@ describe("TeddyTags fromComponent()", () => {
   });
   it("should get Greet component working with .fromComponent()", () => {
     new Tag("Greet").fromComponent(Greet);
-    let greet1 = document.querySelectorAll("#Greet h1")[0];
-    let greet2 = document.querySelectorAll("#Greet h1")[1];
+    const greet1 = document.querySelectorAll("#Greet h1")[0];
+    const greet2 = document.querySelectorAll("#Greet h1")[1];
     expect(greet1.innerHTML).toBe("Hi, React");
     expect(greet2.innerHTML).toBe("Hi, Martin");
   });

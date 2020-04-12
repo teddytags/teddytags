@@ -2,7 +2,7 @@ import { h, Component, render } from "Lib/teddytags.js";
 describe("TeddyVDOM Core - diff", () => {
   let timerCallback;
   beforeEach(() => {
-    var fixture = `<div id="test"></div>`;
+    const fixture = `<div id="test"></div>`;
     timerCallback = jasmine.createSpy("timerCallback");
     jasmine.clock().install();
     document.body.insertAdjacentHTML("afterbegin", fixture);
@@ -33,8 +33,8 @@ describe("TeddyVDOM Core - diff", () => {
   }
   it("should render and diff Counter component", () => {
     render(<Counter />, document.querySelector("#test"));
-    let el = document.querySelector("#test #count");
-    let interval = setInterval(() => {
+    const el = document.querySelector("#test #count");
+    const interval = setInterval(() => {
       timerCallback();
       let count = 0;
       expect(el.innerHTML).toBe(`Count: ${count}`);
@@ -46,8 +46,8 @@ describe("TeddyVDOM Core - diff", () => {
     }, 10000);
   });
   it("should render and diff Greet component", () => {
-    render(<Greet name="Yoda"/>, document.querySelector("#test"));
-    let el = document.querySelector("#test h1");
+    render(<Greet name="Yoda" />, document.querySelector("#test"));
+    const el = document.querySelector("#test h1");
     expect(el.innerHTML).toBe("Hi, Yoda");
   });
 });

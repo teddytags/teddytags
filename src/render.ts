@@ -14,10 +14,10 @@ export const renderComponent: HElementRuntime = (
 ): void => {
   //only proceed if the component has mounted, else return
   if (component.base && component.dom) {
-    let rerendered: HElement = component.render();
-    let base: string[] = [];
+    const rerendered: HElement = component.render();
+    const base: string[] = [];
     base.push(component.base.innerHTML);
-    let oldDom = component.dom;
+    const oldDom = component.dom;
     component.base = diff(component.base, rerendered, "UPDATE", false);
     base.push(component.base.innerHTML);
     if (base[0] !== base[1]) {
@@ -25,18 +25,36 @@ export const renderComponent: HElementRuntime = (
     }
   } else return;
 };
+export const cleanRender = (node: HElement, target: Element) => {
+  diff(target, node, "PLACEMENT", true);
+};
+/**
+ * Another version of render, but will only be used in the process of updating.
+ * @param node Your virtual Element
+ * @param target The target to append to
+ */
+const updateRender = (node: HElement, target: Element) => {
+  diff(target, node, "PLACEMENT", false);
+};
 export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
-  let textTypes = ["string", "number", "boolean"];
+  const isValidMethod = (key: string) => {
+    const validMethods = ["innerHTML", "className"];
+    return validMethods.includes(key);
+  };
+  const isEvent = (key: string) => {
+    return key.startsWith("on");
+  };
+  const textTypes = ["string", "number", "boolean"];
   /* istanbul ignore if*/ if (textTypes.includes(typeof node)) {
     return document.createTextNode(node);
   }
   if (Array.isArray(node)) {
-    let app = node[0],
+    const app = node[0],
       props: object = node[1];
-    let component: HConstructorElement = new app(props);
+    const component: HConstructorElement = new app(props);
     component.node = component.render();
     component.base = target;
-    let dom = renderEl(component.node, undefined, true);
+    const dom = renderEl(component.node, undefined, true);
     component.dom = dom;
     return [dom, component];
   } else {
@@ -44,17 +62,10 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
     const isProp = (key: string) => {
       return key !== "children" && !isEvent(key) && !isValidMethod(key);
     };
-    const isValidMethod = (key: string) => {
-      const validMethods = ["innerHTML", "className"];
-      return validMethods.includes(key);
-    };
-    const isEvent = (key: string) => {
-      return key.startsWith("on");
-    };
     Object.keys(node.props)
       .filter(isEvent)
       .forEach(event => {
-        let type = event.substring(2).toLowerCase();
+        const type = event.substring(2).toLowerCase();
         dom.addEventListener(type, node.props[event]);
       });
     Object.keys(node.props)
@@ -72,25 +83,13 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
         dom.appendChild(document.createTextNode(child));
       else {
         if (isDirty) cleanRender(child, dom);
-        /*istanbul ignore next */
-        else updateRender(child, dom);
+        /*istanbul ignore next */ else updateRender(child, dom);
       }
     });
     //set dom for future reference
-    node.dom = dom
+    node.dom = dom;
     return dom;
   }
-};
-export const cleanRender = (node: HElement, target: Element) => {
-  diff(target, node, "PLACEMENT", true);
-};
-/**
- * Another version of render, but will only be used in the process of updating.
- * @param node Your virtual Element
- * @param target The target to append to
- */
-const updateRender = (node: HElement, target: Element) => {
-  diff(target, node, "PLACEMENT", false);
 };
 /**
  * The function that links your Virtual Elements to the real DOM.
@@ -122,8 +121,8 @@ export const render = (node: HElement, target: Element) => {
     }
   };
   if (window["__karma__"]) commitRoot();
-  /*istanbul ignore next : irreproducible*/
-  else window.requestIdleCallback(commitWork);
+  /*istanbul ignore next : irreproducible*/ else
+    window.requestIdleCallback(commitWork);
 };
 
 //RequestIdleCallback definitions

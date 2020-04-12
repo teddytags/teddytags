@@ -1,17 +1,17 @@
 import { getDOMNode, Component, h, render } from "Lib/teddytags.js";
 describe("TeddyVDOM Utils - getDOMNode", () => {
   beforeEach(() => {
-    var fixture = `<div id="test"></div>`;
+    const fixture = `<div id="test"></div>`;
     document.body.insertAdjacentHTML("afterbegin", fixture);
   });
   afterEach(function() {
     document.body.removeChild(document.getElementById("test"));
   });
   it("should get node of a `h` component", () => {
-    let tester = <h1>Hello World</h1>;
+    const tester = <h1>Hello World</h1>;
     render(tester, document.querySelector("#test"));
-    let isTester = document.querySelector("#test h1").outerHTML;
-    let shouldBeTester = "<h1>Hello World</h1>";
+    const isTester = document.querySelector("#test h1").outerHTML;
+    const shouldBeTester = "<h1>Hello World</h1>";
     expect(shouldBeTester).toBe(isTester);
   });
   it("should get node of a Class component", () => {
@@ -27,9 +27,9 @@ describe("TeddyVDOM Utils - getDOMNode", () => {
         return <h1>Hello, World</h1>;
       }
     }
-    let tester = <Me />;
+    const tester = <Me />;
     render(tester, document.querySelector("#test"));
-    let isTester = document.querySelector("#test h1").outerHTML;
+    const isTester = document.querySelector("#test h1").outerHTML;
     expect(shouldBeTester).toBe(isTester);
   });
 });

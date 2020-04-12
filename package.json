@@ -38,8 +38,10 @@
     "build:dts:es": "dts-bundle-generator --project src/tsconfig.json -o lib/teddytags.d.ts src/index.ts",
     "build:dts:jsx": "tsc util/buildjsxdefs && node util/buildjsxdefs",
     "dev": "rollup --config rollup.config.ts --watch",
-    "prepare": "npm run build",
-    "test": "npm run alias:link && npm run build:dev && karma start karma.conf.ts"
+    "lint": "",
+    "lint:fix": "",
+    "prepublishOnly": "npm run build",
+    "test": "npm run alias:link && npm run lint && npm run build:dev && karma start karma.conf.ts"
   },
   "keywords": [
     "custom elements",
@@ -59,8 +61,13 @@
     "@rollup/plugin-typescript": "^3.1.1",
     "@types/jasmine": "^3.5.4",
     "@types/node": "^13.7.0",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
     "coveralls": "^3.0.9",
     "dts-bundle-generator": "^4.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
     "husky": "^4.2.1",
     "jasmine-core": "^3.5.0",
     "karma": "^4.4.1",

@@ -1,3 +1,4 @@
+/* eslint-disable */
 /*istanbul ignore next */
 (() => {
   if (!Array.prototype.includes) {

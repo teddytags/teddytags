@@ -1,7 +1,7 @@
 import { Tag } from "Lib/teddytags.js";
 describe("TeddyTags Custom Elements", () => {
   beforeEach(() => {
-    var fixture = `
+    const fixture = `
         <div id="test">
             <div id="tags">
                 <testTag>Test Tag</testTag>
@@ -24,22 +24,22 @@ describe("TeddyTags Custom Elements", () => {
   });
   it("will check h1#customH1 to be compiled", () => {
     new Tag("customH1").set("h1");
-    let tag = document.querySelector("#tags h1#customH1");
+    const tag = document.querySelector("#tags h1#customH1");
     expect(tag.innerHTML).toBe("This is a H1 tag");
   });
   it("will check h2#customH2 to be compiled", () => {
     new Tag("customH2").set("h2");
-    let tag = document.querySelector("#tags h2#customH2");
+    const tag = document.querySelector("#tags h2#customH2");
     expect(tag.innerHTML).toBe("This is a H2 tag");
   });
   it("will check p#customP to be compiled", () => {
     new Tag("customP").set("p");
-    let tag = document.querySelector("#tags p#customP");
+    const tag = document.querySelector("#tags p#customP");
     expect(tag.innerHTML).toBe("This is a paragraph");
   });
   it("will check button#myButton to be compiled", () => {
     new Tag("myButton").set("button");
-    let tag = document.querySelector("#tags button#myButton");
+    const tag = document.querySelector("#tags button#myButton");
     expect(tag.innerHTML).toBe("This is a button");
   });
 });
