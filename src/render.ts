@@ -107,42 +107,7 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
  */
 export const render = (node: HElement, target: Element) => {
   /*istanbul ignore next */
-  const commitRoot = () => {
-    if (target["__tdNode__"]) {
-      diff(target, node, "UPDATE", true);
-    } else diff(target, node, "PLACEMENT", true);
-  };
-  /*istanbul ignore next : irreproducible*/
-  const commitWork = (deadline: RequestIdleCallbackDeadline) => {
-    deadline.done = false;
-    while (deadline.timeRemaining() > 0 && !deadline.done) {
-      commitRoot();
-      deadline.done = true;
-    }
-  };
-  if (window["__karma__"]) commitRoot();
-  /*istanbul ignore next : irreproducible*/ else
-    window.requestIdleCallback(commitWork);
+  if (target["__tdNode__"]) {
+    diff(target, node, "UPDATE", true);
+  } else diff(target, node, "PLACEMENT", true);
 };
-
-//RequestIdleCallback definitions
-type RequestIdleCallbackHandle = any;
-type RequestIdleCallbackOptions = {
-  timeout: number;
-};
-type RequestIdleCallbackDeadline = {
-  //custom property
-  done?: boolean;
-  readonly didTimeout: boolean;
-  timeRemaining: () => number;
-};
-
-declare global {
-  interface Window {
-    requestIdleCallback: (
-      callback: (deadline: RequestIdleCallbackDeadline) => void,
-      opts?: RequestIdleCallbackOptions
-    ) => RequestIdleCallbackHandle;
-    cancelIdleCallback: (handle: RequestIdleCallbackHandle) => void;
-  }
-}

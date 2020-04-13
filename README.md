@@ -78,8 +78,6 @@ Head over to https://teddy.js.org/docs
 
    TeddyTags just need five polyfills and which are also shipped with it:
 
-   ✔️ requestIdleCallback
-
    ✔️ Array.includes
 
    ✔️ String.startsWith

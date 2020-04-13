@@ -87,44 +87,4 @@
       return this.substr(position, searchString.length) === searchString;
     };
   }
-  //RequestIdleCallback definitions
-  type RequestIdleCallbackHandle = any;
-  type RequestIdleCallbackOptions = {
-    timeout: number;
-  };
-  type RequestIdleCallbackDeadline = {
-    //custom property
-    done?: boolean;
-    readonly didTimeout: boolean;
-    timeRemaining: () => number;
-  };
-
-  interface Window {
-    requestIdleCallback: (
-      callback: (deadline: RequestIdleCallbackDeadline) => void,
-      opts?: RequestIdleCallbackOptions
-    ) => RequestIdleCallbackHandle;
-    cancelIdleCallback: (handle: RequestIdleCallbackHandle) => void;
-  }
-
-  window.requestIdleCallback =
-    window.requestIdleCallback ||
-    function(cb) {
-      console.log("Loaded requestIdleCallback Polyfill");
-      var start = Date.now();
-      return setTimeout(function() {
-        cb({
-          didTimeout: false,
-          timeRemaining: function() {
-            return Math.max(0, 50 - (Date.now() - start));
-          },
-        });
-      }, 1);
-    };
-
-  window.cancelIdleCallback =
-    window.cancelIdleCallback ||
-    function(id) {
-      clearTimeout(id);
-    };
 })();
