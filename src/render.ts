@@ -25,7 +25,10 @@ export const renderComponent: HElementRuntime = (
     }
   } else return;
 };
-export const cleanRender = (node: HElement, target: Element) => {
+export const cleanRender = (
+  node: HElement,
+  target: Element | DocumentFragment
+) => {
   diff(target, node, "PLACEMENT", true);
 };
 /**
@@ -33,7 +36,7 @@ export const cleanRender = (node: HElement, target: Element) => {
  * @param node Your virtual Element
  * @param target The target to append to
  */
-const updateRender = (node: HElement, target: Element) => {
+const updateRender = (node: HElement, target: Element | DocumentFragment) => {
   diff(target, node, "PLACEMENT", false);
 };
 export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
@@ -49,14 +52,27 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
     return document.createTextNode(node);
   }
   if (Array.isArray(node)) {
-    const app = node[0],
-      props: object = node[1];
-    const component: HConstructorElement = new app(props);
-    component.node = component.render();
-    component.base = target;
-    const dom = renderEl(component.node, undefined, true);
-    component.dom = dom;
-    return [dom, component];
+    if (node[0] === "__FRAGMENT__") {
+      const fragDom: DocumentFragment = document.createDocumentFragment();
+      node.shift();
+      node.forEach(child => {
+        if (isDirty) {
+          cleanRender(child, fragDom);
+        } else {
+          updateRender(child, fragDom);
+        }
+      });
+      return fragDom;
+    } else {
+      const app = node[0],
+        props: object = node[1];
+      const component: HConstructorElement = new app(props);
+      component.node = component.render();
+      component.base = target;
+      const dom = renderEl(component.node, undefined, true);
+      component.dom = dom;
+      return [dom, component];
+    }
   } else {
     const dom: Element = document.createElement(node.type);
     const isProp = (key: string) => {

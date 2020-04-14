@@ -1,10 +1,10 @@
 import "./polyfills";
-import { h } from "./h";
+import { h, Fragment } from "./h";
 import { render } from "./render";
 import { getDOMNode, unmountComponent } from "./utils";
 import { Component, HElement } from "./component";
 import { Tag } from "./tag";
-export { h, render, Component, Tag, getDOMNode, unmountComponent };
+export { h, render, Component, Tag, getDOMNode, unmountComponent, Fragment };
 const _default = {
   /**
    * The hyperscript function which will create virtual elements.
@@ -38,5 +38,6 @@ const _default = {
    */
   render,
   Tag: Tag,
+  Fragment,
 };
 export default _default;

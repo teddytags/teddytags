@@ -38,8 +38,8 @@
     "build:dts:es": "dts-bundle-generator --project src/tsconfig.json -o lib/teddytags.d.ts src/index.ts",
     "build:dts:jsx": "tsc util/buildjsxdefs && node util/buildjsxdefs",
     "dev": "rollup --config rollup.config.ts --watch",
-    "lint": "",
-    "lint:fix": "",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "prepublishOnly": "npm run build",
     "test": "npm run alias:link && npm run lint && npm run build:dev && karma start karma.conf.ts"
   },

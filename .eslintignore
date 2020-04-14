@@ -1,5 +1,6 @@
 node_modules
 coverage
+**/*.js
 lib
 util
 karma.conf.ts

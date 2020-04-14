@@ -50,7 +50,7 @@ export class Tag {
    *
    * Example:
    * ```javascript
-   *    new TeddyTags('customTag')
+   *    new Tag('customTag')
    * ```
    * Will refer to
    * ```html
@@ -72,7 +72,7 @@ export class Tag {
    * ```
    *  * Using the function
    * ```javascript
-   *    new TeddyTags('customTag').set('h1');
+   *    new Tag('customTag').set('h1');
    * ```
    *  * The result
    * ```html
@@ -116,7 +116,7 @@ export class Tag {
    *
    * * Code to convert it into element
    *   ```javascript
-   *    new TeddyTags('Greeter').fromComponent(Greeter)
+   *    new Tag('Greeter').fromComponent(Greeter)
    *   ```
    *
    * * The rendered HTML

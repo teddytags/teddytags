@@ -25,13 +25,18 @@ type RawComponent = {
 export const h: h = (type: any, props: object, ...children: any[]) => {
   props = !props ? {} : props;
   if (type.prototype && type.prototype.isClassComponent) {
-    const rawComponent: RawComponent = [type, props];
+    const rawComponent: RawComponent = [type, { ...props, children }];
     return rawComponent;
   }
   if (typeof type === "function") {
-    const func = type(props);
+    const func = type({ ...props, children });
     return func;
   }
   const node: HElement = { type, props: { ...props, children } };
   return node;
+};
+
+export const Fragment = props => {
+  props.children.unshift("__FRAGMENT__");
+  return props.children;
 };

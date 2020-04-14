@@ -2,6 +2,7 @@ import { renderEl } from "./render";
 import { HElement, HConstructorElement } from "./component";
 /*istanbul ignore next */
 const checkAttrs = (a: NamedNodeMap, b: NamedNodeMap): boolean => {
+  if (!a || !b) return;
   let c = "";
   Array.prototype.slice.call(a).map(x => {
     c = c + x.toString();
@@ -19,9 +20,17 @@ const diffChildren = (
   el: Element,
   sameKind?: boolean
 ): void => {
+  if (
+    //is a text node
+    child.nodeType === 3
+  ) {
+    if (child.nodeValue !== el.nodeValue) {
+      child.nodeValue = el.nodeValue;
+    }
+  }
   outer: if (
-    //same tag
-    child.tagName === el.tagName &&
+    //same tag or is a fragment
+    child.nodeName === el.nodeName &&
     //same attributes
     checkAttrs(child.attributes, el.attributes) &&
     //is a element
@@ -65,7 +74,7 @@ const diffChildren = (
   //if child and el has
   if (
     //same tag
-    child.tagName === el.tagName &&
+    child.nodeName === el.nodeName &&
     //but not same attributes
     !checkAttrs(child.attributes, el.attributes) &&
     //is a element
@@ -83,7 +92,7 @@ const diffChildren = (
 //Ignoring temporarily cause tests not ready
 /* istanbul ignore next */
 export const diff = (
-  dom: Element,
+  dom: any,
   node: HElement,
   diffType: string,
   isDirty: boolean
@@ -104,23 +113,35 @@ export const diff = (
       el = el[0];
     }
     //lookup further if dom has only one child
-    if (dom.firstChild === dom.lastChild) {
+    if (dom.childElementCount === 1) {
       dom.childNodes.forEach((child: Element) => {
         if (child.nodeName === el.nodeName && child.innerHTML !== el.innerHTML)
           diffChildren(child, el, sameKind);
       });
-    } else {
-      //lookup further in all children
-      const domChildren: NodeListOf<ChildNode> = dom.childNodes;
-      domChildren.forEach((child: Element) => {
-        if (
-          child.nodeName === el.nodeName &&
-          child.innerHTML !== el.innerHTML
-        ) {
-          diffChildren(child, el, sameKind);
-          node.dom = child;
-        }
+    } else if (
+      // is documentFragment
+      dom.childElementCount > 1 &&
+      el.nodeName === "#document-fragment"
+    ) {
+      dom.childNodes.forEach((child: Element, index: number) => {
+        const elchild: any = el.childNodes[index];
+        diffChildren(child, elchild, sameKind);
       });
+      node.dom = dom;
+    } else {
+      {
+        //lookup further in all children
+        const domChildren: NodeListOf<ChildNode> = dom.childNodes;
+        domChildren.forEach((child: Element, index: number) => {
+          if (
+            child.nodeName === el.nodeName &&
+            child.innerHTML !== el.innerHTML
+          ) {
+            diffChildren(child, el, sameKind);
+            node.dom = child;
+          }
+        });
+      }
     }
     return dom;
   } else if (diffType === "PLACEMENT") {
