@@ -3,10 +3,8 @@ describe("TeddyVDOM Core - Fragments", () => {
   beforeEach(() => {
     const fixture = `<div id="test"></div>`;
     document.body.insertAdjacentHTML("afterbegin", fixture);
-    jasmine.clock().install();
   });
   afterEach(function() {
-    jasmine.clock().uninstall();
     document.body.removeChild(document.getElementById("test"));
   });
   it("should render a fragment in the element like a simple `h` component does", () => {
@@ -52,16 +50,13 @@ describe("TeddyVDOM Core - Fragments", () => {
       constructor(props) {
         super(props);
         this.state = { count: 0 };
-        setTimeout(() => {
-          this.setState({ count: 1 });
-        }, 1000);
+        this.setState({ count: 1 });
       }
       render(): HElement {
         return <Fragment>{this.state.count}</Fragment>;
       }
     }
     render(<App />, document.querySelector("#test"));
-    jasmine.clock().tick(1000);
     expect(document.querySelector("#test").innerHTML).toBe("1");
   });
 });

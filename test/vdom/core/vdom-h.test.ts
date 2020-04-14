@@ -64,7 +64,7 @@ describe("TeddyVDOM Core - h", () => {
       }
     }
     const el = h(App, { name: "Master" });
-    const shouldBeElRaw = [App, { name: "Master" }];
+    const shouldBeElRaw = [App, { name: "Master", children: [] }];
     const shouldBeElRender = {
       type: "h1",
       props: { children: ["Hi,", "Master"] },
