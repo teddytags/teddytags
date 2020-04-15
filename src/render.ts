@@ -42,13 +42,13 @@ const updateRender = (node: HElement, target: Element | DocumentFragment) => {
 export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
   const isValidMethod = (key: string) => {
     const validMethods = ["innerHTML", "className"];
-    return validMethods.includes(key);
+    return validMethods.indexOf(key) > -1;
   };
   const isEvent = (key: string) => {
-    return key.startsWith("on");
+    return key.indexOf("on") === 0;
   };
   const textTypes = ["string", "number", "boolean"];
-  /* istanbul ignore if*/ if (textTypes.includes(typeof node)) {
+  /* istanbul ignore if*/ if (textTypes.indexOf(typeof node) > -1) {
     return document.createTextNode(node);
   }
   if (Array.isArray(node)) {
@@ -98,8 +98,12 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
       if (textTypes.includes(typeof child))
         dom.appendChild(document.createTextNode(child));
       else {
-        if (isDirty) cleanRender(child, dom);
-        /*istanbul ignore next */ else updateRender(child, dom);
+        /*istanbul ignore next: probably not picked up by istanbul */ if (
+          isDirty
+        )
+          cleanRender(child, dom);
+        /*istanbul ignore next: probably not picked up by istanbul */ else
+          updateRender(child, dom);
       }
     });
     //set dom for future reference

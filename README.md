@@ -77,11 +77,7 @@ Head over to https://teddy.js.org/docs
 ## 1. Polyfills??
 
    TeddyTags just need five polyfills and which are also shipped with it:
-
-   ✔️ Array.includes
-
-   ✔️ String.startsWith
-
+   
    ✔️ Object.assign
 
    ✔️ NodeList.forEach
