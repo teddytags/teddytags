@@ -95,7 +95,7 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
         dom[prop] = node.props[prop];
       });
     node.props.children.forEach(child => {
-      if (textTypes.includes(typeof child))
+      if (textTypes.indexOf(typeof child) > -1)
         dom.appendChild(document.createTextNode(child));
       else {
         /*istanbul ignore next: probably not picked up by istanbul */ if (
