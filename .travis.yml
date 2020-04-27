@@ -10,11 +10,14 @@ os:
 node_js:
   - node
 
-install:
-  - npm ci
-
-script:
-  - npm test
+jobs:
+  include: 
+  - stage: Build
+    script: npm ci
+  - stage: Lint
+    script: npm run lint
+  - stage: Tests
+    script: npm run test
 
 notifications:
   - email: false
