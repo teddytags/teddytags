@@ -20,4 +20,16 @@ describe("TeddyVDOM Core - special properties", () => {
     render(app, document.querySelector("#test"));
     expect(document.querySelector("#test h1").className).toBe("class");
   });
+  it("should set 'style' of the component(string)", () => {
+    const app = <h1 style="font-size: 12px;"></h1>;
+    render(app, document.querySelector("#test"));
+    const testEl: HTMLElement = document.querySelector("#test h1");
+    expect(testEl.style.cssText).toBe("font-size: 12px;");
+  });
+  it("should set 'style' of the component(object)", () => {
+    const app = <h1 style={{ fontSize: "12px" }}></h1>;
+    render(app, document.querySelector("#test"));
+    const testEl: HTMLElement = document.querySelector("#test h1");
+    expect(testEl.style.fontSize).toBe("12px");
+  });
 });

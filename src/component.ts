@@ -1,6 +1,7 @@
 /* eslint @typescript-eslint/no-unused-vars : 0 */
 /* eslint @typescript-eslint/no-empty-function: 0 */
 import { renderComponent } from "./render";
+import { HNode } from "./jsx";
 /*istanbul ignore next */
 /**
  * The class used for the instantaniation of TeddyTags virtual elements
@@ -48,33 +49,33 @@ export class Component<P = any, S = any> {
    * @param state
    */
   /* istanbul ignore next */
-  setState(state: S) {
+  setState(state: S): void {
     this.state = Object.assign({}, state);
     renderComponent(this);
   }
-  readonly node?: HElement;
+  readonly node?: HNode;
   base?: Element;
   dom?: Element;
   /**
    * The function which will invoke when the component is about to mount.
    * @param dom The DOM element that will be mounted
    */
-  componentWillMount(dom?: Element) {}
+  componentWillMount(dom?: Element): void {}
   /**
    * The function which will invoke immediately after mounting the component.
    * @param dom The DOM element that will is mounted
    */
-  componentDidMount(dom?: Element) {}
+  componentDidMount(dom?: Element): void {}
   /**
    * The function which will invoke immediately after unmounting the component.
    */
-  componentDidUnmount() {}
+  componentDidUnmount(): void {}
   /**
    * The function which will invoke immediately if the DOM of component updates.
    * @param oldDOM The old DOM element
    * @param newDOM The updated DOM element
    */
-  componentDidUpdate(oldDOM?: Element, newDOM?: Element) {}
+  componentDidUpdate(oldDOM?: Element, newDOM?: Element): void {}
 }
 Component.prototype["isClassComponent"] = true;
 /**
@@ -85,15 +86,15 @@ export interface HElement {
   readonly props: PropsOrState;
   [children: string]: any;
 }
-export type PropsOrState = { [propOrState: string]: any };
+export type PropsOrState<T = any> = { [propOrState: string]: T };
 /**
  * The standard interface of a component virtual element
  */
-export interface HConstructorElement {
-  readonly props: PropsOrState;
-  state: PropsOrState;
-  HConstructorElement(props: PropsOrState): void;
-  render(): HElement;
+export interface HConstructorElement<P = any, S = any> {
+  readonly props: PropsOrState<P>;
+  state: PropsOrState<S>;
+  new (props: PropsOrState<P>): void;
+  render(): HNode & HElement;
   node?: HElement;
   base?: Element;
   dom?: Element;

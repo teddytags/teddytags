@@ -1,4 +1,7 @@
-type HNode = HElement | string | number | boolean | undefined | null;
+//NO-CONCAT-START
+import { HElement, Component } from "./component";
+//NO-CONCAT-END
+export type HNode = HElement | string | number | boolean | undefined | null;
 /*Courtesy of d.ts (https://github.com/geowarin/ts-react/blob/master/typings/react/d.ts)*/
 interface DOMAttributes {
   onCopy?: ClipboardEventHandler;
@@ -154,7 +157,7 @@ interface HTMLPropAttributes extends DOMAttributes {
   srcSet?: string;
   start?: number;
   step?: number | string;
-  style?: CSSStyleDeclaration;
+  style?: Partial<CSSStyleDeclaration> | string;
   summary?: string;
   tabIndex?: number;
   target?: string;
@@ -242,7 +245,9 @@ interface SVGPropAttributes extends DOMAttributes {
 export interface HTMLProps<T = HTMLElement>
   extends HTMLPropAttributes,
     ChildProps<T> {}
-export interface SVGProps<T = SVGElement> extends SVGPropAttributes, ChildProps<SVGElement> {}
+export interface SVGProps<T = SVGElement>
+  extends SVGPropAttributes,
+    ChildProps<SVGElement> {}
 
 // Events
 

@@ -87,12 +87,7 @@ module.exports = config => {
         os_version: "7",
       },
     },
-    browsers: [
-      "bs_ie_win",
-      "bs_firefox_mac",
-      "bs_chrome_mac",
-      "bs_safari_mac",
-    ],
+    browsers: ["bs_ie_win", "bs_firefox_mac", "bs_chrome_mac", "bs_safari_mac"],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

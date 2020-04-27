@@ -1,16 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "es6",
+    "target": "ES6",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "declaration": true,
     "lib": ["ES2017", "dom"],
-    "types": [
-      "node",
-      "jasmine"
-    ]
+    "types": ["node", "jasmine"]
   }
 }
