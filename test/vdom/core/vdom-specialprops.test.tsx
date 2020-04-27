@@ -24,7 +24,7 @@ describe("TeddyVDOM Core - special properties", () => {
     const app = <h1 style="font-size: 12px;"></h1>;
     render(app, document.querySelector("#test"));
     const testEl: HTMLElement = document.querySelector("#test h1");
-    expect(testEl.style.cssText).toBe("font-size: 12px;");
+    expect(testEl.style.cssText.trim()).toBe("font-size: 12px;");
   });
   it("should set 'style' of the component(object)", () => {
     const app = <h1 style={{ fontSize: "12px" }}></h1>;
