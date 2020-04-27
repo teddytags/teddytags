@@ -43,7 +43,7 @@
     "lint:eslint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "prepublishOnly": "npm run build",
-    "test": "npm run alias:link && npm run lint && npm run build:dev && karma start karma.conf.ts"
+    "test": "npm run alias:link && npm run build:dev && karma start karma.conf.ts"
   },
   "keywords": [
     "custom elements",
