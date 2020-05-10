@@ -1,7 +1,7 @@
+import "./tag/components.test";
 import "./tag/events.test";
-import "./tag/fromcomponent.test";
 import "./tag/misc.test";
-import "./tag/set.test";
+import "./tag/updates.test";
 import "./vdom/core/vdom-diff.test";
 import "./vdom/core/vdom-fragment.test";
 import "./vdom/core/vdom-h.test";

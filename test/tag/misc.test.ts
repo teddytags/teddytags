@@ -23,17 +23,8 @@ describe("TeddyTags Constructor and other functions", () => {
     document.body.removeChild(document.getElementById("test"));
   });
   it("will check constructor properties to be equal", () => {
-    const construct = new Tag("testTag");
-    expect(construct.selector).toEqual(document.querySelectorAll("testTag"));
-    expect(construct.elementName).toBe("testTag");
-  });
-  it("will override id attribute", () => {
-    let testEl = document.createElement("lol");
-    testEl.id = "id";
-    testEl.className = "lol-element";
-    document.querySelector("#test").appendChild(testEl);
-    new Tag("lol").set("h1");
-    testEl = document.querySelector("#test h1.lol-element");
-    expect(testEl.id).toBe("lol");
+    const construct = new Tag({ name: "testTag", to: "p" });
+    expect(construct.current).toBe("p");
+    expect(construct.originalName).toBe("testTag");
   });
 });

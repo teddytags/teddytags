@@ -4,7 +4,7 @@ describe("TeddyTags Event Listener with Custom Elements", () => {
     const fixture = `
         <div id="test">
             <div id="listener">
-const          <sometext>Some Text.</sometext>
+          <sometext>Some Text.</sometext>
                 <clickme>Click me</clickme>
             </div>
         </div>
@@ -16,12 +16,10 @@ const          <sometext>Some Text.</sometext>
     document.body.removeChild(document.getElementById("test"));
   });
   it("will check event listener to be working", () => {
-    new Tag("sometext").set("p");
-    new Tag("clickme").set("button");
-    const text = document.querySelector("#listener p#sometext");
-    const button: Element | any = document.querySelector(
-      "#listener button#clickme"
-    );
+    new Tag({ name: "sometext", to: "p" });
+    new Tag({ name: "clickme", to: "button" });
+    const text = document.querySelector("#listener p");
+    const button: Element | any = document.querySelector("#listener button");
     button.addEventListener("click", () => {
       text.innerHTML = "Listener Triggered.";
     });

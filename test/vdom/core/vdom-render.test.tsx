@@ -1,4 +1,4 @@
-import { h, render, Component } from "Lib/teddytags.js";
+import { h, render, Component, VElement } from "Lib/teddytags.js";
 describe("TeddyVDOM Core - render", () => {
   beforeEach(() => {
     const fixture = `<div id="test"></div>`;
@@ -44,6 +44,13 @@ describe("TeddyVDOM Core - render", () => {
     const el = h(App, { name: "VSCODE" });
     render(el, document.querySelector("#test"));
     expect(document.querySelector("#test #H1").innerHTML).toBe("Hi, VSCODE");
+  });
+  it("should update the component on the spot", () => {
+    const el1 = <h1>Hi</h1>;
+    const el2 = <h1>Hi2</h1>;
+    render(el1, document.querySelector("#test"));
+    render(el2, document.querySelector("#test"));
+    expect(document.querySelector("#test").innerHTML).toBe("<h1>Hi2</h1>");
   });
   it("should render with event listener", () => {
     const log: any[] = [];

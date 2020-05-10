@@ -1,4 +1,4 @@
-import { h, render, Component, Fragment, HElement } from "Lib/teddytags.js";
+import { h, render, Component, Fragment, VElement } from "Lib/teddytags.js";
 describe("TeddyVDOM Core - Fragments", () => {
   beforeEach(() => {
     const fixture = `<div id="test"></div>`;
@@ -17,7 +17,7 @@ describe("TeddyVDOM Core - Fragments", () => {
       constructor(props) {
         super(props);
       }
-      render(): HElement {
+      render(): VElement {
         return (
           <Fragment>
             <h1>Hello, World</h1>
@@ -52,7 +52,7 @@ describe("TeddyVDOM Core - Fragments", () => {
         this.state = { count: 0 };
         this.setState({ count: 1 });
       }
-      render(): HElement {
+      render(): VElement {
         return <Fragment>{this.state.count}</Fragment>;
       }
     }
