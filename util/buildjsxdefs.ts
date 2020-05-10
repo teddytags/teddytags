@@ -10,3 +10,4 @@ const concatFiles = (finalName: string, ...files: string[]) => {
   console.log(`Concatenated ${files} into ${finalName}`)
 };
 concatFiles("./lib/teddytags.d.ts", "./src/jsx.d.ts")
+concatFiles("./lib/teddytags.umd.d.ts", "./src/jsx.d.ts")

@@ -1,17 +1,5 @@
 {
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "chrome": 23,
-          "firefox": 21,
-          "ie": 10,
-          "safari": 6
-        }
-      }
-    ],
-    "@babel/preset-typescript"
-  ],
-  "sourceMaps": true
+  "presets": ["@babel/preset-env"],
+  "sourceMaps": true,
+  "plugins": ["@babel/plugin-transform-object-assign"]
 }

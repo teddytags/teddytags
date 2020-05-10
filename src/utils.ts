@@ -1,11 +1,11 @@
-import { Component, HElement } from "./component";
+import { Component, VElement } from "./vdom/component";
 
 /**
  * Get the rendered DOM of the Component
  * Only use this when the component is rendered (componentDidMount is a good place to use this)
  * @param component The component to get the node
  */
-export const getDOMNode = (component: Component | HElement): Element => {
+export const getDOMNode = (component: Component | VElement): Element => {
   return component.dom;
 };
 
@@ -23,4 +23,33 @@ export const unmountComponent = (dom: Element): boolean => {
   HNode.base = null;
   if (HNode.componentDidUnmount) HNode.componentDidUnmount();
   return true;
+};
+/**
+ * Do a function async with sync fallback
+ * @param fn The function
+ * @param args Arguments for fn
+ * @param callback Callback after done
+ */
+/* istanbul ignore next: Not needed */
+export const Do = (fn: any, args?: any[], callback?: any) => {
+  if ("Promise" in window) {
+    const promise = Promise.resolve();
+    promise
+      .then(() => {
+        fn(...args);
+      })
+      .then(() => {
+        if (typeof callback === "function") callback();
+      })
+      .catch(err => {
+        throw err;
+      });
+  } else {
+    try {
+      fn(...args);
+    } catch (e) {
+      if (e) throw e;
+      else if (typeof callback === "function") callback();
+    }
+  }
 };

@@ -1,8 +1,9 @@
 //NO-CONCAT-START
-import { HElement, Component } from "./component";
+import { VElement, Component } from "./vdom/component";
+import { TagRegistry } from "./tag/registry";
 //NO-CONCAT-END
-export type HNode = HElement | string | number | boolean | undefined | null;
 /*Courtesy of d.ts (https://github.com/geowarin/ts-react/blob/master/typings/react/d.ts)*/
+type VNode = VElement | string | number | boolean | null | undefined;
 interface DOMAttributes {
   onCopy?: ClipboardEventHandler;
   onCut?: ClipboardEventHandler;
@@ -38,15 +39,15 @@ interface DOMAttributes {
   onTouchStart?: TouchEventHandler;
   onScroll?: UIEventHandler;
   onWheel?: WheelEventHandler;
+  //TeddyTags- specific attributes
   /**
    * Set HTML of the element.
    * *WARNING: The children will be replaced by anything that is in this property.*
    */
   innerHTML?: any;
+  class?: string;
 }
-interface ChildProps<T> {
-  children?: HNode[];
-}
+type ChildProps = { children?: VNode[] };
 interface HTMLPropAttributes extends DOMAttributes {
   // Standard HTML Attributes
   accept?: string;
@@ -242,12 +243,8 @@ interface SVGPropAttributes extends DOMAttributes {
   y2?: number | string;
   y?: number | string;
 }
-export interface HTMLProps<T = HTMLElement>
-  extends HTMLPropAttributes,
-    ChildProps<T> {}
-export interface SVGProps<T = SVGElement>
-  extends SVGPropAttributes,
-    ChildProps<SVGElement> {}
+export type HTMLProps<T = HTMLElement> = HTMLPropAttributes & ChildProps & {};
+export type SVGProps<T = SVGElement> = SVGPropAttributes & ChildProps & {};
 
 // Events
 
@@ -377,8 +374,35 @@ interface UIEventHandler extends EventHandler<UIEvent> {}
 interface WheelEventHandler extends EventHandler<WheelEvent> {}
 
 declare global {
+  interface Window {
+    /**
+     * The TeddyTags Custom Tag registry instance
+     */
+    TagRegistry: TagRegistry;
+    /**
+     * Global flag to check if observing the DOM
+     */
+    __TD_DOM_OBSERVER__: boolean;
+    WebKitMutationObserver: typeof MutationObserver;
+    MozMutationObserver: typeof MutationObserver;
+  }
+  interface HTMLElement {
+    /**
+     * Information of the custom element
+     */
+    tag: {
+      /**
+       * Original custom tag name
+       */
+      originalName: string;
+      /**
+       * Tag convertee
+       */
+      from: string | typeof Component;
+    };
+  }
   namespace JSX {
-    interface Element extends HElement {}
+    interface Element extends VElement {}
     interface ElementClass extends Component {}
     interface IntrinsicElements {
       // HTML

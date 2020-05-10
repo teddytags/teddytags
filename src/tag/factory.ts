@@ -69,11 +69,7 @@ const transformElementsWithComponents = (
   registry.from = component;
   registry.nodes.forEach(node => {
     node.tag.from = component;
-    node.setAttribute(
-      "data-component",
-      component.name ||
-        component.toString().match(/[^(function|class)]\s*([^\s(]+)/)[0]
-    );
+    node.setAttribute("data-component", component.name);
     const props = {};
     Array.prototype.slice.call(node.attributes).forEach((a: Attr) => {
       props[a.name] = a.value;

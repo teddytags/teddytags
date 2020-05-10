@@ -1,6 +1,5 @@
 var path = require("path");
-import typescript from "@rollup/plugin-typescript";
-import babel from "rollup-plugin-babel";
+import typescript from "@wessberg/rollup-plugin-ts";
 import { terser } from "rollup-plugin-terser";
 import pkg from "./package.json";
 const config = {
@@ -9,22 +8,23 @@ const config = {
     {
       file: pkg.module,
       format: "esm",
-      sourcemap: false
+      sourcemap: false,
     },
     {
       file: pkg.main,
       format: "umd",
       exports: "named",
       name: "TeddyTags",
-      sourcemap: false
+      sourcemap: false,
     },
   ],
   plugins: [
     typescript({
       tsconfig: "./src/tsconfig.json",
+      babelConfig: "./.babelrc",
+      transpiler: "babel",
     }),
     process.env.BUILD === "dev" ? [] : terser({ compress: true }),
-    babel({ extensions: [".js", ".ts"] }),
   ],
 };
 if (process.env.BUILD === "dev") {

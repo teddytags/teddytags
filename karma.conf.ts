@@ -1,7 +1,6 @@
-let typescript = require("@rollup/plugin-typescript");
+let typescript = require("@wessberg/rollup-plugin-ts");
 let commonjs = require("@rollup/plugin-commonjs");
 let resolve = require("@rollup/plugin-node-resolve");
-let babel = require("rollup-plugin-babel");
 let istanbul = require("rollup-plugin-istanbul");
 module.exports = config => {
   config.set({
@@ -13,9 +12,9 @@ module.exports = config => {
       username: process.env.BROWSERSTACK_USERNAME,
       accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
     },
-    exclude: ["/node_modules/**/*"],
     preprocessors: {
-      "./src/*.ts": ["coverage"],
+      "./src/tag/*.ts": ["coverage"],
+      "./src/vdom/*.ts": ["coverage"],
       "./test/context.ts": ["rollup"],
     },
     rollupPreprocessor: {
@@ -25,11 +24,8 @@ module.exports = config => {
         resolve({ extensions: [".ts", ".tsx"] }),
         typescript({
           tsconfig: "./test/tsconfig.json",
-          noEmit: true,
-          sourceMap: true,
-        }),
-        babel({
-          extensions: [".js", ".ts", ".tsx", ".jsx"],
+          babelConfig: "./.babelrc",
+          transpiler: "babel",
         }),
         istanbul({
           exclude: ["./test/**/*.ts", "./test/**/*.tsx"],
@@ -44,7 +40,7 @@ module.exports = config => {
     reporters: [
       "BrowserStack",
       "coverage",
-      "remap-coverage",
+      "karma-remap-istanbul",
       "coveralls",
       "spec",
     ],
@@ -52,10 +48,15 @@ module.exports = config => {
       type: "in-memory",
       html: "./coverage",
     },
-    remapCoverageReporter: {
-      "text-summary": null,
-      lcovonly: "./coverage/lcov.info",
-      html: "./coverage/html",
+    remapIstanbulReporter: {
+      remapOptions: {
+        exclude: "node_modules",
+      },
+      reports: {
+        "text": null,
+        lcovonly: "./coverage/lcov.info",
+        html: "./coverage/html",
+      },
     },
     customLaunchers: {
       bs_firefox_mac: {
@@ -68,26 +69,19 @@ module.exports = config => {
       bs_chrome_mac: {
         base: "BrowserStack",
         browser: "chrome",
-        browser_version: "23",
-        os: "OS X",
-        os_version: "Lion",
-      },
-      bs_safari_mac: {
-        base: "BrowserStack",
-        browser: "safari",
-        browser_version: "6",
+        browser_version: "26",
         os: "OS X",
         os_version: "Lion",
       },
       bs_ie_win: {
         base: "BrowserStack",
         browser: "ie",
-        browser_version: "10",
+        browser_version: "11",
         os: "Windows",
         os_version: "7",
       },
     },
-    browsers: ["bs_ie_win", "bs_firefox_mac", "bs_chrome_mac", "bs_safari_mac"],
+    browsers: ["bs_ie_win", "bs_firefox_mac", "bs_chrome_mac"],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

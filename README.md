@@ -8,7 +8,28 @@
 ## Name the HTML tags your own.
 
 - Out-of-box custom elements (`<myElement />`)
+
+```js
+new Tag({
+  name: "myElement",
+  to: "p",
+});
+```
+
+↓
+
+```html
+<myElement>Hello</myElement>
+```
+
+↓
+
+```html
+<p>Hello</p>
+```
+
 - Virtual Components (Like those of React)
+- custom elements + Virtual components directly in HTML
 
 ```jsx
 /** @jsx teddy.h */
@@ -18,7 +39,7 @@ class MyComponent extends teddy.Component {
     super(props);
   }
   render() {
-    return <h1>Hello, myself!</h1>;
+    return <h1>Hello, {this.props.name}</h1>;
   }
 }
 ```
@@ -28,19 +49,67 @@ class MyComponent extends teddy.Component {
 ```js
 import { Tag } from "teddytags";
 //MyComponent is defined in above example
-new Tag("MyComponent").fromComponent(MyComponent);
+new Tag({
+  name: "MyComponent",
+  to: MyComponent,
+});
 ```
 
 and use it.
 
 ```html
-<MyComponent></MyComponent>
+<MyComponent name="myself" />
+```
+
+↓
+
+```html
+<div name="myself" data-component="MyComponent">
+  <h1>Hello, myself</h1>
+</div>
 ```
 
 - Superb and extra-simple diff algorithm
-- State implementation in Class Components
-- **1.5kB min-gzipped in browser**
+- Stateful Class Components
+- **3kB min-zipped in browser**
 - TypeScript and TSX support built-in
+- **Custom Elements Registry (`window.TagRegistry`)**
+  ```js
+  window.TagRegistry.getEntry("myComponent")
+  // => { from: class MyComponent..., nodes: Array<HTMLElement> }
+  ```
+
+# Why does the project exist in the first place??
+
+Because custom elements need to be much more powerful than they are now. So a little library like this can make a difference.
+
+# Documentation
+
+Head over to https://teddy.js.org/docs
+
+# Try it out
+
+## Browser
+
+> You don't need ES6 to run TeddyTags... https://git.io/teddytags-es5
+
+```html
+<!-- UMD -->
+<script src="https://unpkg.com/teddytags@latest/lib/teddytags.umd.js"></script>
+<!-- ESM -->
+<script type="module">
+  import TeddyTags from "https://unpkg.com/teddytags@latest/lib/teddytags.js";
+</script>
+```
+
+## NPM
+
+```bash
+> npm i teddytags
+> yarn add teddytags
+```
+
+# Insights
 
 <table>
 <tbody>
@@ -62,28 +131,8 @@ and use it.
 
 </td>
 <td>
-<img src="https://badges.herokuapp.com/browsers?firefox=21&iexplore=10&googlechrome=23&safari=6" alt="Browser Matrix"/>
+<img src="https://badges.herokuapp.com/browsers?firefox=21&iexplore=11&googlechrome=26" alt="Browser Matrix"/>
 </td>
 </tr>
 </tbody>
 </table>
-
-# Documentation
-
-Head over to https://teddy.js.org/docs
-
-# What should you not be worried of
-
-## 1. Polyfills??
-
-   TeddyTags just need five polyfills and which are also shipped with it:
-   
-   ✔️ Object.assign
-
-   ✔️ NodeList.forEach
-
-   So you can just plug this script and rock the way in any ES5 compatible browser
-
-   ```html
-   <script src="https://unpkg.com/teddytags@latest/lib/umd.js"></script>
-   ```

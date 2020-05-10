@@ -1,43 +1,9 @@
 import "./polyfills";
-import { h, Fragment } from "./h";
-import { render } from "./render";
-import { getDOMNode, unmountComponent } from "./utils";
-import { Component, HElement } from "./component";
-import { Tag } from "./tag";
-export { h, render, Component, Tag, getDOMNode, unmountComponent, Fragment };
-const _default = {
-  /**
-   * The hyperscript function which will create virtual elements.
-   * @param type Can be the tagname of the element, a class component or a functional component
-   * @param props Properties to be passed
-   * @param children Child elements, if any
-   * Usage:
-   * ```js
-   * let app = h("div", null, h("h1", null, "Hello"))
-   * //becomes
-   * //<div><h1>Hello</h1></div>
-   * ```
-   */
-  h,
-  getDOMNode,
-  unmountComponent,
-  Component: Component,
-  /**
-   * The function that links your Virtual Elements to the real DOM.
-   * Appends the virtual element to the target
-   * Usage:
-   * ```js
-   * //App is a Component
-   * //If JSX
-   * render(<App />, document.querySelector("#app"))
-   * //If no JSX
-   * render(h(App, null), document.querySelector("#app"))
-   * ```
-   * @param node Your virtual Element
-   * @param target The target to append to
-   */
-  render,
-  Tag: Tag,
-  Fragment,
-};
-export default _default;
+export { h, Fragment } from "./vdom/h";
+export { render } from "./vdom/render";
+export { getDOMNode, unmountComponent } from "./utils";
+export { Component } from "./vdom/component";
+import "./tag/registry";
+export { Tag } from "./tag/factory";
+export { TagRegistry } from "./tag/registry";
+export { VElement } from "./vdom/component";
