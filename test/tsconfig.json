@@ -1,14 +1,12 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./",
-    "module": "es6",
     "jsx": "react",
     "jsxFactory": "h",
     "declaration": false,
     "sourceMap": false,
     "skipLibCheck": true,
   },
-  "include": ["./**/*.test.ts", "./**/*.test.tsx"],
+  "include": ["./**/*.test.ts", "./**/*.test.tsx", "./**/*.ts"],
   "exclude": [""]
 }

@@ -1,11 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "module": "es6",
     "outDir": "../lib",
-    "declaration": false,
-    "noEmit": true,
+    "rootDir": "./",
     "sourceMap": true
   },
-  "include": ["./**.ts", "index.ts"]
+  "include": ["./**.ts"]
 }
