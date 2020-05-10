@@ -28,7 +28,7 @@ module.exports = config => {
           transpiler: "babel",
         }),
         istanbul({
-          exclude: ["./test/**/*.ts", "./test/**/*.tsx"],
+          exclude: ["./test/**/*.ts", "./test/**/*.tsx", "src/index.ts", "src/utils.ts"],
         }),
       ],
       output: {

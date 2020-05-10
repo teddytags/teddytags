@@ -69,7 +69,12 @@ const transformElementsWithComponents = (
   registry.from = component;
   registry.nodes.forEach(node => {
     node.tag.from = component;
-    node.setAttribute("data-component", component.name);
+    const getComponentName = () =>
+      //directly class/fn name
+      component.name ||
+      // Nasty IE hack: element tag name
+      tagName;
+    node.setAttribute("data-component", getComponentName());
     const props = {};
     Array.prototype.slice.call(node.attributes).forEach((a: Attr) => {
       props[a.name] = a.value;
