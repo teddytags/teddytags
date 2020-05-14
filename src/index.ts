@@ -1,7 +1,7 @@
 import "./polyfills";
 export { h, Fragment } from "./vdom/h";
 export { render } from "./vdom/render";
-export { getDOMNode, unmountComponent } from "./utils";
+export { getDOMNode, unmountComponent } from "./vdom/utils";
 export { Component } from "./vdom/component";
 import "./tag/registry";
 export { Tag } from "./tag/factory";

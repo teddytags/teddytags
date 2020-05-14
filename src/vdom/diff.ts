@@ -106,8 +106,7 @@ export const diff = (
     if (Array.isArray(el)) {
       //if we're re-diffing same node when render is called twice
       sameKind = dom["__tdNode__"]
-        ? dom["__tdNode__"].constructor.toString() ===
-          el[1].constructor.toString()
+        ? dom["__tdNode__"].toString() === el[1].toString()
         : false;
       //extract the dom
       el = el[0];

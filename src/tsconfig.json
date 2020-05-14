@@ -5,5 +5,5 @@
     "rootDir": "./",
     "sourceMap": true
   },
-  "include": ["./**.ts"]
+  "include": ["./**.ts", "vdom/utils.ts"]
 }

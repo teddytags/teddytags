@@ -1,4 +1,4 @@
-import { Component, VElement } from "./vdom/component";
+import { Component, VElement } from "./component";
 
 /**
  * Get the rendered DOM of the Component

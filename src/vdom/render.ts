@@ -1,6 +1,6 @@
 import { diff } from "./diff";
 import { HConstructorElement, VElement } from "./component";
-import { Do } from "../utils";
+import { Do } from "./utils";
 /**
  * The runtime condition of a Constructor Element
  */
@@ -97,26 +97,21 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
     const isProp = (key: string) => {
       return key !== "children" && !isEvent(key) && !isValidMethod(key);
     };
-    Object.keys(node.props)
-      .filter(isEvent)
-      .forEach(event => {
-        const type = event.substring(2).toLowerCase();
-        dom.addEventListener(type, node.props[event]);
-      });
-    Object.keys(node.props)
-      .filter(isProp)
-      .map(prop => {
-        dom.setAttribute(prop, node.props[prop].toString());
-      });
-    Object.keys(node.props)
-      .filter(isValidMethod)
-      .map(prop => {
-        if (prop === "style") {
-          if (typeof node.props[prop] === "string") {
-            dom.style.cssText = node.props[prop];
-          } else assignStyles(dom, node.props[prop]);
-        } else dom[prop] = node.props[prop];
-      });
+    const props = Object.keys(node.props);
+    props.filter(isEvent).forEach(event => {
+      const type = event.substring(2).toLowerCase();
+      dom.addEventListener(type, node.props[event]);
+    });
+    props.filter(isProp).map(prop => {
+      dom.setAttribute(prop, node.props[prop].toString());
+    });
+    props.filter(isValidMethod).map(prop => {
+      if (prop === "style") {
+        if (typeof node.props[prop] === "string") {
+          dom.style.cssText = node.props[prop];
+        } else assignStyles(dom, node.props[prop]);
+      } else dom[prop] = node.props[prop];
+    });
     node.props.children.forEach(child => {
       if (textTypes.indexOf(typeof child) > -1)
         dom.appendChild(document.createTextNode(child));
@@ -131,6 +126,7 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
     });
     //set dom for future reference
     node.dom = dom;
+    node.base = target;
     return dom;
   }
 };

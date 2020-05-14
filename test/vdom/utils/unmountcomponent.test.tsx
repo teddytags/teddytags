@@ -24,10 +24,17 @@ describe("TeddyVDOM Utils - unmountComponent", () => {
     const unmounted = unmountComponent(document.querySelector("#test"));
     expect(log).toEqual(["unmount"]);
     expect(document.querySelector("#test").innerHTML).toBe("");
-    expect(unmounted).toBe(true);
+    expect(unmounted).toBeTrue();
   });
   it("will return false since no component is rendered", () => {
     const unmounted = unmountComponent(document.querySelector("#test"));
-    expect(unmounted).toBe(false);
+    expect(unmounted).toBeFalse();
+  });
+  it("should unmount a simple component and return true", () => {
+    const el = <h1>Hi</h1>;
+    render(el, document.querySelector("#test"));
+    const unmounted = unmountComponent(document.querySelector("#test"));
+    expect(document.querySelector("#test").childElementCount).toBe(0);
+    expect(unmounted).toBeTrue();
   });
 });
