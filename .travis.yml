@@ -2,7 +2,7 @@ language: node_js
 
 branches:
   only:
-  - master
+    - master
 
 os:
   - linux
@@ -11,13 +11,13 @@ node_js:
   - node
 
 jobs:
-  include: 
-  - stage: Build
-    script: npm ci
-  - stage: Lint
-    script: npm run lint
-  - stage: Tests
-    script: npm run test
+  include:
+    - stage: Lint
+      script: npm run lint
+    - stage: Tests
+      script: npm run test
+    - stage: Publish
+      script: npx semantic-release
 
 notifications:
   - email: false
