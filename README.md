@@ -98,7 +98,7 @@ Head over to https://teddy.js.org/docs
 <script src="https://unpkg.com/teddytags@latest/lib/teddytags.umd.js"></script>
 <!-- ESM -->
 <script type="module">
-  import TeddyTags from "https://unpkg.com/teddytags@latest/lib/teddytags.js";
+  import * as TeddyTags from "https://unpkg.com/teddytags@latest/lib/teddytags.js";
 </script>
 ```
 
@@ -125,9 +125,9 @@ Head over to https://teddy.js.org/docs
 
 [![npm](https://img.shields.io/npm/v/teddytags.svg)](http://npm.im/teddytags)
 
-[![gzip size](http://img.badgesize.io/https://unpkg.com/teddytags/lib/umd.js?compression=gzip&label=gzip)](https://unpkg.com/teddytags)
+[![gzip size](http://img.badgesize.io/https://unpkg.com/teddytags/lib/teddytags.umd.js?compression=gzip&label=gzip)](https://unpkg.com/teddytags)
 
-[![brotli size](http://img.badgesize.io/https://unpkg.com/teddytags/lib/umd.js?compression=brotli&label=brotli)](https://unpkg.com/teddytags)
+[![brotli size](http://img.badgesize.io/https://unpkg.com/teddytags/lib/teddytags.umd.js?compression=brotli&label=brotli)](https://unpkg.com/teddytags)
 
 </td>
 <td>
