@@ -21,6 +21,8 @@ export const unmountComponent = (dom: Element): boolean => {
   HNode.base.removeChild(HNode.dom);
   HNode.dom = null;
   HNode.base = null;
+  // #6
+  dom["__tdNode__"] = undefined;
   if (HNode.componentDidUnmount) HNode.componentDidUnmount();
   return true;
 };
