@@ -56,6 +56,7 @@
     "@babel/plugin-transform-object-assign": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.9.6",
     "@babel/preset-env": "^7.8.4",
+    "@jedmao/semantic-release-npm-github-config": "^1.0.9",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@types/jasmine": "^3.5.4",
