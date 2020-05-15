@@ -19,8 +19,6 @@ export const unmountComponent = (dom: Element): boolean => {
   if (!HNode) return false;
   //Taking strings as evaluation becomes easier and to avoid TS-2367 error
   HNode.base.removeChild(HNode.dom);
-  HNode.dom = null;
-  HNode.base = null;
   // #6
   dom["__tdNode__"] = undefined;
   if (HNode.componentDidUnmount) HNode.componentDidUnmount();
