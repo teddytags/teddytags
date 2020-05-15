@@ -17,7 +17,7 @@ jobs:
     - stage: Tests
       script: npm run test
     - stage: Publish
-      script: npx semantic-release --extends @jedmao/semantic-release-npm-github-config
+      script: npx semantic-release
 
 notifications:
   - email: false
