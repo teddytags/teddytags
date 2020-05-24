@@ -29,7 +29,6 @@
     }
   },
   "scripts": {
-    "alias:link": "ts-node util/alias",
     "build": "npm run build:ts && npm run build:dts:jsx",
     "build:dev": "npm run build:ts:dev && npm run build:dts:jsx",
     "build:watch": "rollup --config rollup.config.ts --environment BUILD:dev --watch",
@@ -41,7 +40,8 @@
     "lint:eslint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "prepublishOnly": "npm run build",
-    "test": "npm run alias:link && npm run build:dev && karma start karma.conf.ts"
+    "test": "karma start karma.conf.ts",
+    "test:watch": "karma start karma.conf.ts --watch"
   },
   "keywords": [
     "custom elements",
@@ -56,9 +56,11 @@
     "@babel/plugin-transform-object-assign": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.9.6",
     "@babel/preset-env": "^7.8.4",
+    "@rollup/plugin-alias": "^3.1.0",
     "@rollup/plugin-commonjs": "^11.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@semantic-release/git": "^9.0.0",
+    "@teddytags/eslint-plugin": "^1.0.1",
     "@types/jasmine": "^3.5.4",
     "@types/node": "^13.7.0",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
@@ -84,6 +86,7 @@
     "rollup": "^2.8.2",
     "rollup-plugin-istanbul": "^2.0.1",
     "rollup-plugin-terser": "^5.3.0",
+    "rollup-plugin-typescript2": "^0.27.1",
     "ts-node": "^8.10.1",
     "tslib": "^1.11.2",
     "typescript": "^3.8.3"
