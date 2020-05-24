@@ -15,8 +15,7 @@ jobs:
     - stage: Lint
       script: npm run lint
     - stage: Tests
-      script: npm run build:dev
-      script: npm run test
+      script: npm run build:dev && npm run test
     - stage: Publish
       script: npx semantic-release
 
