@@ -1,5 +1,6 @@
 {
   "presets": ["@babel/preset-env"],
   "sourceMaps": true,
-  "plugins": ["@babel/plugin-transform-object-assign"]
+  "inputSourceMap": true
+  // "plugins": ["@babel/plugin-transform-object-assign"]
 }

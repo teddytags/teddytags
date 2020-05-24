@@ -1,4 +1,4 @@
-import { h, render, Component, Fragment, VElement } from "Lib/teddytags.js";
+import { h, render, Component, Fragment, VElement } from "teddytags";
 describe("TeddyVDOM Core - Fragments", () => {
   beforeEach(() => {
     const fixture = `<div id="test"></div>`;

@@ -1,4 +1,4 @@
-import { h, render, Component, VElement } from "Lib/teddytags.js";
+import { h, render, Component, VElement } from "teddytags";
 describe("TeddyVDOM Core - render", () => {
   beforeEach(() => {
     const fixture = `<div id="test"></div>`;

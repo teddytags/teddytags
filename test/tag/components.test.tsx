@@ -1,4 +1,4 @@
-import { Tag, h, Component } from "Lib/teddytags.js";
+import { Tag, h, Component } from "teddytags";
 describe("TeddyTags Custom Elements from Components", () => {
   let timerCallback;
   beforeEach(() => {

@@ -1,41 +1,54 @@
-let typescript = require("@wessberg/rollup-plugin-ts");
+let typescript = require("rollup-plugin-typescript2");
+let alias = require("@rollup/plugin-alias");
 let commonjs = require("@rollup/plugin-commonjs");
 let resolve = require("@rollup/plugin-node-resolve");
 let istanbul = require("rollup-plugin-istanbul");
+let path = require("path");
 module.exports = config => {
   config.set({
     basePath: "",
     frameworks: ["jasmine"],
-    files: [{ pattern: "./test/context.ts", watched: false }],
+    files: [
+      { pattern: "./test/context.ts", watched: false },
+      {
+        pattern: "**/*.js.map",
+        included: false,
+      },
+    ],
     browserStack: {
       project: "TeddyTags",
       username: process.env.BROWSERSTACK_USERNAME,
       accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
     },
     preprocessors: {
-      "./src/tag/*.ts": ["coverage"],
-      "./src/vdom/*.ts": ["coverage"],
+      "./src/**/*.ts": ["coverage"],
       "./test/context.ts": ["rollup"],
     },
     rollupPreprocessor: {
       input: "./test/context.ts",
+      output: {
+        format: "iife",
+        name: "teddy",
+        sourcemap: "inline",
+      },
       plugins: [
+        alias({
+          entries: {
+            teddytags: path.join(__dirname, "./lib/teddytags"),
+          },
+        }),
         commonjs(),
         resolve({ extensions: [".ts", ".tsx"] }),
         typescript({
           tsconfig: "./test/tsconfig.json",
-          babelConfig: "./.babelrc",
-          transpiler: "babel",
         }),
         istanbul({
-          exclude: ["./test/**/*.ts", "./test/**/*.tsx", "src/index.ts", "src/utils.ts"],
+          instrumenterConfig: {
+            embedSource: true,
+          },
+          exclude: ["./test/**/*.ts", "./test/**/*.tsx"],
         }),
       ],
-      output: {
-        format: "iife",
-        name: "teddy",
-        sourcemap: true,
-      },
     },
     reporters: [
       "BrowserStack",
@@ -47,13 +60,14 @@ module.exports = config => {
     coverageReporter: {
       type: "in-memory",
       html: "./coverage",
+      lcovonly: "./coverage/lcov.info",
     },
     remapIstanbulReporter: {
       remapOptions: {
         exclude: "node_modules",
       },
       reports: {
-        "text": null,
+        text: null,
         lcovonly: "./coverage/lcov.info",
         html: "./coverage/html",
       },

@@ -1,4 +1,4 @@
-import { h, Component, render } from "Lib/teddytags.js";
+import { h, Component, render } from "teddytags";
 describe("TeddyVDOM Core - diff", () => {
   let timerCallback;
   beforeEach(() => {

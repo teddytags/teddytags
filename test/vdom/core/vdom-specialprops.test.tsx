@@ -1,4 +1,4 @@
-import { h, render } from "Lib/teddytags.js";
+import { h, render } from "teddytags";
 describe("TeddyVDOM Core - special properties", () => {
   beforeEach(() => {
     const fixture = `<div id="test"></div>`;

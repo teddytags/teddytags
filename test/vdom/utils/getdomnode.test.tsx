@@ -1,4 +1,4 @@
-import { getDOMNode, Component, h, render } from "Lib/teddytags.js";
+import { getDOMNode, Component, h, render } from "teddytags";
 describe("TeddyVDOM Utils - getDOMNode", () => {
   beforeEach(() => {
     const fixture = `<div id="test"></div>`;

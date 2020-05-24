@@ -1,4 +1,4 @@
-import { unmountComponent, Component, h, render } from "Lib/teddytags.js";
+import { unmountComponent, Component, h, render } from "teddytags";
 describe("TeddyVDOM Utils - unmountComponent", () => {
   beforeEach(() => {
     const fixture = `<div id="test"></div>`;

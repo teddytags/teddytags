@@ -6,6 +6,10 @@
     "declaration": false,
     "sourceMap": false,
     "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "teddytags": ["../lib/teddytags"]
+    }
   },
   "include": ["./**/*.test.ts", "./**/*.test.tsx", "./**/*.ts"],
   "exclude": [""]
