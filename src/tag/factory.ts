@@ -50,7 +50,7 @@ const transformElements = (tagName: string, newTagName: string) => {
     Array.prototype.slice.call(node.attributes).forEach((attr: Attr) => {
       newNode.setAttribute(attr.name, attr.value);
     });
-    newNode.innerHTML = node.innerHTML;
+    newNode.nodeValue = node.nodeValue;
     node.parentElement.replaceChild(newNode, node);
     registryEntry.nodes.push(newNode);
   });

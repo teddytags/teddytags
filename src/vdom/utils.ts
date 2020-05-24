@@ -1,57 +1,52 @@
-import { Component, VElement } from "./component";
+/**
+ * Assign styles to a element
+ * @param el any HTMLElement
+ * @param styles CSSStyleDeclaration object
+ */
 
-/**
- * Get the rendered DOM of the Component
- * Only use this when the component is rendered (componentDidMount is a good place to use this)
- * @param component The component to get the node
- */
-export const getDOMNode = (component: Component | VElement): Element => {
-  return component.dom;
-};
-
-/**
- * Unmount a class Component from the DOM
- * @param dom The parent element of the Component
- * @param component The component class to unmount
- */
-export const unmountComponent = (dom: Element): boolean => {
-  const HNode: Component = dom["__tdNode__"];
-  if (!HNode) return false;
-  //Taking strings as evaluation becomes easier and to avoid TS-2367 error
-  HNode.base.removeChild(HNode.dom);
-  HNode.dom = null;
-  HNode.base = null;
-  // #6
-  dom["__tdNode__"] = undefined;
-  if (HNode.componentDidUnmount) HNode.componentDidUnmount();
-  return true;
-};
-/**
- * Do a function async with sync fallback
- * @param fn The function
- * @param args Arguments for fn
- * @param callback Callback after done
- */
-/* istanbul ignore next: Not needed */
-export const Do = (fn: any, args?: any[], callback?: any) => {
-  if ("Promise" in window) {
-    const promise = Promise.resolve();
-    promise
-      .then(() => {
-        fn(...args);
-      })
-      .then(() => {
-        if (typeof callback === "function") callback();
-      })
-      .catch(err => {
-        throw err;
-      });
-  } else {
-    try {
-      fn(...args);
-    } catch (e) {
-      if (e) throw e;
-      else if (typeof callback === "function") callback();
-    }
+/*istanbul ignore next : no need to test this, just a util function */
+const assignStyles = (el: HTMLElement, styles: CSSStyleDeclaration) => {
+  for (const rule in styles) {
+    el.style[rule] = styles[rule];
   }
+};
+/**
+ * Parse JSX props and return it
+ * @param props `Object.keys(yourProps)`
+ * @param dom the element
+ */
+export const parseProps = (props: object, dom: HTMLElement) => {
+  const keys = Object.keys(props);
+  const isRef = (key: string) => {
+    return key === "ref";
+  };
+  const isSpecialProp = (key: string) => {
+    const specialProps = ["innerHTML", "className", "style"];
+    return specialProps.indexOf(key) > -1;
+  };
+  const isEvent = (key: string) => {
+    return key.indexOf("on") === 0;
+  };
+  const isProp = (key: string) => {
+    return (
+      key !== "children" && !isEvent(key) && !isSpecialProp(key) && !isRef(key)
+    );
+  };
+  keys.filter(isRef).forEach((ref: string) => {
+    props[ref].element = dom;
+  });
+  keys.filter(isEvent).forEach(event => {
+    const type = event.substring(2).toLowerCase();
+    dom.addEventListener(type, props[event]);
+  });
+  keys.filter(isProp).map(prop => {
+    dom.setAttribute(prop, props[prop].toString());
+  });
+  keys.filter(isSpecialProp).map(prop => {
+    if (prop === "style") {
+      if (typeof props[prop] === "string") {
+        dom.style.cssText = props[prop];
+      } else assignStyles(dom, props[prop]);
+    } else dom[prop] = props[prop];
+  });
 };

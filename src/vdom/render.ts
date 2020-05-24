@@ -1,6 +1,6 @@
 import { diff } from "./diff";
 import { HConstructorElement, VElement } from "./component";
-import { Do } from "./utils";
+import { parseProps } from "./utils";
 /**
  * The runtime condition of a Constructor Element
  */
@@ -58,13 +58,6 @@ const assignStyles = (el: HTMLElement, styles: CSSStyleDeclaration) => {
  * @param isDirty if dirty(rendering for the first time)
  */
 export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
-  const isValidMethod = (key: string) => {
-    const validMethods = ["innerHTML", "className", "style"];
-    return validMethods.indexOf(key) > -1;
-  };
-  const isEvent = (key: string) => {
-    return key.indexOf("on") === 0;
-  };
   const textTypes = ["string", "number", "boolean"];
   /* istanbul ignore if*/ if (textTypes.indexOf(typeof node) > -1) {
     return document.createTextNode(node);
@@ -94,24 +87,7 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
     }
   } else {
     const dom: HTMLElement = document.createElement(node.type);
-    const isProp = (key: string) => {
-      return key !== "children" && !isEvent(key) && !isValidMethod(key);
-    };
-    const props = Object.keys(node.props);
-    props.filter(isEvent).forEach(event => {
-      const type = event.substring(2).toLowerCase();
-      dom.addEventListener(type, node.props[event]);
-    });
-    props.filter(isProp).map(prop => {
-      dom.setAttribute(prop, node.props[prop].toString());
-    });
-    props.filter(isValidMethod).map(prop => {
-      if (prop === "style") {
-        if (typeof node.props[prop] === "string") {
-          dom.style.cssText = node.props[prop];
-        } else assignStyles(dom, node.props[prop]);
-      } else dom[prop] = node.props[prop];
-    });
+    parseProps(node.props, dom);
     node.props.children.forEach(child => {
       if (textTypes.indexOf(typeof child) > -1)
         dom.appendChild(document.createTextNode(child));
@@ -147,6 +123,6 @@ export const renderEl = (node: any, target?: any, isDirty?: boolean) => {
 export const render = (node: VElement, target: Element) => {
   /*istanbul ignore next */
   if (target["__tdNode__"]) {
-    Do(diff, [target, node, "UPDATE", true]);
-  } else Do(diff, [target, node, "PLACEMENT", true]);
+    diff(target, node, "UPDATE", true);
+  } else diff(target, node, "PLACEMENT", true);
 };

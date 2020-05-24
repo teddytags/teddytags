@@ -18,7 +18,8 @@ import { renderComponent } from "./render";
  * ```
  */
 /*istanbul ignore next */
-export class Component<P = any, S = any> implements ComponentFunctions {
+export class Component<P extends object = any, S extends object = any>
+  implements ComponentFunctions {
   /**
    * The general properties of the Component. Cannot be changed once set.
    * Should contain some unique or permanent information.
@@ -43,7 +44,7 @@ export class Component<P = any, S = any> implements ComponentFunctions {
    */
   /* istanbul ignore next */
   setState(state: S): void {
-    this.state = Object.assign({}, state);
+    this.state = Object.create(state);
     renderComponent(this);
   }
   readonly node?: VElement;

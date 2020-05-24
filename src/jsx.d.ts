@@ -1,9 +1,20 @@
 //NO-CONCAT-START
 import { VElement, Component } from "./vdom/component";
 import { TagRegistry } from "./tag/registry";
+import { Ref } from "./vdom/fn";
 //NO-CONCAT-END
 /*Courtesy of d.ts (https://github.com/geowarin/ts-react/blob/master/typings/react/d.ts)*/
 type VNode = VElement | string | number | boolean | null | undefined;
+interface SpecialAttributes {
+  //TeddyTags- specific attributes
+  /**
+   * Set HTML of the element.
+   * *WARNING: The children will be replaced by anything that is in this property.*
+   */
+  innerHTML?: any;
+  class?: string;
+  ref?: Ref;
+}
 interface DOMAttributes {
   onCopy?: ClipboardEventHandler;
   onCut?: ClipboardEventHandler;
@@ -39,16 +50,9 @@ interface DOMAttributes {
   onTouchStart?: TouchEventHandler;
   onScroll?: UIEventHandler;
   onWheel?: WheelEventHandler;
-  //TeddyTags- specific attributes
-  /**
-   * Set HTML of the element.
-   * *WARNING: The children will be replaced by anything that is in this property.*
-   */
-  innerHTML?: any;
-  class?: string;
 }
 type ChildProps = { children?: VNode[] };
-interface HTMLPropAttributes extends DOMAttributes {
+interface HTMLPropAttributes extends DOMAttributes, SpecialAttributes {
   // Standard HTML Attributes
   accept?: string;
   acceptCharset?: string;
@@ -198,7 +202,7 @@ interface SVGElementAttributes extends HTMLPropAttributes {
   viewBox?: string;
   preserveAspectRatio?: string;
 }
-interface SVGPropAttributes extends DOMAttributes {
+interface SVGPropAttributes extends DOMAttributes, SpecialAttributes {
   cx?: number | string;
   cy?: number | string;
   d?: string;
@@ -245,7 +249,11 @@ interface SVGPropAttributes extends DOMAttributes {
 }
 export type HTMLProps<T = HTMLElement> = HTMLPropAttributes & ChildProps & {};
 export type SVGProps<T = SVGElement> = SVGPropAttributes & ChildProps & {};
-
+export type ExtendProps<T, K> = K extends HTMLElement
+  ? HTMLPropAttributes
+  : K extends SVGElement
+  ? SVGPropAttributes
+  : unknown & ChildProps & T;
 // Events
 
 interface SyntheticEvent {
