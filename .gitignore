@@ -5,3 +5,4 @@ test/**/*.js
 dev/*
 util/**/*.js
 local.log
+*.env

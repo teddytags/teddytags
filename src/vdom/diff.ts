@@ -14,7 +14,6 @@ const checkAttrs = (a: NamedNodeMap, b: NamedNodeMap): boolean => {
   return c === d;
 };
 //Ignoring temporarily cause tests not ready
-/* istanbul ignore next */
 const diffChildren = (
   child: Element,
   el: Element,

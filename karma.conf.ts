@@ -4,6 +4,7 @@ let commonjs = require("@rollup/plugin-commonjs");
 let resolve = require("@rollup/plugin-node-resolve");
 let istanbul = require("rollup-plugin-istanbul");
 let path = require("path");
+require("dotenv").config({ path: "./.env" });
 module.exports = config => {
   config.set({
     basePath: "",
